@@ -97,7 +97,13 @@ function GuiClick(event)
     -- get the player who clicked
     local player = game.get_player(event.player_index)
 
+    if not (player and player.valid) then
+        return
+    end
+
     if event.element.name == "wlw_travel_travel_button" then
+        local surface = player.surface
+        local player_surface_name = surface.name
         -- get the parent of the button, this is the frame that holds both dropdowns.
         local parent_frame = event.element.parent
 
@@ -112,15 +118,15 @@ function GuiClick(event)
         local current_top_level = nil
 
         -- we need to search for this string to see if we're already on an underground layer.
-        local underground_string_index = string.find(player.surface.name, "underground %- layer")
+        local underground_string_index = string.find(player_surface_name, "underground %- layer")
 
         if underground_string_index == nil then
             -- the player is not on an underground layer, so we're going to assume they're on the top level.
-            current_top_level = player.surface.name
+            current_top_level = player_surface_name
         else
             -- the player is on an underground layer, so the top level name should be our current name minus everything starting from the space before underground - layer
             -- to the end of the string.
-            current_top_level = string.sub(player.surface.name, 1, underground_string_index - 2)
+            current_top_level = string.sub(player_surface_name, 1, underground_string_index - 2)
         end
 
         -- if the player's current top level is in the target surface name, then we'll allow them to travel there.
@@ -128,8 +134,8 @@ function GuiClick(event)
         -- e.g. target surface = Frost underground - layer 30 current top level = nauvis (they can not travel)
         if string.find(target_surface_name, current_top_level) then
             -- first check if the player is on the surface that they're trying to travel to.
-            if target_surface_name ~= player.surface.name then
-                 -- the target surface is a sub surface of the player's current world and should be traveled to.
+            if target_surface_name ~= player_surface_name then
+                -- the target surface is a sub surface of the player's current world and should be traveled to.
 
                 -- we need to find a non colliding position for the player to teleport to
                 local target_surface = game.get_surface(target_surface_name)
@@ -142,9 +148,9 @@ function GuiClick(event)
                 else
                     -- we found a valid position so tell the player we're moving them there and move them.
                     player.print("You make your way to " .. target_surface_name .. ".")
-                    game.connected_players[player.index].teleport(non_colliding_position, target_surface)
+                    player.teleport(non_colliding_position, target_surface)
                     local super_parent_frame = parent_frame.parent
-                    super_parent_frame.wlw_travel_labels_flow.wlw_travel_current_location_label.caption = "Current Location: [color=0,1,0]" .. player.surface.name .. "[/color]"
+                    super_parent_frame.wlw_travel_labels_flow.wlw_travel_current_location_label.caption = "Current Location: [color=0,1,0]" .. player_surface_name .. "[/color]"
                     toggle_travel_interface(player)
                 end
             else
@@ -160,10 +166,16 @@ function GuiClick(event)
     end
 end
 
-function PlayerBuiltEntity(event)
-    local player = game.get_player(event.player_index)
-    local name = event.created_entity.name
+function OnBuiltEntity(event)
+    local entity = event.created_entity
 
+    if not (entity and entity.valid) then
+        return
+    end
+
+    local name = entity.name
+    local surface = entity.surface
+    local entity_surface_name = surface.name
 
     if name == "wlw-item-elevator" then
         -- when we place an item elevator, we need to make the next underground layer if it doesn't already exist.
@@ -171,11 +183,11 @@ function PlayerBuiltEntity(event)
         -- check if it already exists
 
         -- first check if we're on an underground layer
-        if string.find(player.surface.name, "underground %- layer") then
+        if string.find(entity_surface_name, "underground %- layer") then
             -- we are on an underground layer, so we need to check the next underground layer.
-            local _, underground_layer_index_end = string.find(player.surface.name, "underground %- layer ")
-            local top_surface_name = string.gsub(player.surface.name, " underground %- layer %d+", "")
-            local current_underground_layer_number = tonumber(string.sub(player.surface.name, underground_layer_index_end + 1))
+            local _, underground_layer_index_end = string.find(entity_surface_name, "underground %- layer ")
+            local top_surface_name = string.gsub(entity_surface_name, " underground %- layer %d+", "")
+            local current_underground_layer_number = tonumber(string.sub(entity_surface_name, underground_layer_index_end + 1))
             local target_underground_layer_number = current_underground_layer_number + 1
 
             if global.zones_by_name[top_surface_name .. " underground - layer " .. tostring(target_underground_layer_number)] then
@@ -186,16 +198,16 @@ function PlayerBuiltEntity(event)
             end
         else
             -- we are not on an underground layer, so we need to check the first underground layer of this world.
-            if global.zones_by_name[player.surface.name .. " underground - layer 1"] then
+            if global.zones_by_name[entity_surface_name .. " underground - layer 1"] then
                 -- if we get here it exists already so do nothing.
             else
                 -- if we get here it doesn't exist, so make it.
-                Zone.create_underground_layer_given_top_surface_name(player.surface.name, 1)
+                Zone.create_underground_layer_given_top_surface_name(entity_surface_name, 1)
             end
         end
 
         -- this is how you create the arbitrary next underground layer
-        -- Zone.create_underground_layer_given_top_surface_name(string.gsub(player.surface.name, " underground %- layer %d+", ""), 1)
+        -- Zone.create_underground_layer_given_top_surface_name(string.gsub(entity_surface_name, " underground %- layer %d+", ""), 1)
     else
         -- print every surface
         --for _, surface in pairs(global.zones_by_name) do
@@ -226,6 +238,11 @@ end
 
 function EntityDamaged(event)
     local entity = event.entity
+
+    if not (entity and entity.valid) then
+        return
+    end
+
     local surface = entity.surface
     local position = entity.position
     local name = entity.name
@@ -256,23 +273,30 @@ end
 
 function EntityDied(event)
     local entity = event.entity
+
+    if not (entity and entity.valid) then
+        return
+    end
+
     local surface = entity.surface
     local position = entity.position
+    local entity_name = entity.name
+
     -- if it is a unit and has exploding in its name
-    if entity.type == "unit" and string.find(entity.name, "exploding") then
+    if entity.type == "unit" and string.find(entity_name, "exploding") then
         -- if it's a small unit make a small explosion
-        if string.find(entity.name, "small") then
+        if string.find(entity_name, "small") then
             surface.create_entity({name = "grenade", position = position, target = position, speed = 0})
         -- if it's a medium unit make a medium explosion
-        elseif string.find(entity.name, "medium") then
+        elseif string.find(entity_name, "medium") then
             surface.create_entity({name = "explosive-rocket", position = position, target = position, speed = 0})
         -- if it's a big unit make a big explosion
-        elseif string.find(entity.name, "big") then
+        elseif string.find(entity_name, "big") then
             -- do normal explosive rocket damage but look a lot bigger.
             surface.create_entity({name = "explosive-rocket", position = position, target = position, speed = 0})
             surface.create_entity({name = "massive-explosion", position = position})
         -- if it's a behemoth unit make a behemoth explosion :)
-        elseif string.find(entity.name, "behemoth") or string.find(entity.name, "leviathan") or string.find(entity.name, "mother") then
+        elseif string.find(entity_name, "behemoth") or string.find(entity_name, "leviathan") or string.find(entity_name, "mother") then
             surface.create_entity({name = "atomic-rocket", position = position, target = position, speed = 0})
         -- if its name doesn't match any of those, but it did match exploding (modded units probably)
         -- then give it a default small explosion
@@ -284,6 +308,11 @@ end
 
 function EntitySpawned(event)
     local entity = event.entity
+
+    if not (entity and entity.valid) then
+        return
+    end
+
     local evolution = entity.force.evolution_factor
     local name = entity.name
     local surface = entity.surface
@@ -346,6 +375,11 @@ end
 
 function GuiSelectionStateChanged(event)
     local player = game.get_player(event.player_index)
+
+    if not (player and player.valid) then
+        return
+    end
+    
     local parent_frame = event.element.parent
     if event.element.name == "wlw_travel_top_level_dropdown" then
         -- the player changed which top level they want, so update the sub surfaces for that top level.
@@ -440,9 +474,12 @@ script.on_init(OnInit)
 script.on_configuration_changed(OnConfigurationChanged)
 script.on_event(defines.events.on_tick, OnTick)
 script.on_event(defines.events.on_gui_click, GuiClick)
-script.on_event(defines.events.on_built_entity, PlayerBuiltEntity)
+script.on_event(defines.events.on_built_entity, OnBuiltEntity)
+script.on_event(defines.events.on_robot_built_entity, OnBuiltEntity)
+script.on_event(defines.events.script_raised_built, OnBuiltEntity)
 script.on_event(defines.events.on_entity_damaged, EntityDamaged)
 script.on_event(defines.events.on_entity_died, EntityDied)
+script.on_event(defines.events.script_raised_destroy, EntityDied)
 script.on_event(defines.events.on_entity_spawned, EntitySpawned)
 script.on_event(defines.events.on_player_created, PlayerCreated)
 script.on_event(defines.events.on_chunk_generated, ChunkGenerated)
