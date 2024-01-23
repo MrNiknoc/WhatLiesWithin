@@ -1,20 +1,128 @@
-##VERSIONS:
-0.0.51009 - Made What Lies Within more crash resistant. This should fix compatibility with some mods.
-0.0.51008 - Adjusted the scope of What Lies Within, mainly by moving some things into their own standalone mods. Added (ugly) circuit connections to item elevators.
-0.0.51007 - Added several new atmospheric messages and changed how frequently they are shown.
-0.0.51006 - Traveling between surfaces now uses the player's current position instead of moving the player to 0,0 every time. Travel menu now closes with either the shortcut or by pressing esc or e like a vanilla menu.
-0.0.51005 - Travel menu text now dynamically updates to reflect the correct hotkey for opening and closing.
-0.0.51004 - Fixed the iron ore casting recipe. Also fixed the hitbox for item elevators and gave them an explosion when they die. Also locked Advanced Electronics behind Precision Smelting because red circuits need silver and made biters hate lamps.
-0.0.51003 - Fixed an oversight where lead casting recipes weren't becoming available after researching casting. Also worked on secret stuff. >:)
-0.0.51002 - Added a primitive burner generator for more power generation options.
-0.0.51001 - Changed version numbers to allow for more updates before 1.0.0. Fixed a bug causing the game to crash when nauvis is created without any autoplace controls. Travel menu now automatically closes when traveling succeeds.
-0.0.51 - Fixed a bug that was allowing other mods to place What Lies Within ores in places they shouldn't be.
-0.0.50 - First feature complete release. Underground layers and travel between them are implemented but lack balance. Added surface travel GUI and item elevator.
-0.0.41 - Adjusted the spawn chance of explode-y type biters. They now spawn based on evolution, capping at a 1% chance at max evolution.
-0.0.40 - Added an enrage mechanic to all biters, spitters, and worms. Also added exploding biters and spitters, they move slower but well... explode on death. :)
-0.0.32 - Added the melting machine to the melting tech (renamed from molten metals) and shifted prereqs for some techs around a little.
-0.0.31 - Balanced the renewable wood production chain. Added a thumbnail. Removed a lot of recipes from the player crafting menu for QOL.
-0.0.30 - Added the alloying/casting/melting system.
-0.0.21 - Enabled the tin plate recipe at the start of the game. Small oversight :)
-0.0.2 - Added renewable wood as well as Lead, Silver, and Gold. Also added metal compacting for bulk plate transportation.
-0.0.1 - Development starting point.
+---------------------------------------------------------------------------------------------------
+Version: 0.0.51010
+Date: 5. 5. 2023
+  Tweaks:
+    - Updated the changelog format.
+  Bugfixes:
+    - Made several improvements to fix multiplayer functionality (thanks RedRafe)
+---------------------------------------------------------------------------------------------------
+Version: 0.0.51009
+Date: 2. 1. 2023
+  Bugfixes:
+    - Made What Lies Within more crash resistant. This should fix compatibility with some mods.
+---------------------------------------------------------------------------------------------------
+Version: 0.0.51008
+Date: 1. 1. 2023
+  Tweaks:
+    - Adjusted the scope of What Lies Within, mainly by moving some things into their own standalone mods.
+  Minor Features:
+    - Added (ugly) circuit connections to item elevators.
+---------------------------------------------------------------------------------------------------
+Version: 0.0.51007
+Date: 1. 1. 2023
+  Minor Features:
+    - Added several new atmospheric messages and changed how frequently they are shown.
+---------------------------------------------------------------------------------------------------
+Version: 0.0.51006
+Date: 1. 1. 2023
+  Tweaks:
+    - Traveling between surfaces now uses the player's current position instead of moving the player to 0,0 every time.
+  Minor Features:
+    - Travel menu now closes with either the shortcut or by pressing esc or e like a vanilla menu.
+---------------------------------------------------------------------------------------------------
+Version: 0.0.51005
+Date: 1. 1. 2023
+  Bugfixes:
+    - Travel menu text now dynamically updates to reflect the correct hotkey for opening and closing.
+---------------------------------------------------------------------------------------------------
+Version: 0.0.51004
+Date: 1. 1. 2023
+  Bugfixes:
+    - Fixed the iron ore casting recipe.
+    - Fixed the hitbox for item elevators and gave them an explosion when they die.
+    - Locked Advanced Electronics behind Precision Smelting because red circuits need silver.
+  Minor Features:
+    - Made biters hate lamps.
+---------------------------------------------------------------------------------------------------
+Version: 0.0.51003
+Date: 1. 1. 2023
+  Bugfixes:
+    - Fixed an oversight where lead casting recipes weren't becoming available after researching casting.
+---------------------------------------------------------------------------------------------------
+Version: 0.0.51002
+Date: 1. 1. 2023
+  Major Features:
+    - Added a primitive burner generator for more power generation options.
+---------------------------------------------------------------------------------------------------
+Version: 0.0.51001
+Date: 1. 1. 2023
+  Tweaks:
+    - Changed version numbers to allow for more updates before 1.0.0.
+  Bugfixes:
+    - Fixed a bug causing the game to crash when Nauvis is created without any autoplace controls.
+    - Travel menu now automatically closes when traveling succeeds.
+---------------------------------------------------------------------------------------------------
+Version: 0.0.51
+Date: 1. 1. 2023
+  Bugfixes:
+    - Fixed a bug that was allowing other mods to place What Lies Within ores in places they shouldn't be.
+---------------------------------------------------------------------------------------------------
+Version: 0.0.50
+Date: 1. 1. 2023
+  Major Features:
+    - Underground layers and travel between them are implemented but lack balance.
+    - Added surface travel GUI.
+    - Added item elevators.
+---------------------------------------------------------------------------------------------------
+Version: 0.0.41
+Date: 10. 1. 2022
+  Tweaks:
+    - Adjusted the spawn chance of explode-y type biters. They now spawn based on evolution, capping at a 1% chance at max evolution.
+---------------------------------------------------------------------------------------------------
+Version: 0.0.40
+Date: 10. 1. 2022
+  Major Features:
+    - Added an enrage mechanic to all biters, spitters, and worms.
+    - Added exploding biters and spitters.
+---------------------------------------------------------------------------------------------------
+Version: 0.0.32
+Date: 10. 1. 2022
+  Major Features:
+    - Added the melting machine to the melting tech.
+    - Renamed Molten Metals to Melting.
+  Tweaks:
+    - Shifted prerequisites for some techs around a little.
+---------------------------------------------------------------------------------------------------
+Version: 0.0.31
+Date: 10. 1. 2022
+  Minor Features:
+    - Added a thumbnail.
+    - Removed a lot of recipes from the player crafting menu for QOL.
+  Tweaks:
+    - Balanced the renewable wood production chain.
+---------------------------------------------------------------------------------------------------
+Version: 0.0.30
+Date: 10. 1. 2022
+  Major Features:
+    - Added the alloying system.
+    - Added the casting system.
+    - Added the melting system.
+---------------------------------------------------------------------------------------------------
+Version: 0.0.21
+Date: 10. 1. 2022
+  Bugfixes:
+    - Enabled the tin plate recipe at the start of the game.
+---------------------------------------------------------------------------------------------------
+Version: 0.0.2
+Date: 10. 1. 2022
+  Major Features:
+    - Added renewable wood.
+    - Added Lead.
+    - Added Silver.
+    - Added Gold.
+    - Added metal compacting for bulk plate transportation.
+---------------------------------------------------------------------------------------------------
+Version: 0.0.1
+Date: 10. 1. 2022
+  Major Features:
+    - Development starting point.
