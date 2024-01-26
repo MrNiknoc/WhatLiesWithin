@@ -48,6 +48,77 @@ local function build_travel_interface(player)
     controls_flow.add{type="button", name="wlw_travel_travel_button", caption={"wlw-gui.travel"}}
 end
 
+local function get_companion_elevators(entity)
+    -- This function will return the companion elevators of the elevator that's passed into the function.
+    -- This is so that when we deconstruct/destroy one piece of the elevator all of the other pieces will be deconstructed/destroyed as well.
+    -- We'll do this by taking the position and surface name of the passed elevator and checking every other surface with a similar name
+    -- for elevators at the same position with the same link_id.
+
+    local entity_position = entity.position
+    local entity_surface = entity.surface
+    local entity_name = entity.name
+    local entity_link_id = entity.link_id
+    local companions = {}
+
+    -- first figure out the top level surface name.
+    local top_surface_name = Zone.get_top_surface_name(entity_surface)
+    local top_surface_underground_directory = top_surface_name .. " underground %- layer "
+    local top_surface = game.surfaces[top_surface_name]
+
+    -- check the top surface and any surface that contains top_surface_name .. " underground - layer "
+    for _, surface in pairs(game.surfaces) do
+        local surface_name = surface.name
+
+        if (surface_name == top_surface_name or string.find(surface_name, top_surface_underground_directory)) and surface_name ~= entity_surface.name then
+            -- This is either the top surface or in the correct underground directory so we should check it.
+            local companion = surface.find_entity(entity_name, entity_position)
+
+            if companion then
+                table.insert(companions, companion)
+            end
+        end
+    end
+
+    if companions then
+        for i=1, #companions do
+            game.print(companions[i].name)
+        end
+    end
+
+    return companions
+
+end
+
+local function get_unused_link_id(force)
+    if global.last_used_link_id_by_force then
+        if global.last_used_link_id_by_force.force == nil then
+            global.last_used_link_id_by_force.force = 1
+        end
+        -- If we get to 2 billion (we won't) then return nil so we can throw an error.
+        if global.last_used_link_id_by_force.force >= 2000000000 then
+            global.last_used_link_id_by_force.force = 2000000000
+            return nil
+        else
+            local next_link_id = global.last_used_link_id_by_force.force + 1
+            while force.get_linked_inventory("wlw-item-elevator", next_link_id) ~= nil and next_link_id < 2000000000 do
+                next_link_id = next_link_id + 1
+            end
+
+            global.last_used_link_id_by_force.force = next_link_id
+            
+            if next_link_id == 2000000000 then
+                return nil
+            else
+                return next_link_id
+            end
+        end
+    else
+        game.print("global.last_used_link_id_by_force was empty!")
+        global.last_used_link_id_by_force.force = 1
+        return 1
+    end
+end
+
 local function toggle_travel_interface(player)
     local main_frame = player.gui.screen.wlw_travel_frame
 
@@ -70,6 +141,11 @@ function OnInit(event)
     global.zones_by_surface_index = global.zones_by_surface_index or {}
     global.zones_by_name = global.zones_by_name or {}
 
+    -- Currently this table is key = force value = int of last used link_id.
+    -- TODO: Link ids are per force AND per prototype, so this table should really be force -> prototype -> link id.
+    -- TODO: We only need to do this once we've implemented multiple item elevator prototypes.
+    global.last_used_link_id_by_force = global.last_used_link_id_by_force or {}
+
     -- save the map settings the player chose then change nauvis to not spawn the ores we want underground.
     global.chosen_map_settings = global.chosen_map_settings or game.default_map_gen_settings
 
@@ -91,6 +167,35 @@ end
 
 function OnConfigurationChanged(event)
     game.print("Configuration changed!!")
+
+    global.space_exploration_enabled = global.space_exploration_enabled or script.active_mods["space-exploration"]
+    global.players = global.players or {}
+
+    global.zones_by_surface_index = global.zones_by_surface_index or {}
+    global.zones_by_name = global.zones_by_name or {}
+
+    -- Currently this table is key = force value = int of last used link_id.
+    -- TODO: Link ids are per force AND per prototype, so this table should really be force -> prototype -> link id.
+    -- TODO: We only need to do this once we've implemented multiple item elevator prototypes.
+    global.last_used_link_id_by_force = global.last_used_link_id_by_force or {}
+
+    -- save the map settings the player chose then change nauvis to not spawn the ores we want underground.
+    global.chosen_map_settings = global.chosen_map_settings or game.default_map_gen_settings
+
+    -- create a list of all tile prototypes with water in their name.
+    global.water_tile_names = {}
+    for name, prototype in pairs(game.tile_prototypes) do
+        if string.find(name, "water") then
+            table.insert(global.water_tile_names, name)
+        end
+    end
+
+    -- create an array of atmospheric messages (flavor text)
+    global.atmosphere_messages = {"You feel an intense urge to venture further... [color=1,0,1]deeper...[/color]", "Your body and mind long for the darkness below...", "Thoughts of the underground cloud your mind...", "The [color=1,0,1]depths[/color] beckon...", "The light stings your eyes. They crave the [color=1,0,1]darkness...[/color]"}
+
+    -- make sure every Zone is created that should be.
+    -- if there are zones already then check if each surface is in the zone list.
+    Zone.rebuild_global_surface_lists()
 end
 
 function GuiClick(event)
@@ -175,12 +280,23 @@ function OnBuiltEntity(event)
 
     local name = entity.name
     local surface = entity.surface
+    local player_index = event.player_index
+    local player = game.players[player_index]
     local entity_surface_name = surface.name
 
     if name == "wlw-item-elevator" then
-        -- when we place an item elevator, we need to make the next underground layer if it doesn't already exist.
+        -- when we place an item elevator, we need to make the next underground layer if it doesn't already exist and place the companion elevator there.
+        -- we also need to give the item elevator a unique id, currently this function will allow for 2 billion unique links.
+        local next_link_id = get_unused_link_id(entity.force)
+        if next_link_id == nil then
+            -- If we get here we have already used up all of the link_ids so don't allow the elevator to be built.
+            player.create_local_flying_text({text = {"error-message.wlw-cant-place-item-elevator"}, create_at_cursor = true})
+            entity.destroy()
+            player.insert{name = "wlw-item-elevator", count = 1}
+            return
+        end
 
-        -- check if it already exists
+        -- check if the next layer already exists, at this point we know our next_link_id is valid so we don't need to check again.
 
         -- first check if we're on an underground layer
         if string.find(entity_surface_name, "underground %- layer") then
@@ -191,18 +307,132 @@ function OnBuiltEntity(event)
             local target_underground_layer_number = current_underground_layer_number + 1
 
             if global.zones_by_name[top_surface_name .. " underground - layer " .. tostring(target_underground_layer_number)] then
-                -- it exists, so do nothing
+                -- it exists, try to place the companion elevator there. If it fails then we can't place the elevator here.
+
+                local target_surface = game.surfaces[top_surface_name .. " underground - layer " .. tostring(target_underground_layer_number)]
+
+                -- then try to place the companion elevator there. If it fails then we can't place the elevator here.
+                if target_surface.find_non_colliding_position("wlw-item-elevator", entity.position, 0.01, 0.01) == nil then
+                    -- We failed to build the entity here.
+                    player.create_local_flying_text({text = {"error-message.wlw-cant-place-item-elevator"}, create_at_cursor = true})
+                    entity.destroy()
+                    player.insert{name = "wlw-item-elevator", count = 1}
+                    player.play_sound(
+                        {
+                            path = "utility/cannot_build"
+                        }
+                    )
+                    return
+                else
+                    local companion_elevator = target_surface.create_entity(
+                        {
+                            name = "wlw-item-elevator",
+                            force = entity.force,
+                            position = entity.position
+                        }
+                    )
+
+                    -- We succeeded in building the entity here so give it them both the correct link id and return.
+                    entity.link_id = next_link_id
+                    companion_elevator.link_id = next_link_id
+                    return
+                end
             else
                 -- it doesn't exist so make it
                 Zone.create_underground_layer_given_top_surface_name(top_surface_name, target_underground_layer_number)
+
+                local target_surface = game.surfaces[top_surface_name .. " underground - layer " .. tostring(target_underground_layer_number)]
+
+                -- then try to place the companion elevator there. If it fails then we can't place the elevator here.
+                if target_surface.find_non_colliding_position("wlw-item-elevator", entity.position, 0.01, 0.01) == nil then
+                    -- We failed to build the entity here.
+                    player.create_local_flying_text({text = {"error-message.wlw-cant-place-item-elevator"}, create_at_cursor = true})
+                    entity.destroy()
+                    player.insert{name = "wlw-item-elevator", count = 1}
+                    player.play_sound(
+                        {
+                            path = "utility/cannot_build"
+                        }
+                    )
+                    return
+                else
+                    local companion_elevator = target_surface.create_entity(
+                        {
+                            name = "wlw-item-elevator",
+                            force = entity.force,
+                            position = entity.position
+                        }
+                    )
+
+                    -- We succeeded in building the entity here so give it them both the correct link id and return.
+                    entity.link_id = next_link_id
+                    companion_elevator.link_id = next_link_id
+                    return
+                end
             end
         else
             -- we are not on an underground layer, so we need to check the first underground layer of this world.
             if global.zones_by_name[entity_surface_name .. " underground - layer 1"] then
-                -- if we get here it exists already so do nothing.
+                -- if we get here it exists already so try to place the companion elevator there. If it fails then we can't place the elevator here.
+
+                local target_surface = game.surfaces[entity_surface_name .. " underground - layer 1"]
+
+                if target_surface.find_non_colliding_position("wlw-item-elevator", entity.position, 0.01, 0.01) == nil then
+                    -- We failed to build the entity here.
+                    player.create_local_flying_text({text = {"error-message.wlw-cant-place-item-elevator"}, create_at_cursor = true})
+                    entity.destroy()
+                    player.insert{name = "wlw-item-elevator", count = 1}
+                    player.play_sound(
+                        {
+                            path = "utility/cannot_build"
+                        }
+                    )
+                    return
+                else
+                    local companion_elevator = target_surface.create_entity(
+                        {
+                            name = "wlw-item-elevator",
+                            force = entity.force,
+                            position = entity.position
+                        }
+                    )
+
+                    -- We succeeded in building the entity here so give it them both the correct link id and return.
+                    entity.link_id = next_link_id
+                    companion_elevator.link_id = next_link_id
+                    return
+                end
             else
-                -- if we get here it doesn't exist, so make it.
+                -- if we get here it doesn't exist, so make it and build the companion elevator there.
                 Zone.create_underground_layer_given_top_surface_name(entity_surface_name, 1)
+
+                local target_surface = game.surfaces[entity_surface_name .. " underground - layer 1"]
+
+                if target_surface.find_non_colliding_position("wlw-item-elevator", entity.position, 0.01, 0.01) == nil then
+                    -- We failed to build the entity here.
+                    player.create_local_flying_text({text = {"Companion elevator could not be placed! Make sure both ends of the elevator are clear!"}, create_at_cursor = true})
+                    entity.destroy()
+                    player.insert{name = "wlw-item-elevator", count = 1}
+                    player.play_sound(
+                        {
+                            path = "utility/cannot_build"
+                        }
+                    )
+                    return
+                else
+                    local companion_elevator = target_surface.create_entity(
+                        {
+                            name = "wlw-item-elevator",
+                            force = entity.force,
+                            position = entity.position
+                        }
+                    )
+
+                    -- We succeeded in building the entity here so give it them both the correct link id and return.
+                    entity.link_id = next_link_id
+                    companion_elevator.link_id = next_link_id
+                    return
+                end
             end
         end
 
@@ -222,6 +452,32 @@ function OnBuiltEntity(event)
             --player.surface.create_entity({name="wlw-lead-ore", amount=1000, position={player.position.x+x, player.position.y+y}})
         --end
     --end
+end
+
+function OnMinedEntity(event)
+    local entity = event.entity
+
+    if not (entity and entity.valid) then
+        return
+    end
+
+    if entity.name == "wlw-item-elevator" then
+        local inventory = entity.get_output_inventory()
+        local companions = get_companion_elevators(entity)
+
+        if inventory then
+            for i = 1, #inventory do
+                event.buffer.insert(inventory[i])
+            end
+            inventory.clear()
+        end
+
+        if companions then
+            for i = 1, #companions do
+                companions[i].destroy()
+            end
+        end
+    end
 end
 
 function PlayerCreated(event)
@@ -476,6 +732,8 @@ script.on_event(defines.events.on_tick, OnTick)
 script.on_event(defines.events.on_gui_click, GuiClick)
 script.on_event(defines.events.on_built_entity, OnBuiltEntity)
 script.on_event(defines.events.on_robot_built_entity, OnBuiltEntity)
+script.on_event(defines.events.on_player_mined_entity, OnMinedEntity)
+script.on_event(defines.events.on_robot_mined_entity, OnMinedEntity)
 script.on_event(defines.events.script_raised_built, OnBuiltEntity)
 script.on_event(defines.events.on_entity_damaged, EntityDamaged)
 script.on_event(defines.events.on_entity_died, EntityDied)

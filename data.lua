@@ -251,6 +251,69 @@ data.raw["recipe"]["substation"].ingredients =
     {type = "item", name = "wlw-platinum-cable", amount = 2}
 }
 
+-- land mines to only produce one mine per explosive, and use lead.
+data.raw["recipe"]["land-mine"].ingredients = 
+{
+    {type = "item", name = "wlw-lead-plate", amount = 4},
+    {type = "item", name = "explosives", amount = 1}
+}
+
+data.raw["recipe"]["land-mine"].results =
+{
+    {type = "item", name = "land-mine", amount = 1}
+}
+
+-- make land mines have a smaller trigger radius, damage radius, do less damage, arm slower, and have less health.
+data.raw["land-mine"]["land-mine"].trigger_radius = 1
+-- This timeout is in ticks, 1800 = 30s.
+data.raw["land-mine"]["land-mine"].timeout = 1800
+-- Small biters do 7 damage in vanilla, they should 1 shot unarmed land mines.
+data.raw["land-mine"]["land-mine"].max_health = 7
+data.raw["land-mine"]["land-mine"].action =
+{
+  type = "direct",
+  action_delivery =
+  {
+    type = "instant",
+    source_effects =
+    {
+      {
+        type = "nested-result",
+        affects_target = true,
+        action =
+        {
+          type = "area",
+          radius = 1,
+          force = "enemy",
+          action_delivery =
+          {
+            type = "instant",
+            target_effects =
+            {
+              {
+                type = "damage",
+                damage = { amount = 25, type = "explosion"}
+              },
+              {
+                type = "create-sticker",
+                sticker = "stun-sticker"
+              }
+            }
+          }
+        }
+      },
+      {
+        type = "create-entity",
+        entity_name = "explosion"
+      },
+      {
+        type = "damage",
+        damage = { amount = 10, type = "explosion"}
+      }
+    }
+  }
+}
+
 -- change all units to prefer targeting low health enemies
 for name, prototype in pairs(data.raw["unit"]) do
     data.raw["unit"][name].attack_parameters.health_penalty = 0.5

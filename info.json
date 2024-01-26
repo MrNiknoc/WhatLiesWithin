@@ -1,11 +1,11 @@
 {
     "name": "WhatLiesWithin",
-    "version": "0.0.51010",
+    "version": "0.0.51011",
     "title": "What Lies Within",
     "author": "MrNiknoc",
     "dependencies": [
         "base >= 1.1.0",
-        "AngryBiters >= 0.0.3",
+        "AngryBiters >= 0.0.8",
         "? informatron >= 0.2.1",
         "? AfraidOfTheDark >= 1.1.1"
     ],

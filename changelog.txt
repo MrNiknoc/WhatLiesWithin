@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.0.51011
+Date: 1. 23. 2024
+  Tweaks:
+    - Adjusted the recipe for land mines to use lead instead of steel.
+    - Nerfed land mines to arm SIGNIFICANTLY slower, do less damage in a smaller area, and have a smaller trigger radius. This is to incentivise using them as static defense rather than an active weapon (looking at you Cyclo :P).
+  Minor Features:
+    - Item elevators are now placed in pairs of two and the link id for each is hidden. No more manually selecting which elevators are attached to each other.
+    - Item elevators will now properly destroy their companions and empty their inventories when mined.
+---------------------------------------------------------------------------------------------------
 Version: 0.0.51010
 Date: 5. 5. 2023
   Tweaks:
