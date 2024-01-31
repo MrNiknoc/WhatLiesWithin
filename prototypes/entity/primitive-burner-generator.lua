@@ -3,7 +3,7 @@ local layers = {
   layers =
   {
     {
-      filename = "__WhatLiesWithin__/graphics/entity/primitive-burner-generator/primitive-burner-generator.png",
+      filename = "__WhatLiesWithinGraphics__/graphics/entity/primitive-burner-generator/primitive-burner-generator.png",
       priority = "extra-high",
       line_length = 1,
       frame_count = 1,
@@ -13,7 +13,7 @@ local layers = {
       height = 64,
       --shift = util.by_pixel(0, -10),
       hr_version = {
-        filename = "__WhatLiesWithin__/graphics/entity/primitive-burner-generator/hr-primitive-burner-generator.png",
+        filename = "__WhatLiesWithinGraphics__/graphics/entity/primitive-burner-generator/hr-primitive-burner-generator.png",
         priority = "extra-high",
         line_length = 1,
         frame_count = 1,
@@ -26,7 +26,7 @@ local layers = {
       }
     },
     {
-      filename = "__WhatLiesWithin__/graphics/entity/primitive-burner-generator/primitive-burner-generator-shadow.png",
+      filename = "__WhatLiesWithinGraphics__/graphics/entity/primitive-burner-generator/primitive-burner-generator-shadow.png",
       priority = "extra-high",
       width = 81,
       height = 64,
@@ -34,7 +34,7 @@ local layers = {
       draw_as_shadow = true,
       repeat_count = 48,
       hr_version = {
-        filename = "__WhatLiesWithin__/graphics/entity/primitive-burner-generator/hr-primitive-burner-generator-shadow.png",
+        filename = "__WhatLiesWithinGraphics__/graphics/entity/primitive-burner-generator/hr-primitive-burner-generator-shadow.png",
         priority = "extra-high",
         width = 164,
         height = 74,
@@ -47,7 +47,7 @@ local layers = {
   }
 }
 local fire_glow = {
-  filename = "__WhatLiesWithin__/graphics/entity/primitive-burner-generator/primitive-burner-generator-glow.png",
+  filename = "__WhatLiesWithinGraphics__/graphics/entity/primitive-burner-generator/primitive-burner-generator-glow.png",
   priority = "extra-high",
   line_length = 1,
   frame_count = 1,
@@ -59,7 +59,7 @@ local fire_glow = {
   blend_mode = "additive",
   draw_as_glow = true,
   hr_version = {
-    filename = "__WhatLiesWithin__/graphics/entity/primitive-burner-generator/hr-primitive-burner-generator-glow.png",
+    filename = "__WhatLiesWithinGraphics__/graphics/entity/primitive-burner-generator/hr-primitive-burner-generator-glow.png",
     priority = "extra-high",
     line_length = 1,
     frame_count = 1,
@@ -74,7 +74,7 @@ local fire_glow = {
   }
 }
 local fire_light = {
-  filename = "__WhatLiesWithin__/graphics/entity/primitive-burner-generator/primitive-burner-generator-fire.png",
+  filename = "__WhatLiesWithinGraphics__/graphics/entity/primitive-burner-generator/primitive-burner-generator-fire.png",
   priority = "extra-high",
   line_length = 8,
   frame_count = 48,
@@ -85,7 +85,7 @@ local fire_light = {
   blend_mode = "additive",
   draw_as_light = true,
   hr_version = {
-    filename = "__WhatLiesWithin__/graphics/entity/primitive-burner-generator/hr-primitive-burner-generator-fire.png",
+    filename = "__WhatLiesWithinGraphics__/graphics/entity/primitive-burner-generator/hr-primitive-burner-generator-fire.png",
     priority = "extra-high",
     line_length = 8,
     frame_count = 48,
@@ -107,7 +107,7 @@ local fire_and_glow = {
 local burner_generator = {
   type = "burner-generator",
   name = "wlw-primitive-burner-generator",
-  icon = "__WhatLiesWithin__/graphics/icons/primitive-burner-generator.png",
+  icon = "__WhatLiesWithinGraphics__/graphics/icons/primitive-burner-generator.png",
   icon_size = 64, icon_mipmaps = 4,
   flags = {"placeable-neutral", "player-creation", "not-rotatable"},
   minable = {mining_time = 0.5, result = "wlw-primitive-burner-generator"},
@@ -129,14 +129,14 @@ local burner_generator = {
   },
   collision_box = {{-0.7, -0.7}, {0.7, 0.7}},
   selection_box = {{-0.8, -1}, {0.8, 1}},
-  max_power_output = "600kW",
+  max_power_output = "20kW",
   burner =
   {
     type = "burner",
     fuel_categories = {"chemical"},
     effectivity = effectivity,
-    fuel_inventory_size = 1,
-    emissions_per_minute = 10,
+    fuel_inventory_size = 2,
+    emissions_per_minute = 5,
     light_flicker =
     {
       minimum_light_size = 1,

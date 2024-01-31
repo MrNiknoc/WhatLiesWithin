@@ -1,4 +1,4 @@
--- this is where we place our AutoplaceControl(s) for ores. Ores won't work without one :)
+-- this is where we place our AutoplaceControl(s) for ores and other things. They won't work without one :)
 
 data:extend(
     {

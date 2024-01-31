@@ -92,56 +92,56 @@ local dummyfurnace =
 data:extend({dummyfurnace})
 
 -- change plate icons to fit the plate > ingot > sheet > block convention. (plate = iron plate, ingot = steel-plate, sheet = stone-brick, block = solid-fuel)
-data.raw["item"]["copper-plate"].icon = "__WhatLiesWithin__/graphics/icons/copper-plate.png"
-data.raw["item"]["iron-plate"].icon = "__WhatLiesWithin__/graphics/icons/iron-plate.png"
-data.raw["item"]["steel-plate"].icon = "__WhatLiesWithin__/graphics/icons/steel-plate.png"
+data.raw["item"]["copper-plate"].icon = "__WhatLiesWithinGraphics__/graphics/icons/copper-plate.png"
+data.raw["item"]["iron-plate"].icon = "__WhatLiesWithinGraphics__/graphics/icons/iron-plate.png"
+data.raw["item"]["steel-plate"].icon = "__WhatLiesWithinGraphics__/graphics/icons/steel-plate.png"
 
 -- change stone, iron, and copper ore graphics to fit new plate colors
-data.raw["item"]["iron-ore"].icon = "__WhatLiesWithin__/graphics/icons/iron-ore.png"
+data.raw["item"]["iron-ore"].icon = "__WhatLiesWithinGraphics__/graphics/icons/iron-ore.png"
 data.raw["item"]["iron-ore"].pictures = 
 {
-    { size = 64, filename = "__WhatLiesWithin__/graphics/icons/iron-ore.png",   scale = 0.25, mipmap_count = 4 },
-    { size = 64, filename = "__WhatLiesWithin__/graphics/icons/iron-ore-1.png", scale = 0.25, mipmap_count = 4 },
-    { size = 64, filename = "__WhatLiesWithin__/graphics/icons/iron-ore-2.png", scale = 0.25, mipmap_count = 4 },
-    { size = 64, filename = "__WhatLiesWithin__/graphics/icons/iron-ore-3.png", scale = 0.25, mipmap_count = 4 }
+    { size = 64, filename = "__WhatLiesWithinGraphics__/graphics/icons/iron-ore.png",   scale = 0.25, mipmap_count = 4 },
+    { size = 64, filename = "__WhatLiesWithinGraphics__/graphics/icons/iron-ore-1.png", scale = 0.25, mipmap_count = 4 },
+    { size = 64, filename = "__WhatLiesWithinGraphics__/graphics/icons/iron-ore-2.png", scale = 0.25, mipmap_count = 4 },
+    { size = 64, filename = "__WhatLiesWithinGraphics__/graphics/icons/iron-ore-3.png", scale = 0.25, mipmap_count = 4 }
 }
 data.raw["resource"]["iron-ore"].stages.sheet =
 {
-    filename = "__WhatLiesWithin__/graphics/entity/ores/iron.png",
+    filename = "__WhatLiesWithinGraphics__/graphics/entity/ores/iron.png",
     priority = "extra-high",
     size = 128,
     frame_count = 8,
     variation_count = 8,
     scale = 0.5
 }
-data.raw["item"]["copper-ore"].icon = "__WhatLiesWithin__/graphics/icons/copper-ore.png"
+data.raw["item"]["copper-ore"].icon = "__WhatLiesWithinGraphics__/graphics/icons/copper-ore.png"
 data.raw["item"]["copper-ore"].pictures = 
 {
-    { size = 64, filename = "__WhatLiesWithin__/graphics/icons/copper-ore.png",   scale = 0.25, mipmap_count = 4 },
-    { size = 64, filename = "__WhatLiesWithin__/graphics/icons/copper-ore-1.png", scale = 0.25, mipmap_count = 4 },
-    { size = 64, filename = "__WhatLiesWithin__/graphics/icons/copper-ore-2.png", scale = 0.25, mipmap_count = 4 },
-    { size = 64, filename = "__WhatLiesWithin__/graphics/icons/copper-ore-3.png", scale = 0.25, mipmap_count = 4 }
+    { size = 64, filename = "__WhatLiesWithinGraphics__/graphics/icons/copper-ore.png",   scale = 0.25, mipmap_count = 4 },
+    { size = 64, filename = "__WhatLiesWithinGraphics__/graphics/icons/copper-ore-1.png", scale = 0.25, mipmap_count = 4 },
+    { size = 64, filename = "__WhatLiesWithinGraphics__/graphics/icons/copper-ore-2.png", scale = 0.25, mipmap_count = 4 },
+    { size = 64, filename = "__WhatLiesWithinGraphics__/graphics/icons/copper-ore-3.png", scale = 0.25, mipmap_count = 4 }
 }
 data.raw["resource"]["copper-ore"].stages.sheet =
 {
-    filename = "__WhatLiesWithin__/graphics/entity/ores/copper.png",
+    filename = "__WhatLiesWithinGraphics__/graphics/entity/ores/copper.png",
     priority = "extra-high",
     size = 128,
     frame_count = 8,
     variation_count = 8,
     scale = 0.5
 }
-data.raw["item"]["stone"].icon = "__WhatLiesWithin__/graphics/icons/stone.png"
+data.raw["item"]["stone"].icon = "__WhatLiesWithinGraphics__/graphics/icons/stone.png"
 data.raw["item"]["stone"].pictures = 
 {
-    { size = 64, filename = "__WhatLiesWithin__/graphics/icons/stone.png",   scale = 0.25, mipmap_count = 4 },
-    { size = 64, filename = "__WhatLiesWithin__/graphics/icons/stone-1.png", scale = 0.25, mipmap_count = 4 },
-    { size = 64, filename = "__WhatLiesWithin__/graphics/icons/stone-2.png", scale = 0.25, mipmap_count = 4 },
-    { size = 64, filename = "__WhatLiesWithin__/graphics/icons/stone-3.png", scale = 0.25, mipmap_count = 4 }
+    { size = 64, filename = "__WhatLiesWithinGraphics__/graphics/icons/stone.png",   scale = 0.25, mipmap_count = 4 },
+    { size = 64, filename = "__WhatLiesWithinGraphics__/graphics/icons/stone-1.png", scale = 0.25, mipmap_count = 4 },
+    { size = 64, filename = "__WhatLiesWithinGraphics__/graphics/icons/stone-2.png", scale = 0.25, mipmap_count = 4 },
+    { size = 64, filename = "__WhatLiesWithinGraphics__/graphics/icons/stone-3.png", scale = 0.25, mipmap_count = 4 }
 }
 data.raw["resource"]["stone"].stages.sheet =
 {
-    filename = "__WhatLiesWithin__/graphics/entity/ores/stone.png",
+    filename = "__WhatLiesWithinGraphics__/graphics/entity/ores/stone.png",
     priority = "extra-high",
     size = 128,
     frame_count = 8,
@@ -155,15 +155,15 @@ data.raw["resource"]["copper-ore"].map_color = {r=0.75,g=0.4}
 data.raw["resource"]["stone"].map_color = {r=0.4,g=0.4,b=0.2}
 
 -- change intermediate copper and iron product graphics to fit new plate colors
-data.raw["item"]["copper-cable"].icon = "__WhatLiesWithin__/graphics/icons/copper-cable.png"
-data.raw["item"]["iron-gear-wheel"].icon = "__WhatLiesWithin__/graphics/icons/iron-gear-wheel.png"
-data.raw["item"]["iron-stick"].icon = "__WhatLiesWithin__/graphics/icons/iron-stick.png"
+data.raw["item"]["copper-cable"].icon = "__WhatLiesWithinGraphics__/graphics/icons/copper-cable.png"
+data.raw["item"]["iron-gear-wheel"].icon = "__WhatLiesWithinGraphics__/graphics/icons/iron-gear-wheel.png"
+data.raw["item"]["iron-stick"].icon = "__WhatLiesWithinGraphics__/graphics/icons/iron-stick.png"
 
 -- change green wires to be more? distinguishable from platinum cable
-data.raw["item"]["green-wire"].icon = "__WhatLiesWithin__/graphics/icons/green-wire.png"
+data.raw["item"]["green-wire"].icon = "__WhatLiesWithinGraphics__/graphics/icons/green-wire.png"
 
 -- change steel processing research icon to match steel plates
-data.raw["technology"]["steel-processing"].icon = "__WhatLiesWithin__/graphics/icons/steel-plate.png"
+data.raw["technology"]["steel-processing"].icon = "__WhatLiesWithinGraphics__/graphics/icons/steel-plate.png"
 data.raw["technology"]["steel-processing"].icon_size = 64
 
 -- lock electric energy distribution 1 (this will lock electric energy distribution 2 as well) behind precision smelting (the better poles require silver, gold, and platinum cables)

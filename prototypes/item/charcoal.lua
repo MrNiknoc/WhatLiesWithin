@@ -3,7 +3,7 @@ data:extend(
         {
             type = "item",
             name = "wlw-charcoal",
-            icon = "__WhatLiesWithin__/graphics/icons/charcoal.png",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/charcoal.png",
             icon_size = 64, icon_mipmaps = 4,
             subgroup = "raw-resource",
             order = "wlw-charcoal",

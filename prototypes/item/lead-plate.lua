@@ -2,7 +2,7 @@
 local leadplate = table.deepcopy(data.raw["item"]["iron-plate"])
 
 leadplate.name = "wlw-lead-plate"
-leadplate.icon = "__WhatLiesWithin__/graphics/icons/lead-plate.png"
+leadplate.icon = "__WhatLiesWithinGraphics__/graphics/icons/lead-plate.png"
 leadplate.subgroup = "raw-material"
 leadplate.order = "wlw-lead-plate"
 

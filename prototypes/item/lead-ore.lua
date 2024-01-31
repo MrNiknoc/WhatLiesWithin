@@ -3,16 +3,16 @@
 local leadore = table.deepcopy(data.raw["item"]["stone"])
 
 leadore.name = "wlw-lead-ore"
-leadore.icon = "__WhatLiesWithin__/graphics/icons/lead-ore.png"
+leadore.icon = "__WhatLiesWithinGraphics__/graphics/icons/lead-ore.png"
 leadore.order = "wlw-lead-ore"
 leadore.subgroup = "raw-resource"
 
 leadore.pictures =
 {
-    { size = 64, filename = "__WhatLiesWithin__/graphics/icons/lead-ore.png", scale = 0.25, mipmap_count = 4 },
-    { size = 64, filename = "__WhatLiesWithin__/graphics/icons/lead-ore-1.png", scale = 0.25, mipmap_count = 4 },
-    { size = 64, filename = "__WhatLiesWithin__/graphics/icons/lead-ore-2.png", scale = 0.25, mipmap_count = 4 },
-    { size = 64, filename = "__WhatLiesWithin__/graphics/icons/lead-ore-3.png", scale = 0.25, mipmap_count = 4 }
+    { size = 64, filename = "__WhatLiesWithinGraphics__/graphics/icons/lead-ore.png", scale = 0.25, mipmap_count = 4 },
+    { size = 64, filename = "__WhatLiesWithinGraphics__/graphics/icons/lead-ore-1.png", scale = 0.25, mipmap_count = 4 },
+    { size = 64, filename = "__WhatLiesWithinGraphics__/graphics/icons/lead-ore-2.png", scale = 0.25, mipmap_count = 4 },
+    { size = 64, filename = "__WhatLiesWithinGraphics__/graphics/icons/lead-ore-3.png", scale = 0.25, mipmap_count = 4 }
 }
 
 

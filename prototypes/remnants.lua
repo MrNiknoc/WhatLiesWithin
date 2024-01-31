@@ -9,18 +9,18 @@ local casting_machine = table.deepcopy(data.raw["corpse"]["chemical-plant-remnan
 local melting_machine = table.deepcopy(data.raw["corpse"]["chemical-plant-remnants"])
 
 alloying_machine.name = "wlw-alloying-machine-remnants"
-alloying_machine.icon = "__WhatLiesWithin__/graphics/icons/alloying-machine.png"
-alloying_machine.animation.filename = "__WhatLiesWithin__/graphics/entity/alloying-machine/remnants/alloying-machine-remnants.png"
-alloying_machine.animation.hr_version.filename = "__WhatLiesWithin__/graphics/entity/alloying-machine/remnants/hr-alloying-machine-remnants.png"
+alloying_machine.icon = "__WhatLiesWithinGraphics__/graphics/icons/alloying-machine.png"
+alloying_machine.animation.filename = "__WhatLiesWithinGraphics__/graphics/entity/alloying-machine/remnants/alloying-machine-remnants.png"
+alloying_machine.animation.hr_version.filename = "__WhatLiesWithinGraphics__/graphics/entity/alloying-machine/remnants/hr-alloying-machine-remnants.png"
 
 casting_machine.name = "wlw-casting-machine-remnants"
-casting_machine.icon = "__WhatLiesWithin__/graphics/icons/casting-machine.png"
-casting_machine.animation.filename = "__WhatLiesWithin__/graphics/entity/casting-machine/remnants/casting-machine-remnants.png"
-casting_machine.animation.hr_version.filename = "__WhatLiesWithin__/graphics/entity/casting-machine/remnants/hr-casting-machine-remnants.png"
+casting_machine.icon = "__WhatLiesWithinGraphics__/graphics/icons/casting-machine.png"
+casting_machine.animation.filename = "__WhatLiesWithinGraphics__/graphics/entity/casting-machine/remnants/casting-machine-remnants.png"
+casting_machine.animation.hr_version.filename = "__WhatLiesWithinGraphics__/graphics/entity/casting-machine/remnants/hr-casting-machine-remnants.png"
 
 melting_machine.name = "wlw-melting-machine-remnants"
-melting_machine.icon = "__WhatLiesWithin__/graphics/icons/melting-machine.png"
-melting_machine.animation.filename = "__WhatLiesWithin__/graphics/entity/melting-machine/remnants/melting-machine-remnants.png"
-melting_machine.animation.hr_version.filename = "__WhatLiesWithin__/graphics/entity/melting-machine/remnants/hr-melting-machine-remnants.png"
+melting_machine.icon = "__WhatLiesWithinGraphics__/graphics/icons/melting-machine.png"
+melting_machine.animation.filename = "__WhatLiesWithinGraphics__/graphics/entity/melting-machine/remnants/melting-machine-remnants.png"
+melting_machine.animation.hr_version.filename = "__WhatLiesWithinGraphics__/graphics/entity/melting-machine/remnants/hr-melting-machine-remnants.png"
 
 data:extend({alloying_machine, casting_machine, melting_machine})

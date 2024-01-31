@@ -39,6 +39,17 @@ function Zone.get_default()
     return Zone.from_surface_index(1)
 end
 
+function Zone.get_top_surface_name(surface)
+    local surface_name = surface.name
+    local index = string.find(surface_name, " underground %- layer ")
+
+    if index ~= nil then
+        return string.sub(surface_name, 1, index-1)
+    else
+        return surface_name
+    end
+end
+
 function Zone.from_name(name)
     return global.zones_by_name[name]
 end

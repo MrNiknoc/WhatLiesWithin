@@ -2,10 +2,18 @@
 -- because we don't want to generate underground layers on an asteroid for example.
 -- if a different mod is generating surfaces we're just going to assume that they're "planet-like" and make underground layers for them
 -- until we decide to add compatibility for said mods.
+
+-- keep this here to store a local reference to LUA's global function next, this is faster according to stack exchange :)
+local next = next
+
 local Underground = require("scripts/underground")
 local Zone = require("scripts/zone")
 
 -- define local functions that will be used later (GUI stuff mostly?)
+local function add_blacklisted_surface(surface_name)
+    table.insert(global.underground_blacklisted_surfaces, surface_name)
+end
+
 local function build_travel_interface(player)
     -- get the player global
     local player_global = global.players[player.index]
@@ -48,6 +56,10 @@ local function build_travel_interface(player)
     controls_flow.add{type="button", name="wlw_travel_travel_button", caption={"wlw-gui.travel"}}
 end
 
+local function get_blacklisted_surfaces()
+    return global.underground_blacklisted_surfaces
+end
+
 local function get_companion_elevators(entity)
     -- This function will return the companion elevators of the elevator that's passed into the function.
     -- This is so that when we deconstruct/destroy one piece of the elevator all of the other pieces will be deconstructed/destroyed as well.
@@ -74,37 +86,45 @@ local function get_companion_elevators(entity)
             local companion = surface.find_entity(entity_name, entity_position)
 
             if companion then
-                table.insert(companions, companion)
+                -- There is an item elevator here but it might not have the same link id so check
+                if companion.link_id == entity_link_id then
+                    table.insert(companions, companion)
+                end
             end
         end
     end
 
     if companions then
-        for i=1, #companions do
-            game.print(companions[i].name)
-        end
+        return companions
+    else
+        return nil
     end
-
-    return companions
 
 end
 
-local function get_unused_link_id(force)
-    if global.last_used_link_id_by_force then
-        if global.last_used_link_id_by_force.force == nil then
-            global.last_used_link_id_by_force.force = 1
+local function get_unused_link_id(entity_force_index)
+
+    if next(global.last_used_link_id_by_force_index) ~= nil then
+        -- table is not empty
+        if global.last_used_link_id_by_force_index[entity_force_index] == nil then
+            global.last_used_link_id_by_force_index[entity_force_index] = 1
         end
         -- If we get to 2 billion (we won't) then return nil so we can throw an error.
-        if global.last_used_link_id_by_force.force >= 2000000000 then
-            global.last_used_link_id_by_force.force = 2000000000
+        if global.last_used_link_id_by_force_index[entity_force_index] >= 2000000000 then
+            global.last_used_link_id_by_force_index[entity_force_index] = 2000000000
             return nil
         else
-            local next_link_id = global.last_used_link_id_by_force.force + 1
-            while force.get_linked_inventory("wlw-item-elevator", next_link_id) ~= nil and next_link_id < 2000000000 do
+            local next_link_id = global.last_used_link_id_by_force_index[entity_force_index] + 1
+
+            if game.forces[entity_force_index].get_linked_inventory("wlw-item-elevator", global.last_used_link_id_by_force_index[entity_force_index]) == nil then
+                return global.last_used_link_id_by_force_index[entity_force_index]
+            end
+
+            while game.forces[entity_force_index].get_linked_inventory("wlw-item-elevator", next_link_id) ~= nil and next_link_id < 2000000000 do
                 next_link_id = next_link_id + 1
             end
 
-            global.last_used_link_id_by_force.force = next_link_id
+            global.last_used_link_id_by_force_index[entity_force_index] = next_link_id
             
             if next_link_id == 2000000000 then
                 return nil
@@ -113,9 +133,17 @@ local function get_unused_link_id(force)
             end
         end
     else
-        game.print("global.last_used_link_id_by_force was empty!")
-        global.last_used_link_id_by_force.force = 1
+        -- table is empty
+        global.last_used_link_id_by_force_index[entity_force_index] = 1
         return 1
+    end
+end
+
+local function remove_blacklisted_surface(surface_name)
+    for index, value in ipairs(global.underground_blacklisted_surfaces) do
+        if value == surface_name then
+            table.remove(global.underground_blacklisted_surfaces, index)
+        end
     end
 end
 
@@ -134,6 +162,7 @@ end
 function OnInit(event)
     -- When creating a new game, script.on_init() will be called on each mod that has a control.lua file.
     -- When loading a save game and the mod did not exist in that save game script.on_init() is called.
+
     -- global table stuff goes here
     global.space_exploration_enabled = global.space_exploration_enabled or script.active_mods["space-exploration"]
     global.players = global.players or {}
@@ -141,10 +170,13 @@ function OnInit(event)
     global.zones_by_surface_index = global.zones_by_surface_index or {}
     global.zones_by_name = global.zones_by_name or {}
 
+    -- This table will hold any surfaces that mods have explicitly told us not to create underground surfaces for.
+    global.underground_blacklisted_surfaces = global.underground_blacklisted_surfaces or {}
+
     -- Currently this table is key = force value = int of last used link_id.
     -- TODO: Link ids are per force AND per prototype, so this table should really be force -> prototype -> link id.
     -- TODO: We only need to do this once we've implemented multiple item elevator prototypes.
-    global.last_used_link_id_by_force = global.last_used_link_id_by_force or {}
+    global.last_used_link_id_by_force_index = global.last_used_link_id_by_force_index or {}
 
     -- save the map settings the player chose then change nauvis to not spawn the ores we want underground.
     global.chosen_map_settings = global.chosen_map_settings or game.default_map_gen_settings
@@ -160,13 +192,20 @@ function OnInit(event)
     -- create an array of atmospheric messages (flavor text)
     global.atmosphere_messages = {"You feel an intense urge to venture further... [color=1,0,1]deeper...[/color]", "Your body and mind long for the darkness below...", "Thoughts of the underground cloud your mind...", "The [color=1,0,1]depths[/color] beckon...", "The light stings your eyes. They crave the [color=1,0,1]darkness...[/color]"}
 
+    -- add our remote interfaces for blacklisting and whitelisting surfaces
+    remote.add_interface("wlw-underground-layer-creation-blacklist", {
+        add_surface = add_blacklisted_surface,
+        get_surfaces = get_blacklisted_surfaces,
+        remove_surface = remove_blacklisted_surface
+    })
+
     -- make sure every Zone is created that should be.
     -- if there are zones already then check if each surface is in the zone list.
     Zone.rebuild_global_surface_lists()
 end
 
 function OnConfigurationChanged(event)
-    game.print("Configuration changed!!")
+    -- game.print("Configuration changed!!")
 
     global.space_exploration_enabled = global.space_exploration_enabled or script.active_mods["space-exploration"]
     global.players = global.players or {}
@@ -174,10 +213,13 @@ function OnConfigurationChanged(event)
     global.zones_by_surface_index = global.zones_by_surface_index or {}
     global.zones_by_name = global.zones_by_name or {}
 
+    -- This table will hold any surfaces that mods have explicitly told us not to create underground surfaces for.
+    global.underground_blacklisted_surfaces = global.underground_blacklisted_surfaces or {}
+
     -- Currently this table is key = force value = int of last used link_id.
     -- TODO: Link ids are per force AND per prototype, so this table should really be force -> prototype -> link id.
     -- TODO: We only need to do this once we've implemented multiple item elevator prototypes.
-    global.last_used_link_id_by_force = global.last_used_link_id_by_force or {}
+    global.last_used_link_id_by_force_index = global.last_used_link_id_by_force_index or {}
 
     -- save the map settings the player chose then change nauvis to not spawn the ores we want underground.
     global.chosen_map_settings = global.chosen_map_settings or game.default_map_gen_settings
@@ -286,8 +328,19 @@ function OnBuiltEntity(event)
 
     if name == "wlw-item-elevator" then
         -- when we place an item elevator, we need to make the next underground layer if it doesn't already exist and place the companion elevator there.
+        -- before we do that though we need to make sure that this surface isn't in our blacklist. If it is we shouldn't build it and we should tell the player
+        -- that they can't place an item-elevator on this surface.
+        for _, value in ipairs(global.underground_blacklisted_surfaces) do
+            if value == surface.name then
+                player.create_local_flying_text({text = {"error-message.wlw-surface-blacklisted"}, create_at_cursor = true})
+                entity.destroy()
+                player.insert{name = "wlw-item-elevator", count = 1}
+                return
+            end
+        end
+
         -- we also need to give the item elevator a unique id, currently this function will allow for 2 billion unique links.
-        local next_link_id = get_unused_link_id(entity.force)
+        local next_link_id = get_unused_link_id(entity.force.index)
         if next_link_id == nil then
             -- If we get here we have already used up all of the link_ids so don't allow the elevator to be built.
             player.create_local_flying_text({text = {"error-message.wlw-cant-place-item-elevator"}, create_at_cursor = true})
@@ -332,13 +385,50 @@ function OnBuiltEntity(event)
                         }
                     )
 
+                    -- Create the poles to connect power between the surfaces.
+                    local top_pole = surface.create_entity(
+                        {
+                            name = "medium-electric-pole",
+                            force = entity.force,
+                            position = entity.position
+                        }
+                    )
+
+                    local bottom_pole = target_surface.create_entity(
+                        {
+                            name = "medium-electric-pole",
+                            force = entity.force,
+                            position = companion_elevator.position
+                        }
+                    )
+
+                    -- Connect the poles electricty as well as red and green cables.
+                    top_pole.connect_neighbour(bottom_pole)
+                    top_pole.connect_neighbour({
+                        wire = defines.wire_type.green,
+                        target_entity = bottom_pole
+                    })
+                    top_pole.connect_neighbour({
+                        wire = defines.wire_type.red,
+                        target_entity = bottom_pole
+                    })
+
+                    -- Make both poles indestructible and not minable.
+                    top_pole.destructible = false
+                    top_pole.minable = false
+                    bottom_pole.destructible = false
+                    bottom_pole.minable = false
+
                     -- We succeeded in building the entity here so give it them both the correct link id and return.
                     entity.link_id = next_link_id
                     companion_elevator.link_id = next_link_id
+
+                    -- also generate a radius of 3 chunks around the elevator (enables biter spawning, among other things)
+                    target_surface.request_to_generate_chunks(companion_elevator.position, 3)
+                    target_surface.force_generate_chunk_requests()
                     return
                 end
             else
-                -- it doesn't exist so make it
                 Zone.create_underground_layer_given_top_surface_name(top_surface_name, target_underground_layer_number)
 
                 local target_surface = game.surfaces[top_surface_name .. " underground - layer " .. tostring(target_underground_layer_number)]
@@ -364,9 +454,46 @@ function OnBuiltEntity(event)
                         }
                     )
 
+                    -- Create the poles to connect power between the surfaces.
+                    local top_pole = surface.create_entity(
+                        {
+                            name = "medium-electric-pole",
+                            force = entity.force,
+                            position = entity.position
+                        }
+                    )
+
+                    local bottom_pole = target_surface.create_entity(
+                        {
+                            name = "medium-electric-pole",
+                            force = entity.force,
+                            position = companion_elevator.position
+                        }
+                    )
+
+                    -- Connect the poles electricty as well as red and green cables.
+                    top_pole.connect_neighbour(bottom_pole)
+                    top_pole.connect_neighbour({
+                        wire = defines.wire_type.green,
+                        target_entity = bottom_pole
+                    })
+                    top_pole.connect_neighbour({
+                        wire = defines.wire_type.red,
+                        target_entity = bottom_pole
+                    })
+
+                    -- Make both poles indestructible and not minable.
+                    top_pole.destructible = false
+                    top_pole.minable = false
+                    bottom_pole.destructible = false
+                    bottom_pole.minable = false
+
                     -- We succeeded in building the entity here so give it them both the correct link id and return.
                     entity.link_id = next_link_id
                     companion_elevator.link_id = next_link_id
+                    -- also generate a radius of 3 chunks around the elevator (enables biter spawning, among other things)
+                    target_surface.request_to_generate_chunks(companion_elevator.position, 3)
+                    target_surface.force_generate_chunk_requests()
                     return
                 end
             end
@@ -397,9 +524,47 @@ function OnBuiltEntity(event)
                         }
                     )
 
+                    -- Create the poles to connect power between the surfaces.
+                    local top_pole = surface.create_entity(
+                        {
+                            name = "medium-electric-pole",
+                            force = entity.force,
+                            position = entity.position
+                        }
+                    )
+
+                    local bottom_pole = target_surface.create_entity(
+                        {
+                            name = "medium-electric-pole",
+                            force = entity.force,
+                            position = companion_elevator.position
+                        }
+                    )
+
+                    -- Connect the poles electricty as well as red and green cables.
+                    top_pole.connect_neighbour(bottom_pole)
+                    top_pole.connect_neighbour({
+                        wire = defines.wire_type.green,
+                        target_entity = bottom_pole
+                    })
+                    top_pole.connect_neighbour({
+                        wire = defines.wire_type.red,
+                        target_entity = bottom_pole
+                    })
+
+                    -- Make both poles indestructible and not minable.
+                    top_pole.destructible = false
+                    top_pole.minable = false
+                    bottom_pole.destructible = false
+                    bottom_pole.minable = false
+
                     -- We succeeded in building the entity here so give it them both the correct link id and return.
                     entity.link_id = next_link_id
                     companion_elevator.link_id = next_link_id
+
+                    -- also generate a radius of 3 chunks around the elevator (enables biter spawning, among other things)
+                    target_surface.request_to_generate_chunks(companion_elevator.position, 3)
+                    target_surface.force_generate_chunk_requests()
                     return
                 end
             else
@@ -428,9 +593,46 @@ function OnBuiltEntity(event)
                         }
                     )
 
+                    -- Create the poles to connect power between the surfaces.
+                    local top_pole = surface.create_entity(
+                        {
+                            name = "medium-electric-pole",
+                            force = entity.force,
+                            position = entity.position
+                        }
+                    )
+
+                    local bottom_pole = target_surface.create_entity(
+                        {
+                            name = "medium-electric-pole",
+                            force = entity.force,
+                            position = companion_elevator.position
+                        }
+                    )
+
+                    -- Connect the poles electricty as well as red and green cables.
+                    top_pole.connect_neighbour(bottom_pole)
+                    top_pole.connect_neighbour({
+                        wire = defines.wire_type.green,
+                        target_entity = bottom_pole
+                    })
+                    top_pole.connect_neighbour({
+                        wire = defines.wire_type.red,
+                        target_entity = bottom_pole
+                    })
+
+                    -- Make both poles indestructible and not minable.
+                    top_pole.destructible = false
+                    top_pole.minable = false
+                    bottom_pole.destructible = false
+                    bottom_pole.minable = false
+
                     -- We succeeded in building the entity here so give it them both the correct link id and return.
                     entity.link_id = next_link_id
                     companion_elevator.link_id = next_link_id
+                    -- also generate a radius of 3 chunks around the elevator (enables biter spawning, among other things)
+                    target_surface.request_to_generate_chunks(companion_elevator.position, 3)
+                    target_surface.force_generate_chunk_requests()
                     return
                 end
             end
@@ -464,6 +666,21 @@ function OnMinedEntity(event)
     if entity.name == "wlw-item-elevator" then
         local inventory = entity.get_output_inventory()
         local companions = get_companion_elevators(entity)
+        local entity_force_index = entity.force.index
+        local entity_link_id = entity.link_id
+        local entity_surface = entity.surface
+
+        -- destroy the medium pole that got placed with this item elevator.
+        local medium_pole = entity_surface.find_entities_filtered(
+            {
+                position = entity_position,
+                name = "medium-electric-pole"
+            }
+        )[1]
+
+        if medium_pole and medium_pole.valid then
+            medium_pole.destroy()
+        end
 
         if inventory then
             for i = 1, #inventory do
@@ -474,9 +691,21 @@ function OnMinedEntity(event)
 
         if companions then
             for i = 1, #companions do
+                medium_pole = companions[i].surface.find_entities_filtered(
+                    {
+                        position = entity_position,
+                        name = "medium-electric-pole"
+                    }
+                )[1]
+
+                if medium_pole and medium_pole.valid then
+                    medium_pole.destroy()
+                end
                 companions[i].destroy()
             end
         end
+
+        global.last_used_link_id_by_force_index[entity_force_index] = entity_link_id - 1
     end
 end
 
@@ -534,30 +763,79 @@ function EntityDied(event)
         return
     end
 
-    local surface = entity.surface
-    local position = entity.position
+    local entity_surface = entity.surface
+    local entity_position = entity.position
     local entity_name = entity.name
 
     -- if it is a unit and has exploding in its name
     if entity.type == "unit" and string.find(entity_name, "exploding") then
         -- if it's a small unit make a small explosion
         if string.find(entity_name, "small") then
-            surface.create_entity({name = "grenade", position = position, target = position, speed = 0})
+            entity_surface.create_entity({name = "grenade", position = entity_position, target = entity_position, speed = 0})
         -- if it's a medium unit make a medium explosion
         elseif string.find(entity_name, "medium") then
-            surface.create_entity({name = "explosive-rocket", position = position, target = position, speed = 0})
+            entity_surface.create_entity({name = "explosive-rocket", position = entity_position, target = entity_position, speed = 0})
         -- if it's a big unit make a big explosion
         elseif string.find(entity_name, "big") then
             -- do normal explosive rocket damage but look a lot bigger.
-            surface.create_entity({name = "explosive-rocket", position = position, target = position, speed = 0})
-            surface.create_entity({name = "massive-explosion", position = position})
+            entity_surface.create_entity({name = "explosive-rocket", position = entity_position, target = entity_position, speed = 0})
+            entity_surface.create_entity({name = "massive-explosion", position = entity_position})
         -- if it's a behemoth unit make a behemoth explosion :)
         elseif string.find(entity_name, "behemoth") or string.find(entity_name, "leviathan") or string.find(entity_name, "mother") then
-            surface.create_entity({name = "atomic-rocket", position = position, target = position, speed = 0})
+            entity_surface.create_entity({name = "atomic-rocket", position = entity_position, target = entity_position, speed = 0})
         -- if its name doesn't match any of those, but it did match exploding (modded units probably)
         -- then give it a default small explosion
         else
-            surface.create_entity({name = "grenade", position = position, target = position, speed = 0})
+            entity_surface.create_entity({name = "grenade", position = entity_position, target = entity_position, speed = 0})
+        end
+    end
+
+    -- otherwise if it's an item elevator destroy it and its companions.
+    if entity_name == "wlw-item-elevator" then
+
+        local inventory = entity.get_output_inventory()
+        local entity_link_id = entity.link_id
+        local entity_force_index = entity.force.index
+        local companions = get_companion_elevators(entity)
+
+        -- we subtract one here so that the next link id is the one that gets used.
+        if global.last_used_link_id_by_force_index[entity_force_index] then
+            global.last_used_link_id_by_force_index[entity_force_index] = entity_link_id - 1
+        else
+            global.last_used_link_id_by_force_index[entity_force_index] = 0
+        end
+
+        if inventory then
+            inventory.clear()
+        end
+
+        -- destroy the medium pole that got placed with this item elevator.
+        local medium_pole = entity_surface.find_entities_filtered(
+            {
+                position = entity_position,
+                name = "medium-electric-pole"
+            }
+        )[1]
+
+        if medium_pole and medium_pole.valid then
+            medium_pole.destroy()
+        end
+
+        if companions then
+            for i = 1, #companions do
+                medium_pole = companions[i].surface.find_entities_filtered(
+                    {
+                        position = entity_position,
+                        name = "medium-electric-pole"
+                    }
+                )[1]
+
+                if medium_pole and medium_pole.valid then
+                    medium_pole.destroy()
+                end
+
+                companions[i].die()
+            end
         end
     end
 end

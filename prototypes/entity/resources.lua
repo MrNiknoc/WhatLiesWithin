@@ -8,7 +8,7 @@ local function resource(resource_parameters, autoplace_parameters)
     {
       type = "resource",
       name = resource_parameters.name,
-      icon = "__WhatLiesWithin__/graphics/icons/" .. resource_parameters.name:gsub("wlw%-","") .. ".png",
+      icon = "__WhatLiesWithinGraphics__/graphics/icons/" .. resource_parameters.name:gsub("wlw%-","") .. ".png",
       icon_size = 64,
       icon_mipmaps = 4,
       flags = {"placeable-neutral"},
@@ -40,7 +40,7 @@ local function resource(resource_parameters, autoplace_parameters)
       {
         sheet =
         {
-            filename = "__WhatLiesWithin__/graphics/entity/ores/" .. resource_parameters.name:gsub("wlw%-","") .. ".png",
+            filename = "__WhatLiesWithinGraphics__/graphics/entity/ores/" .. resource_parameters.name:gsub("wlw%-","") .. ".png",
             priority = "extra-high",
             size = 128,
             frame_count = 8,

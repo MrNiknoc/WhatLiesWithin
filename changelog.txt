@@ -1,4 +1,27 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.0.51014
+Date: 1. 30. 2024
+  Tweaks:
+    - Fixed a bug preventing new games from being created. I implemented the remote interface incorrectly :/
+---------------------------------------------------------------------------------------------------
+Version: 0.0.51013
+Date: 1. 30. 2024
+  Major Features:
+    - Refactored all graphics into a separate mod (What Lies Within Graphics).
+  Minor Features:
+    - Added a remote interface to allow other mods to whitelist (all surfaces are whitelisted by default), blacklist, and get all blacklisted surfaces from having underground layers.
+    - Added a global table to keep track of all surfaces that are blacklisted from having underground layers.
+    - Item elevators now have a cross surface power connection, as well as green and red wire connection.
+    - Nerfed primitive burner generator power production by 30x (cross surface power is a thing now).
+    - Nerfed primitive burner generator pollution production by 5x (cross surface power is a thing now).
+---------------------------------------------------------------------------------------------------
+Version: 0.0.51012
+Date: 1. 26. 2024
+  Tweaks:
+    - Item elevators that are destroyed will now properly lose their inventory instead of saving it in the void.
+    - Item elevators will now use link ids that were used previously but then made vacant.
+    - Removed some mod dependencies.
+---------------------------------------------------------------------------------------------------
 Version: 0.0.51011
 Date: 1. 23. 2024
   Tweaks:

@@ -3,7 +3,7 @@ data:extend(
         {
             type = "fluid",
             name = "wlw-freshwater",
-            icon = "__WhatLiesWithin__/graphics/icons/fluid/freshwater.png",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/fluid/freshwater.png",
             icon_size = 64, icon_mipmaps = 4,
             order = "wlw-freshwater",
             default_temperature = 15,
@@ -15,7 +15,7 @@ data:extend(
         {
             type = "fluid",
             name = "wlw-molten-copper",
-            icon = "__WhatLiesWithin__/graphics/icons/fluid/molten-copper.png",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/fluid/molten-copper.png",
             icon_size = 64, icon_mipmaps = 4,
             order = "wlw-molten-copper",
             default_temperature = 200,
@@ -29,7 +29,7 @@ data:extend(
         {
             type = "fluid",
             name = "wlw-molten-electrum",
-            icon = "__WhatLiesWithin__/graphics/icons/fluid/molten-electrum.png",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/fluid/molten-electrum.png",
             icon_size = 64, icon_mipmaps = 4,
             oreder = "wlw-molten-electrum",
             default_temperature = 200,
@@ -43,7 +43,7 @@ data:extend(
         {
             type = "fluid",
             name = "wlw-molten-gold",
-            icon = "__WhatLiesWithin__/graphics/icons/fluid/molten-gold.png",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/fluid/molten-gold.png",
             icon_size = 64, icon_mipmaps = 4,
             order = "wlw-molten-gold",
             default_temperature = 200,
@@ -57,7 +57,7 @@ data:extend(
         {
             type = "fluid",
             name = "wlw-molten-iron",
-            icon = "__WhatLiesWithin__/graphics/icons/fluid/molten-iron.png",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/fluid/molten-iron.png",
             icon_size = 64, icon_mipmaps = 4,
             order = "wlw-molten-iron",
             default_temperature = 200,
@@ -71,7 +71,7 @@ data:extend(
         {
             type = "fluid",
             name = "wlw-molten-lead",
-            icon = "__WhatLiesWithin__/graphics/icons/fluid/molten-lead.png",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/fluid/molten-lead.png",
             icon_size = 64, icon_mipmaps = 4,
             order = "wlw-molten-lead",
             default_temperature = 200,
@@ -85,7 +85,7 @@ data:extend(
         {
             type = "fluid",
             name = "wlw-molten-platinum",
-            icon = "__WhatLiesWithin__/graphics/icons/fluid/molten-platinum.png",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/fluid/molten-platinum.png",
             icon_size = 64, icon_mipmaps = 4,
             order = "wlw-molten-platinum",
             default_temperature = 200,
@@ -99,7 +99,7 @@ data:extend(
         {
             type = "fluid",
             name = "wlw-molten-silver",
-            icon = "__WhatLiesWithin__/graphics/icons/fluid/molten-silver.png",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/fluid/molten-silver.png",
             icon_size = 64, icon_mipmaps = 4,
             order = "wlw-molten-silver",
             default_temperature = 200,
@@ -113,7 +113,7 @@ data:extend(
         {
             type = "fluid",
             name = "wlw-molten-steel",
-            icon = "__WhatLiesWithin__/graphics/icons/fluid/molten-steel.png",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/fluid/molten-steel.png",
             icon_size = 64, icon_mipmaps = 4,
             order = "wlw-molten-steel",
             default_temperature = 200,
@@ -127,7 +127,7 @@ data:extend(
         {
             type = "fluid",
             name = "wlw-molten-tin",
-            icon = "__WhatLiesWithin__/graphics/icons/fluid/molten-tin.png",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/fluid/molten-tin.png",
             icon_size = 64, icon_mipmaps = 4,
             order = "wlw-molten-tin",
             default_temperature = 200,
@@ -141,7 +141,7 @@ data:extend(
         {
             type = "fluid",
             name = "wlw-saltwater",
-            icon = "__WhatLiesWithin__/graphics/icons/fluid/saltwater.png",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/fluid/saltwater.png",
             icon_size = 64, icon_mipmaps = 4,
             order = "wlw-saltwater",
             default_temperature = 15,

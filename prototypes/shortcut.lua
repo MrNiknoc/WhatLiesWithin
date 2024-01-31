@@ -5,7 +5,7 @@ data:extend({
       action = "lua",
       icon = 
       {
-        filename = "__WhatLiesWithin__/graphics/shortcut/wlw-travel.png",
+        filename = "__WhatLiesWithinGraphics__/graphics/shortcut/wlw-travel.png",
         priority = "extra-high",
         width = 64,
         height = 64,

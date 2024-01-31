@@ -25,7 +25,7 @@ leadore.autoplace = resource_autoplace.resource_autoplace_settings {
 -- this is where the graphics of our ore are set.
 leadore.stages = {
     sheet = {
-        filename = "__WhatLiesWithin__/graphics/entity/ores/lead.png",
+        filename = "__WhatLiesWithinGraphics__/graphics/entity/ores/lead.png",
         priority = "extra-high",
         -- lead ore uses the high res version of stone graphics which has bigger tiles.
         size = 128,

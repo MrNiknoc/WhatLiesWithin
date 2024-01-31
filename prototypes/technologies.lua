@@ -3,7 +3,7 @@ data:extend(
         {
             type = "technology",
             name = "wlw-alloying",
-            icon = "__WhatLiesWithin__/graphics/icons/alloying-machine.png",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/alloying-machine.png",
             icon_size = 64,
             prerequisites = {"wlw-casting"},
             unit =
@@ -51,7 +51,7 @@ data:extend(
         {
             type = "technology",
             name = "wlw-casting",
-            icon = "__WhatLiesWithin__/graphics/icons/casting-machine.png",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/casting-machine.png",
             icon_size = 64,
             prerequisites = {"wlw-melting"},
             unit =
@@ -101,7 +101,7 @@ data:extend(
         {
             type = "technology",
             name = "wlw-charcoal",
-            icon = "__WhatLiesWithin__/graphics/icons/charcoal.png",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/charcoal.png",
             icon_size = 64,
             prerequisites = {"advanced-material-processing"},
             unit =
@@ -125,7 +125,7 @@ data:extend(
         {
             type = "technology",
             name = "wlw-coke",
-            icon = "__WhatLiesWithin__/graphics/icons/coke.png",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/coke.png",
             icon_size = 64,
             prerequisites = {"wlw-charcoal", "advanced-material-processing"},
             unit =
@@ -146,7 +146,7 @@ data:extend(
         {
             type = "technology",
             name = "wlw-desalination",
-            icon = "__WhatLiesWithin__/graphics/icons/salt.png",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/salt.png",
             icon_size = 64,
             prerequisites = {"fluid-handling"},
             unit =
@@ -167,7 +167,7 @@ data:extend(
         {
             type = "technology",
             name = "wlw-fertilizer",
-            icon = "__WhatLiesWithin__/graphics/icons/fertilizer.png",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/fertilizer.png",
             icon_size = 64,
             prerequisites = {"wlw-wood-processing"},
             unit =
@@ -190,7 +190,7 @@ data:extend(
         {
             type = "technology",
             name = "wlw-high-density-steel",
-            icon = "__WhatLiesWithin__/graphics/icons/high-density-steel.png",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/high-density-steel.png",
             icon_size = 64,
             prerequisites = {"wlw-precision-smelting", "wlw-coke", "chemical-science-pack"},
             unit =
@@ -212,7 +212,7 @@ data:extend(
         {
             type = "technology",
             name = "wlw-high-density-structure",
-            icon = "__WhatLiesWithin__/graphics/icons/high-density-structure.png",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/high-density-structure.png",
             icon_size = 64,
             prerequisites = {"wlw-high-density-steel", "low-density-structure", "wlw-casting", "production-science-pack"},
             unit =
@@ -235,7 +235,7 @@ data:extend(
         {
             type = "technology",
             name = "wlw-item-elevator",
-            icon = "__WhatLiesWithin__/graphics/icons/item-elevator.png",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/item-elevator.png",
             icon_size = 64,
             prerequisites = {"logistic-science-pack", "concrete"},
             unit =
@@ -256,7 +256,7 @@ data:extend(
         {
             type = "technology",
             name = "wlw-landfill-from-wood-chips",
-            icon = "__WhatLiesWithin__/graphics/technology/landfill-from-wood-chips.png",
+            icon = "__WhatLiesWithinGraphics__/graphics/technology/landfill-from-wood-chips.png",
             icon_size = 256,
             prerequisites = {"logistic-science-pack", "landfill", "automation-2", "wlw-wood-processing"},
             unit =
@@ -277,7 +277,7 @@ data:extend(
         {
             type = "technology",
             name = "wlw-metal-compacting",
-            icon = "__WhatLiesWithin__/graphics/icons/gold-block.png",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/gold-block.png",
             icon_size = 64,
             prerequisites = {"wlw-precision-smelting", "chemical-science-pack"},
             unit =
@@ -334,7 +334,7 @@ data:extend(
         {
             type = "technology",
             name = "wlw-melting",
-            icon = "__WhatLiesWithin__/graphics/icons/melting-machine.png",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/melting-machine.png",
             icon_size = 64,
             prerequisites = {"wlw-metal-compacting", "chemical-science-pack"},
             unit =
@@ -399,7 +399,7 @@ data:extend(
         {
             type = "technology",
             name = "wlw-multi-core-processing-unit",
-            icon = "__WhatLiesWithin__/graphics/icons/multi-core-processing-unit.png",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/multi-core-processing-unit.png",
             icon_size = 64,
             prerequisites = {"wlw-alloying", "advanced-electronics-2", "production-science-pack"},
             unit =
@@ -422,7 +422,7 @@ data:extend(
         {
             type = "technology",
             name = "wlw-precision-smelting",
-            icon = "__WhatLiesWithin__/graphics/icons/gold-plate.png",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/gold-plate.png",
             icon_size = 64,
             prerequisites = {"advanced-material-processing"},
             unit =
@@ -449,7 +449,7 @@ data:extend(
         {
             type = "technology",
             name = "wlw-primitive-burner-generator",
-            icon = "__WhatLiesWithin__/graphics/icons/primitive-burner-generator.png",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/primitive-burner-generator.png",
             icon_size = 64,
             unit = 
             {
@@ -468,7 +468,7 @@ data:extend(
         {
             type = "technology",
             name = "wlw-wood-processing",
-            icon = "__WhatLiesWithin__/graphics/icons/wood-chips.png",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/wood-chips.png",
             icon_size = 64,
             unit =
             {

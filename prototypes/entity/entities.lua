@@ -77,17 +77,17 @@ function make_4way_animation_from_spritesheet(animation)
 
 
   alloying_machine.name = "wlw-alloying-machine"
-  alloying_machine.icon = "__WhatLiesWithin__/graphics/icons/alloying-machine.png"
+  alloying_machine.icon = "__WhatLiesWithinGraphics__/graphics/icons/alloying-machine.png"
   alloying_machine.minable = {mining_time = 0.1, result = "wlw-alloying-machine"}
   alloying_machine.max_health = 500 -- chemical plant default is 300. Casting machines are beefier :).
   alloying_machine.corpse = "wlw-alloying-machine-remnants"
-  alloying_machine.animation.filename = "__WhatLiesWithin__/graphics/entity/alloying-machine/hr-alloying-machine.png"
+  alloying_machine.animation.filename = "__WhatLiesWithinGraphics__/graphics/entity/alloying-machine/hr-alloying-machine.png"
   alloying_machine.crafting_categories = {"wlw-alloying"}
   alloying_machine.crafting_speed = 1
   alloying_machine.animation = make_4way_animation_from_spritesheet({ layers =
       {
         {
-          filename = "__WhatLiesWithin__/graphics/entity/alloying-machine/alloying-machine.png",
+          filename = "__WhatLiesWithinGraphics__/graphics/entity/alloying-machine/alloying-machine.png",
           width = 108,
           height = 148,
           frame_count = 24,
@@ -95,7 +95,7 @@ function make_4way_animation_from_spritesheet(animation)
           shift = util.by_pixel(1, -9),
           hr_version =
           {
-            filename = "__WhatLiesWithin__/graphics/entity/alloying-machine/hr-alloying-machine.png",
+            filename = "__WhatLiesWithinGraphics__/graphics/entity/alloying-machine/hr-alloying-machine.png",
             width = 220,
             height = 292,
             frame_count = 24,
@@ -351,17 +351,17 @@ function make_4way_animation_from_spritesheet(animation)
 
 
 casting_machine.name = "wlw-casting-machine"
-casting_machine.icon = "__WhatLiesWithin__/graphics/icons/casting-machine.png"
+casting_machine.icon = "__WhatLiesWithinGraphics__/graphics/icons/casting-machine.png"
 casting_machine.minable = {mining_time = 0.1, result = "wlw-casting-machine"}
 casting_machine.max_health = 500 -- chemical plant default is 300. Casting machines are beefier :).
 casting_machine.corpse = "wlw-casting-machine-remnants"
-casting_machine.animation.filename = "__WhatLiesWithin__/graphics/entity/casting-machine/hr-casting-machine.png"
+casting_machine.animation.filename = "__WhatLiesWithinGraphics__/graphics/entity/casting-machine/hr-casting-machine.png"
 casting_machine.crafting_categories = {"wlw-casting"}
 casting_machine.crafting_speed = 1
 casting_machine.animation = make_4way_animation_from_spritesheet({ layers =
     {
       {
-        filename = "__WhatLiesWithin__/graphics/entity/casting-machine/casting-machine.png",
+        filename = "__WhatLiesWithinGraphics__/graphics/entity/casting-machine/casting-machine.png",
         width = 108,
         height = 148,
         frame_count = 24,
@@ -369,7 +369,7 @@ casting_machine.animation = make_4way_animation_from_spritesheet({ layers =
         shift = util.by_pixel(1, -9),
         hr_version =
         {
-          filename = "__WhatLiesWithin__/graphics/entity/casting-machine/hr-casting-machine.png",
+          filename = "__WhatLiesWithinGraphics__/graphics/entity/casting-machine/hr-casting-machine.png",
           width = 220,
           height = 292,
           frame_count = 24,
@@ -624,17 +624,17 @@ casting_machine.animation = make_4way_animation_from_spritesheet({ layers =
       }
 
 melting_machine.name = "wlw-melting-machine"
-melting_machine.icon = "__WhatLiesWithin__/graphics/icons/melting-machine.png"
+melting_machine.icon = "__WhatLiesWithinGraphics__/graphics/icons/melting-machine.png"
 melting_machine.minable = {mining_time = 0.1, result = "wlw-melting-machine"}
 melting_machine.max_health = 500 -- chemical plant default is 300. Casting machines are beefier :).
 melting_machine.corpse = "wlw-melting-machine-remnants"
-melting_machine.animation.filename = "__WhatLiesWithin__/graphics/entity/melting-machine/hr-melting-machine.png"
+melting_machine.animation.filename = "__WhatLiesWithinGraphics__/graphics/entity/melting-machine/hr-melting-machine.png"
 melting_machine.crafting_categories = {"wlw-melting"}
 melting_machine.crafting_speed = 1
 melting_machine.animation = make_4way_animation_from_spritesheet({ layers =
     {
       {
-        filename = "__WhatLiesWithin__/graphics/entity/melting-machine/melting-machine.png",
+        filename = "__WhatLiesWithinGraphics__/graphics/entity/melting-machine/melting-machine.png",
         width = 108,
         height = 148,
         frame_count = 24,
@@ -642,7 +642,7 @@ melting_machine.animation = make_4way_animation_from_spritesheet({ layers =
         shift = util.by_pixel(1, -9),
         hr_version =
         {
-          filename = "__WhatLiesWithin__/graphics/entity/melting-machine/hr-melting-machine.png",
+          filename = "__WhatLiesWithinGraphics__/graphics/entity/melting-machine/hr-melting-machine.png",
           width = 220,
           height = 292,
           frame_count = 24,
