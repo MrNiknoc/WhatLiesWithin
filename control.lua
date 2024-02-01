@@ -323,7 +323,11 @@ function OnBuiltEntity(event)
     local name = entity.name
     local surface = entity.surface
     local player_index = event.player_index
-    local player = game.players[player_index]
+    local player = game.get_player(event.player_index)
+
+    if not (player and player.valid) then
+        return
+    end
     local entity_surface_name = surface.name
 
     if name == "wlw-item-elevator" then
@@ -669,12 +673,14 @@ function OnMinedEntity(event)
         local entity_force_index = entity.force.index
         local entity_link_id = entity.link_id
         local entity_surface = entity.surface
+        local entity_position = entity.position
 
         -- destroy the medium pole that got placed with this item elevator.
         local medium_pole = entity_surface.find_entities_filtered(
             {
                 position = entity_position,
-                name = "medium-electric-pole"
+                name = "medium-electric-pole",
+                radius = 2
             }
         )[1]
 
@@ -707,6 +713,350 @@ function OnMinedEntity(event)
 
         global.last_used_link_id_by_force_index[entity_force_index] = entity_link_id - 1
     end
+end
+
+function OnRobotBuiltEntity(event)
+    local entity = event.created_entity
+    local robot = event.robot
+
+    if not (entity and entity.valid) then
+        return
+    end
+
+    if not (robot and robot.valid) then
+        return
+    end
+
+    local name = entity.name
+    local surface = entity.surface
+    local entity_surface_name = surface.name
+
+    if name == "wlw-item-elevator" then
+        -- when we place an item elevator, we need to make the next underground layer if it doesn't already exist and place the companion elevator there.
+        -- before we do that though we need to make sure that this surface isn't in our blacklist. If it is we shouldn't build it and we should tell the player
+        -- that they can't place an item-elevator on this surface.
+        for _, value in ipairs(global.underground_blacklisted_surfaces) do
+            if value == surface.name then
+                entity.destroy()
+                surface.spill_item_stack(robot.position, {name="wlw-item-elevator", count=1, enable_looted=true})
+                local dropped_item = surface.find_entities_filtered({type = "item-entity", position = robot.position, radius = 10})
+                if dropped_item then
+                    dropped_item[1].order_deconstruction(robot.force)
+                end
+                return
+            end
+        end
+
+        -- we also need to give the item elevator a unique id, currently this function will allow for 2 billion unique links.
+        local next_link_id = get_unused_link_id(entity.force.index)
+        if next_link_id == nil then
+            -- If we get here we have already used up all of the link_ids so don't allow the elevator to be built.
+            entity.destroy()
+            surface.spill_item_stack(robot.position, {name="wlw-item-elevator", count=1, enable_looted=true})
+            local dropped_item = surface.find_entities_filtered({type = "item-entity", position = robot.position, radius = 10})
+            if dropped_item then
+                dropped_item[1].order_deconstruction(robot.force)
+            end
+            return
+        end
+
+        -- check if the next layer already exists, at this point we know our next_link_id is valid so we don't need to check again.
+
+        -- first check if we're on an underground layer
+        if string.find(entity_surface_name, "underground %- layer") then
+            -- we are on an underground layer, so we need to check the next underground layer.
+            local _, underground_layer_index_end = string.find(entity_surface_name, "underground %- layer ")
+            local top_surface_name = string.gsub(entity_surface_name, " underground %- layer %d+", "")
+            local current_underground_layer_number = tonumber(string.sub(entity_surface_name, underground_layer_index_end + 1))
+            local target_underground_layer_number = current_underground_layer_number + 1
+
+            if global.zones_by_name[top_surface_name .. " underground - layer " .. tostring(target_underground_layer_number)] then
+                -- it exists, try to place the companion elevator there. If it fails then we can't place the elevator here.
+
+                local target_surface = game.surfaces[top_surface_name .. " underground - layer " .. tostring(target_underground_layer_number)]
+
+                -- then try to place the companion elevator there. If it fails then we can't place the elevator here.
+                if target_surface.find_non_colliding_position("wlw-item-elevator", entity.position, 0.01, 0.01) == nil then
+                    -- We failed to build the entity here.
+                    entity.destroy()
+                    surface.spill_item_stack(robot.position, {name="wlw-item-elevator", count=1, enable_looted=true})
+                    local dropped_item = surface.find_entities_filtered({type = "item-entity", position = robot.position, radius = 10})
+                    if dropped_item then
+                        dropped_item[1].order_deconstruction(robot.force)
+                    end
+                    return
+                else
+                    local companion_elevator = target_surface.create_entity(
+                        {
+                            name = "wlw-item-elevator",
+                            force = entity.force,
+                            position = entity.position
+                        }
+                    )
+
+                    -- Create the poles to connect power between the surfaces.
+                    local top_pole = surface.create_entity(
+                        {
+                            name = "medium-electric-pole",
+                            force = entity.force,
+                            position = entity.position
+                        }
+                    )
+
+                    local bottom_pole = target_surface.create_entity(
+                        {
+                            name = "medium-electric-pole",
+                            force = entity.force,
+                            position = companion_elevator.position
+                        }
+                    )
+
+                    -- Connect the poles electricty as well as red and green cables.
+                    top_pole.connect_neighbour(bottom_pole)
+                    top_pole.connect_neighbour({
+                        wire = defines.wire_type.green,
+                        target_entity = bottom_pole
+                    })
+                    top_pole.connect_neighbour({
+                        wire = defines.wire_type.red,
+                        target_entity = bottom_pole
+                    })
+
+                    -- Make both poles indestructible and not minable.
+                    top_pole.destructible = false
+                    top_pole.minable = false
+                    bottom_pole.destructible = false
+                    bottom_pole.minable = false
+
+                    -- We succeeded in building the entity here so give it them both the correct link id and return.
+                    entity.link_id = next_link_id
+                    companion_elevator.link_id = next_link_id
+
+                    -- also generate a radius of 3 chunks around the elevator (enables biter spawning, among other things)
+                    target_surface.request_to_generate_chunks(companion_elevator.position, 3)
+                    target_surface.force_generate_chunk_requests()
+                    return
+                end
+            else
+                Zone.create_underground_layer_given_top_surface_name(top_surface_name, target_underground_layer_number)
+
+                local target_surface = game.surfaces[top_surface_name .. " underground - layer " .. tostring(target_underground_layer_number)]
+
+                -- then try to place the companion elevator there. If it fails then we can't place the elevator here.
+                if target_surface.find_non_colliding_position("wlw-item-elevator", entity.position, 0.01, 0.01) == nil then
+                    -- We failed to build the entity here.
+                    entity.destroy()
+                    surface.spill_item_stack(robot.position, {name="wlw-item-elevator", count=1, enable_looted=true})
+                    local dropped_item = surface.find_entities_filtered({type = "item-entity", position = robot.position, radius = 10})
+                    if dropped_item then
+                        dropped_item[1].order_deconstruction(robot.force)
+                    end
+                    return
+                else
+                    local companion_elevator = target_surface.create_entity(
+                        {
+                            name = "wlw-item-elevator",
+                            force = entity.force,
+                            position = entity.position
+                        }
+                    )
+
+                    -- Create the poles to connect power between the surfaces.
+                    local top_pole = surface.create_entity(
+                        {
+                            name = "medium-electric-pole",
+                            force = entity.force,
+                            position = entity.position
+                        }
+                    )
+
+                    local bottom_pole = target_surface.create_entity(
+                        {
+                            name = "medium-electric-pole",
+                            force = entity.force,
+                            position = companion_elevator.position
+                        }
+                    )
+
+                    -- Connect the poles electricty as well as red and green cables.
+                    top_pole.connect_neighbour(bottom_pole)
+                    top_pole.connect_neighbour({
+                        wire = defines.wire_type.green,
+                        target_entity = bottom_pole
+                    })
+                    top_pole.connect_neighbour({
+                        wire = defines.wire_type.red,
+                        target_entity = bottom_pole
+                    })
+
+                    -- Make both poles indestructible and not minable.
+                    top_pole.destructible = false
+                    top_pole.minable = false
+                    bottom_pole.destructible = false
+                    bottom_pole.minable = false
+
+                    -- We succeeded in building the entity here so give it them both the correct link id and return.
+                    entity.link_id = next_link_id
+                    companion_elevator.link_id = next_link_id
+                    -- also generate a radius of 3 chunks around the elevator (enables biter spawning, among other things)
+                    target_surface.request_to_generate_chunks(companion_elevator.position, 3)
+                    target_surface.force_generate_chunk_requests()
+                    return
+                end
+            end
+        else
+            -- we are not on an underground layer, so we need to check the first underground layer of this world.
+            if global.zones_by_name[entity_surface_name .. " underground - layer 1"] then
+                -- if we get here it exists already so try to place the companion elevator there. If it fails then we can't place the elevator here.
+
+                local target_surface = game.surfaces[entity_surface_name .. " underground - layer 1"]
+
+                if target_surface.find_non_colliding_position("wlw-item-elevator", entity.position, 0.01, 0.01) == nil then
+                    -- We failed to build the entity here.
+                    entity.destroy()
+                    surface.spill_item_stack(robot.position, {name="wlw-item-elevator", count=1, enable_looted=true})
+                    local dropped_item = surface.find_entities_filtered({type = "item-entity", position = robot.position, radius = 10})
+                    if dropped_item then
+                        dropped_item[1].order_deconstruction(robot.force)
+                    end
+                    return
+                else
+                    local companion_elevator = target_surface.create_entity(
+                        {
+                            name = "wlw-item-elevator",
+                            force = entity.force,
+                            position = entity.position
+                        }
+                    )
+
+                    -- Create the poles to connect power between the surfaces.
+                    local top_pole = surface.create_entity(
+                        {
+                            name = "medium-electric-pole",
+                            force = entity.force,
+                            position = entity.position
+                        }
+                    )
+
+                    local bottom_pole = target_surface.create_entity(
+                        {
+                            name = "medium-electric-pole",
+                            force = entity.force,
+                            position = companion_elevator.position
+                        }
+                    )
+
+                    -- Connect the poles electricty as well as red and green cables.
+                    top_pole.connect_neighbour(bottom_pole)
+                    top_pole.connect_neighbour({
+                        wire = defines.wire_type.green,
+                        target_entity = bottom_pole
+                    })
+                    top_pole.connect_neighbour({
+                        wire = defines.wire_type.red,
+                        target_entity = bottom_pole
+                    })
+
+                    -- Make both poles indestructible and not minable.
+                    top_pole.destructible = false
+                    top_pole.minable = false
+                    bottom_pole.destructible = false
+                    bottom_pole.minable = false
+
+                    -- We succeeded in building the entity here so give it them both the correct link id and return.
+                    entity.link_id = next_link_id
+                    companion_elevator.link_id = next_link_id
+
+                    -- also generate a radius of 3 chunks around the elevator (enables biter spawning, among other things)
+                    target_surface.request_to_generate_chunks(companion_elevator.position, 3)
+                    target_surface.force_generate_chunk_requests()
+                    return
+                end
+            else
+                -- if we get here it doesn't exist, so make it and build the companion elevator there.
+                Zone.create_underground_layer_given_top_surface_name(entity_surface_name, 1)
+
+                local target_surface = game.surfaces[entity_surface_name .. " underground - layer 1"]
+
+                if target_surface.find_non_colliding_position("wlw-item-elevator", entity.position, 0.01, 0.01) == nil then
+                    -- We failed to build the entity here.
+                    entity.destroy()
+                    surface.spill_item_stack(robot.position, {name="wlw-item-elevator", count=1, enable_looted=true})
+                    local dropped_item = surface.find_entities_filtered({type = "item-entity", position = robot.position, radius = 10})
+                    if dropped_item then
+                        dropped_item[1].order_deconstruction(robot.force)
+                    end
+                    return
+                else
+                    local companion_elevator = target_surface.create_entity(
+                        {
+                            name = "wlw-item-elevator",
+                            force = entity.force,
+                            position = entity.position
+                        }
+                    )
+
+                    -- Create the poles to connect power between the surfaces.
+                    local top_pole = surface.create_entity(
+                        {
+                            name = "medium-electric-pole",
+                            force = entity.force,
+                            position = entity.position
+                        }
+                    )
+
+                    local bottom_pole = target_surface.create_entity(
+                        {
+                            name = "medium-electric-pole",
+                            force = entity.force,
+                            position = companion_elevator.position
+                        }
+                    )
+
+                    -- Connect the poles electricty as well as red and green cables.
+                    top_pole.connect_neighbour(bottom_pole)
+                    top_pole.connect_neighbour({
+                        wire = defines.wire_type.green,
+                        target_entity = bottom_pole
+                    })
+                    top_pole.connect_neighbour({
+                        wire = defines.wire_type.red,
+                        target_entity = bottom_pole
+                    })
+
+                    -- Make both poles indestructible and not minable.
+                    top_pole.destructible = false
+                    top_pole.minable = false
+                    bottom_pole.destructible = false
+                    bottom_pole.minable = false
+
+                    -- We succeeded in building the entity here so give it them both the correct link id and return.
+                    entity.link_id = next_link_id
+                    companion_elevator.link_id = next_link_id
+                    -- also generate a radius of 3 chunks around the elevator (enables biter spawning, among other things)
+                    target_surface.request_to_generate_chunks(companion_elevator.position, 3)
+                    target_surface.force_generate_chunk_requests()
+                    return
+                end
+            end
+        end
+
+        -- this is how you create the arbitrary next underground layer
+        -- Zone.create_underground_layer_given_top_surface_name(string.gsub(entity_surface_name, " underground %- layer %d+", ""), 1)
+    else
+        -- print every surface
+        --for _, surface in pairs(global.zones_by_name) do
+            --player.print("Zone name: " .. surface.name .. " Zone index: " .. surface.index)
+        --end
+    end
+
+    --local size = 5
+
+    --for y=-size, size do
+        --for x=-size, size do
+            --player.surface.create_entity({name="wlw-lead-ore", amount=1000, position={player.position.x+x, player.position.y+y}})
+        --end
+    --end
 end
 
 function PlayerCreated(event)
@@ -1009,7 +1359,7 @@ script.on_configuration_changed(OnConfigurationChanged)
 script.on_event(defines.events.on_tick, OnTick)
 script.on_event(defines.events.on_gui_click, GuiClick)
 script.on_event(defines.events.on_built_entity, OnBuiltEntity)
-script.on_event(defines.events.on_robot_built_entity, OnBuiltEntity)
+script.on_event(defines.events.on_robot_built_entity, OnRobotBuiltEntity)
 script.on_event(defines.events.on_player_mined_entity, OnMinedEntity)
 script.on_event(defines.events.on_robot_mined_entity, OnMinedEntity)
 script.on_event(defines.events.script_raised_built, OnBuiltEntity)
