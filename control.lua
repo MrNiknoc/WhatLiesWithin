@@ -1293,7 +1293,7 @@ end
 function OnTick(event)
     local nauvis = game.surfaces[1]
 
-    if game.connected_players:
+    if next(game.connected_players) ~= nil then
         -- this range is inclusive, first number and last number are possible.
         -- right now the range goes up to 2.16m, which is the number of ticks in 10 hours. on average an atmosphere message should happen once every ten hours.
         -- these are meant to just be flavor.
