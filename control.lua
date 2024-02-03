@@ -1293,19 +1293,21 @@ end
 function OnTick(event)
     local nauvis = game.surfaces[1]
 
-    -- this range is inclusive, first number and last number are possible.
-    -- right now the range goes up to 2.16m, which is the number of ticks in 10 hours. on average an atmosphere message should happen once every ten hours.
-    -- these are meant to just be flavor.
-    local atmosphere_message_random = math.random(1, 2146000)
-    if atmosphere_message_random == 1 then
-        -- send an atmosphere message to a random player.
-        local target_player_index = math.random(1, #game.connected_players)
-        local player = game.connected_players[target_player_index]
-        if global.atmosphere_messages then
-            local message_index = math.random(1, #global.atmosphere_messages)
-            player.print(global.atmosphere_messages[message_index])
-        else
-            player.print("You feel an intense urge to venture further... [color=1,0,1]deeper...[/color]")
+    if game.connected_players:
+        -- this range is inclusive, first number and last number are possible.
+        -- right now the range goes up to 2.16m, which is the number of ticks in 10 hours. on average an atmosphere message should happen once every ten hours.
+        -- these are meant to just be flavor.
+        local atmosphere_message_random = math.random(1, 2146000)
+        if atmosphere_message_random == 1 then
+            -- send an atmosphere message to a random player.
+            local target_player_index = math.random(1, #game.connected_players)
+            local player = game.connected_players[target_player_index]
+            if global.atmosphere_messages then
+                local message_index = math.random(1, #global.atmosphere_messages)
+                player.print(global.atmosphere_messages[message_index])
+            else
+                player.print("You feel an intense urge to venture further... [color=1,0,1]deeper...[/color]")
+            end
         end
     end
 

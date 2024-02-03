@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.0.51018
+Date: 2. 3. 2024
+  Bugfixes:
+    - Added a check to make sure there were connected players before trying to send one an atmospheric message.
+---------------------------------------------------------------------------------------------------
 Version: 0.0.51017
 Date: 1. 31. 2024
   Bugfixes:
