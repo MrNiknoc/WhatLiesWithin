@@ -1,4 +1,45 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.0.51020
+Date: 2. 3. 2024
+  Major Features:
+    - Added the biter butchery system.
+    - Added the biter husbandry system.
+    - Added the biter breeding system for mass larvae production.
+  Minor Features:
+    - Players can now only move between layers if there's an elevator connecting them and they're close to it.
+    - Add a "respawn at surface" button for if the player gets stuck.
+    - Whitelisted several WLW recipes for productivity modules.
+    - Removed nightvision equipment.
+    - Underground layers will no longer generate with biters if their top surface has no biters.
+    - Players will now respawn on the top surface after dying.
+  Tweaks:
+    - Made exploding biters less resistant to explosions.
+    - Made Power Armor Mk1 use high density steel.
+    - Made Power Armor Mk2 use high density structure instead of low density structure.
+    - Made Uranium Fuel Cells use high density steel instead of iron.
+    - Made rocket fuel also use steel plates.
+    - Made nuclear fuel also use high density steel.
+    - Made nuclear reactor use high density steel instead of steel and gold plates instead of copper plates.
+    - Made solar panels use advanced circuits instead of electronic circuits.
+    - Made accumulators use steel plates instead of iron plates and 4 silver cable to craft.
+    - Made melting machines use high density steel instead of steel.
+    - Made explosive cannon shells use high density steel instead of steel.
+    - Made artillery turrets use high density structure instead of steel.
+    - Made artillery wagons use high density structure instead of steel.
+    - Made electric furnaces use high density steel instead of steel.
+    - Made rocket silo use high density structure instead of steel, multi-core processing units instead of blue circuits.
+    - Made satellites use multi-core processing units instead of blue circuits.
+    - Made low density structure use tin instead of steel.
+    - Made centrifuges use lead plates instead of steel plates.
+    - Changed ore -> molten metal recipes to output 100 molten metal instead of 200 (200 was ore quadrupling, 100 is ore doubling)
+    - Fixed color of electrum alloying recipe smoke and fluid inside machine to match the fluid color.
+    - Fixed travel menu column 2 not updating correctly when swapping column 1.
+    - Added item icons to autoplace controls in pre-game menu like vanilla ores.
+    - Cliffs now spawn underground.
+    - Slowed how quickly biter bases ramp up on underground layers a bit.
+  Bugfixes:
+    - Rocket silos can no longer be built underground.
+---------------------------------------------------------------------------------------------------
 Version: 0.0.51019
 Date: 2. 3. 2024
   Bugfixes:

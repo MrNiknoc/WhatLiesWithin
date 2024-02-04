@@ -2,15 +2,15 @@ data:extend(
     {
         {
             type = "fluid",
-            name = "wlw-freshwater",
-            icon = "__WhatLiesWithinGraphics__/graphics/icons/fluid/freshwater.png",
+            name = "wlw-blood",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/fluid/blood.png",
             icon_size = 64, icon_mipmaps = 4,
-            order = "wlw-freshwater",
-            default_temperature = 15,
+            order = "wlw-blood",
+            default_temperature = 100,
             max_temperature = 100,
             heat_capacity = "0.2KJ",
-            base_color = {r=0, g=0.34, b=0.6},
-            flow_color = {r=0.9, g=0.9, b=0.9}
+            base_color = {r=1, g=0, b=0},
+            flow_color = {r=0.8, g=0, b=0}
         },
         {
             type = "fluid",
@@ -31,7 +31,7 @@ data:extend(
             name = "wlw-molten-electrum",
             icon = "__WhatLiesWithinGraphics__/graphics/icons/fluid/molten-electrum.png",
             icon_size = 64, icon_mipmaps = 4,
-            oreder = "wlw-molten-electrum",
+            order = "wlw-molten-electrum",
             default_temperature = 200,
             -- Joules needed to heat 1 Unit by 1 degree Celsius (may need adjusting)
             heat_capacity = "0.1KJ",

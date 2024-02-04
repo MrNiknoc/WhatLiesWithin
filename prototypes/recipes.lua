@@ -20,6 +20,465 @@ data:extend(
         },
         {
             type = "recipe",
+            name = "wlw-biter-incubation-1",
+            category = "wlw-husbandry-with-fluid",
+            energy_required = 30,
+            enabled = false,
+            ingredients = 
+            {
+                {type = "item", name = "wlw-biter-larva", amount = 1},
+                {type = "item", name = "wlw-fertilizer", amount = 5},
+                {type = "fluid", name = "water", amount = 100}
+            },
+            results =
+            {
+                {type = "item", name = "wlw-biter-pupa", amount = 1}
+            }
+        },
+        {
+            type = "recipe",
+            name = "wlw-biter-incubation-2",
+            category = "wlw-husbandry-with-fluid",
+            energy_required = 30,
+            enabled = false,
+            ingredients = 
+            {
+                {type = "item", name = "wlw-biter-pupa", amount = 1},
+                {type = "item", name = "wlw-biter-meat", amount = 10},
+                {type = "fluid", name = "water", amount = 200}
+            },
+            results =
+            {
+                {type = "item", name = "wlw-small-biter-untamed", amount = 1}
+            }
+        },
+        {
+            type = "recipe",
+            name = "wlw-butcher-behemoth-biter-untamed",
+            category = "wlw-butchery-with-fluid",
+            energy_required = 6,
+            enabled = false,
+            ingredients = 
+            {
+                {type = "item", name = "wlw-behemoth-biter-untamed", amount = 1}
+            },
+            icon = "__base__/graphics/icons/behemoth-biter.png",
+            icon_size = 64, icon_mipmaps = 4,
+            results = 
+            {
+                {type = "item", name = "wlw-biter-meat", amount = 32},
+                {type = "fluid", name = "wlw-blood", amount = 800}
+            },
+            subgroup = "wlw-biter-butchering"
+        },
+        {
+            type = "recipe",
+            name = "wlw-butcher-behemoth-biter-tamed",
+            category = "wlw-butchery-with-fluid",
+            energy_required = 6,
+            enabled = false,
+            ingredients = 
+            {
+                {type = "item", name = "wlw-behemoth-biter-tamed", amount = 1}
+            },
+            icon = "__base__/graphics/icons/behemoth-biter.png",
+            icon_size = 64, icon_mipmaps = 4,
+            results = 
+            {
+                {type = "item", name = "wlw-biter-meat", amount = 32},
+                {type = "fluid", name = "wlw-blood", amount = 800}
+            },
+            subgroup = "wlw-biter-butchering"
+        },
+        {
+            type = "recipe",
+            name = "wlw-butcher-behemoth-spitter-untamed",
+            category = "wlw-butchery-with-fluid",
+            energy_required = 6,
+            enabled = false,
+            ingredients = 
+            {
+                {type = "item", name = "wlw-behemoth-spitter-untamed", amount = 1}
+            },
+            icon = "__base__/graphics/icons/behemoth-spitter.png",
+            icon_size = 64, icon_mipmaps = 4,
+            results = 
+            {
+                {type = "item", name = "wlw-biter-meat", amount = 32},
+                {type = "fluid", name = "wlw-blood", amount = 800}
+            },
+            subgroup = "wlw-biter-butchering"
+        },
+        {
+            type = "recipe",
+            name = "wlw-butcher-behemoth-spitter-tamed",
+            category = "wlw-butchery-with-fluid",
+            energy_required = 6,
+            enabled = false,
+            ingredients = 
+            {
+                {type = "item", name = "wlw-behemoth-spitter-tamed", amount = 1}
+            },
+            icon = "__base__/graphics/icons/behemoth-spitter.png",
+            icon_size = 64, icon_mipmaps = 4,
+            results = 
+            {
+                {type = "item", name = "wlw-biter-meat", amount = 32},
+                {type = "fluid", name = "wlw-blood", amount = 800}
+            },
+            subgroup = "wlw-biter-butchering"
+        },
+        {
+            type = "recipe",
+            name = "wlw-butcher-big-biter-untamed",
+            category = "wlw-butchery-with-fluid",
+            energy_required = 5,
+            enabled = false,
+            ingredients = 
+            {
+                {type = "item", name = "wlw-big-biter-untamed", amount = 1}
+            },
+            icon = "__base__/graphics/icons/big-biter.png",
+            icon_size = 64, icon_mipmaps = 4,
+            results = 
+            {
+                {type = "item", name = "wlw-biter-meat", amount = 16},
+                {type = "fluid", name = "wlw-blood", amount = 400}
+            },
+            subgroup = "wlw-biter-butchering"
+        },
+        {
+            type = "recipe",
+            name = "wlw-butcher-big-biter-tamed",
+            category = "wlw-butchery-with-fluid",
+            energy_required = 5,
+            enabled = false,
+            ingredients = 
+            {
+                {type = "item", name = "wlw-big-biter-tamed", amount = 1}
+            },
+            icon = "__base__/graphics/icons/big-biter.png",
+            icon_size = 64, icon_mipmaps = 4,
+            results = 
+            {
+                {type = "item", name = "wlw-biter-meat", amount = 16},
+                {type = "fluid", name = "wlw-blood", amount = 400}
+            },
+            subgroup = "wlw-biter-butchering"
+        },
+        {
+            type = "recipe",
+            name = "wlw-butcher-big-spitter-untamed",
+            category = "wlw-butchery-with-fluid",
+            energy_required = 5,
+            enabled = false,
+            ingredients = 
+            {
+                {type = "item", name = "wlw-big-spitter-untamed", amount = 1}
+            },
+            icon = "__base__/graphics/icons/big-spitter.png",
+            icon_size = 64, icon_mipmaps = 4,
+            results = 
+            {
+                {type = "item", name = "wlw-biter-meat", amount = 16},
+                {type = "fluid", name = "wlw-blood", amount = 400}
+            },
+            subgroup = "wlw-biter-butchering"
+        },
+        {
+            type = "recipe",
+            name = "wlw-butcher-big-spitter-tamed",
+            category = "wlw-butchery-with-fluid",
+            energy_required = 5,
+            enabled = false,
+            ingredients = 
+            {
+                {type = "item", name = "wlw-big-spitter-tamed", amount = 1}
+            },
+            icon = "__base__/graphics/icons/big-spitter.png",
+            icon_size = 64, icon_mipmaps = 4,
+            results = 
+            {
+                {type = "item", name = "wlw-biter-meat", amount = 16},
+                {type = "fluid", name = "wlw-blood", amount = 400}
+            },
+            subgroup = "wlw-biter-butchering"
+        },
+        {
+            type = "recipe",
+            name = "wlw-butcher-biter-larva",
+            category = "wlw-butchery",
+            energy_required = 1,
+            enabled = false,
+            ingredients = 
+            {
+                {type = "item", name = "wlw-biter-larva", amount = 1}
+            },
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/biter-larva.png",
+            icon_size = 64,
+            results = 
+            {
+                {type = "item", name = "wlw-biter-meat", amount = 1}
+            }
+        },
+        {
+            type = "recipe",
+            name = "wlw-butcher-biter-pupa",
+            category = "wlw-butchery",
+            energy_required = 2,
+            enabled = false,
+            ingredients = 
+            {
+                {type = "item", name = "wlw-biter-pupa", amount = 1}
+            },
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/biter-pupa.png",
+            icon_size = 64,
+            results = 
+            {
+                {type = "item", name = "wlw-biter-meat", amount = 2}
+            },
+            subgroup = "wlw-biter-butchering"
+        },
+        {
+            type = "recipe",
+            name = "wlw-butcher-medium-biter-untamed",
+            category = "wlw-butchery-with-fluid",
+            energy_required = 4,
+            enabled = false,
+            ingredients = 
+            {
+                {type = "item", name = "wlw-medium-biter-untamed", amount = 1}
+            },
+            icon = "__base__/graphics/icons/medium-biter.png",
+            icon_size = 64, icon_mipmaps = 4,
+            results = 
+            {
+                {type = "item", name = "wlw-biter-meat", amount = 8},
+                {type = "fluid", name = "wlw-blood", amount = 200}
+            },
+            subgroup = "wlw-biter-butchering"
+        },
+        {
+            type = "recipe",
+            name = "wlw-butcher-medium-biter-tamed",
+            category = "wlw-butchery-with-fluid",
+            energy_required = 4,
+            enabled = false,
+            ingredients = 
+            {
+                {type = "item", name = "wlw-medium-biter-tamed", amount = 1}
+            },
+            icon = "__base__/graphics/icons/medium-biter.png",
+            icon_size = 64, icon_mipmaps = 4,
+            results = 
+            {
+                {type = "item", name = "wlw-biter-meat", amount = 8},
+                {type = "fluid", name = "wlw-blood", amount = 200}
+            },
+            subgroup = "wlw-biter-butchering"
+        },
+        {
+            type = "recipe",
+            name = "wlw-butcher-medium-spitter-untamed",
+            category = "wlw-butchery-with-fluid",
+            energy_required = 4,
+            enabled = false,
+            ingredients = 
+            {
+                {type = "item", name = "wlw-medium-spitter-untamed", amount = 1}
+            },
+            icon = "__base__/graphics/icons/medium-spitter.png",
+            icon_size = 64, icon_mipmaps = 4,
+            results = 
+            {
+                {type = "item", name = "wlw-biter-meat", amount = 8},
+                {type = "fluid", name = "wlw-blood", amount = 200}
+            },
+            subgroup = "wlw-biter-butchering"
+        },
+        {
+            type = "recipe",
+            name = "wlw-butcher-medium-spitter-tamed",
+            category = "wlw-butchery-with-fluid",
+            energy_required = 4,
+            enabled = false,
+            ingredients = 
+            {
+                {type = "item", name = "wlw-medium-spitter-tamed", amount = 1}
+            },
+            icon = "__base__/graphics/icons/medium-spitter.png",
+            icon_size = 64, icon_mipmaps = 4,
+            results = 
+            {
+                {type = "item", name = "wlw-biter-meat", amount = 8},
+                {type = "fluid", name = "wlw-blood", amount = 200}
+            },
+            subgroup = "wlw-biter-butchering"
+        },
+        {
+            type = "recipe",
+            name = "wlw-butcher-small-biter-untamed",
+            category = "wlw-butchery-with-fluid",
+            energy_required = 3,
+            enabled = false,
+            ingredients = 
+            {
+                {type = "item", name = "wlw-small-biter-untamed", amount = 1}
+            },
+            icon = "__base__/graphics/icons/small-biter.png",
+            icon_size = 64, icon_mipmaps = 4,
+            results = 
+            {
+                {type = "item", name = "wlw-biter-meat", amount = 4},
+                {type = "fluid", name = "wlw-blood", amount = 100}
+            },
+            subgroup = "wlw-biter-butchering"
+        },
+        {
+            type = "recipe",
+            name = "wlw-butcher-small-biter-tamed",
+            category = "wlw-butchery-with-fluid",
+            energy_required = 3,
+            enabled = false,
+            ingredients = 
+            {
+                {type = "item", name = "wlw-small-biter-tamed", amount = 1}
+            },
+            icon = "__base__/graphics/icons/small-biter.png",
+            icon_size = 64, icon_mipmaps = 4,
+            results = 
+            {
+                {type = "item", name = "wlw-biter-meat", amount = 4},
+                {type = "fluid", name = "wlw-blood", amount = 100}
+            },
+            subgroup = "wlw-biter-butchering"
+        },
+        {
+            type = "recipe",
+            name = "wlw-butcher-small-spitter-untamed",
+            category = "wlw-butchery-with-fluid",
+            energy_required = 3,
+            enabled = false,
+            ingredients = 
+            {
+                {type = "item", name = "wlw-small-spitter-untamed", amount = 1}
+            },
+            icon = "__base__/graphics/icons/small-spitter.png",
+            icon_size = 64, icon_mipmaps = 4,
+            results = 
+            {
+                {type = "item", name = "wlw-biter-meat", amount = 4},
+                {type = "fluid", name = "wlw-blood", amount = 100}
+            },
+            subgroup = "wlw-biter-butchering"
+        },
+        {
+            type = "recipe",
+            name = "wlw-butcher-small-spitter-tamed",
+            category = "wlw-butchery-with-fluid",
+            energy_required = 3,
+            enabled = false,
+            ingredients = 
+            {
+                {type = "item", name = "wlw-small-spitter-tamed", amount = 1}
+            },
+            icon = "__base__/graphics/icons/small-spitter.png",
+            icon_size = 64, icon_mipmaps = 4,
+            results = 
+            {
+                {type = "item", name = "wlw-biter-meat", amount = 4},
+                {type = "fluid", name = "wlw-blood", amount = 100}
+            },
+            subgroup = "wlw-biter-butchering"
+        },
+        {
+            type = "recipe",
+            name = "wlw-butcher-spitter-larva",
+            category = "wlw-butchery",
+            energy_required = 1,
+            enabled = false,
+            ingredients = 
+            {
+                {type = "item", name = "wlw-spitter-larva", amount = 1}
+            },
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/spitter-larva.png",
+            icon_size = 64,
+            results = 
+            {
+                {type = "item", name = "wlw-biter-meat", amount = 1}
+            }
+        },
+        {
+            type = "recipe",
+            name = "wlw-butcher-spitter-pupa",
+            category = "wlw-butchery",
+            energy_required = 2,
+            enabled = false,
+            ingredients = 
+            {
+                {type = "item", name = "wlw-spitter-pupa", amount = 1}
+            },
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/spitter-pupa.png",
+            icon_size = 64,
+            results = 
+            {
+                {type = "item", name = "wlw-biter-meat", amount = 2}
+            },
+            subgroup = "wlw-biter-butchering"
+        },
+        {
+            type = "recipe",
+            name = "wlw-butchering-machine-1",
+            category = "crafting",
+            energy_required = 10,
+            enabled = false,
+            ingredients = 
+            {
+                {type = "item", name = "iron-plate", amount = 5},
+                {type = "item", name = "wlw-tin-plate", amount = 10},
+                {type = "item", name = "electronic-circuit", amount = 2}
+            },
+            results = 
+            {
+                {type = "item", name = "wlw-butchering-machine-1", amount = 1}
+            }
+        },
+        {
+            type = "recipe",
+            name = "wlw-butchering-machine-2",
+            category = "crafting",
+            energy_required = 10,
+            enabled = false,
+            ingredients = 
+            {
+                {type = "item", name = "steel-plate", amount = 5},
+                {type = "item", name = "wlw-tin-plate", amount = 10},
+                {type = "item", name = "advanced-circuit", amount = 2}
+            },
+            results = 
+            {
+                {type = "item", name = "wlw-butchering-machine-2", amount = 1}
+            }
+        },
+        {
+            type = "recipe",
+            name = "wlw-butchering-machine-3",
+            category = "crafting",
+            energy_required = 10,
+            enabled = false,
+            ingredients = 
+            {
+                {type = "item", name = "wlw-high-density-steel", amount = 5},
+                {type = "item", name = "steel-plate", amount = 10},
+                {type = "item", name = "processing-unit", amount = 2}
+            },
+            results = 
+            {
+                {type = "item", name = "wlw-butchering-machine-3", amount = 1}
+            }
+        },
+        {
+            type = "recipe",
             name = "wlw-casting-machine",
             category = "crafting",
             energy_required = 10,
@@ -247,7 +706,7 @@ data:extend(
             },
             results =
             {
-                {type = "fluid", name = "wlw-molten-copper", amount = 200}
+                {type = "fluid", name = "wlw-molten-copper", amount = 100}
             },
             crafting_machine_tint =
             {
@@ -373,23 +832,6 @@ data:extend(
             results =
             {
                 {type = "item", name = "wlw-copper-ingot", amount = 5}
-            }
-        },
-        {
-            type = "recipe",
-            name = "wlw-desalinate-saltwater",
-            category = "chemistry",
-            energy_required = 10,
-            enabled = false,
-            main_product = "wlw-freshwater",
-            ingredients =
-            {
-                {type = "fluid", name = "wlw-saltwater", amount = 200}
-            },
-            results =
-            {
-                {type = "fluid", name = "wlw-freshwater", amount = 200},
-                {type = "item", name = "wlw-salt", amount = 1}
             }
         },
         {
@@ -600,7 +1042,7 @@ data:extend(
             },
             results =
             {
-                {type = "fluid", name = "wlw-molten-gold", amount = 200}
+                {type = "fluid", name = "wlw-molten-gold", amount = 100}
             },
             crafting_machine_tint =
             {
@@ -737,6 +1179,459 @@ data:extend(
             results =
             {
                 {type = "item", name = "wlw-gold-ingot", amount = 5}
+            }
+        },
+        {
+            type = "recipe",
+            name = "wlw-gut-fish",
+            category = "crafting",
+            energy_required = 30,
+            enabled = true,
+            ingredients =
+            {
+                {type = "item", name = "raw-fish", amount = 1}
+            },
+            results =
+            {
+                {type = "item", name = "wlw-biter-larva", amount = 1, probability = 0.01},
+                {type = "item", name = "wlw-spitter-larva", amount = 1, probability = 0.01}
+            },
+            icon = "__base__/graphics/icons/fish.png",
+            icon_size = 64, icon_mipmaps = 4,
+            subgroup = "raw-material"
+        },
+        {
+            type = "recipe",
+            name = "wlw-husbandry-behemoth-biter-breeding",
+            category = "wlw-husbandry",
+            energy_required = 30,
+            enabled = false,
+            main_product = "wlw-biter-larva",
+            ingredients = 
+            {
+                {type = "item", name = "wlw-behemoth-biter-tamed", amount = 2},
+                {type = "item", name = "wlw-biter-meat", amount = 30}
+            },
+            results =
+            {
+                {type = "item", name = "wlw-biter-larva", amount = 60},
+                {type = "item", name = "wlw-behemoth-biter-tamed", amount = 2}
+            }
+        },
+        {
+            type = "recipe",
+            name = "wlw-husbandry-behemoth-spitter-breeding",
+            category = "wlw-husbandry",
+            energy_required = 30,
+            enabled = false,
+            main_product = "wlw-spitter-larva",
+            ingredients = 
+            {
+                {type = "item", name = "wlw-behemoth-spitter-tamed", amount = 2},
+                {type = "item", name = "wlw-biter-meat", amount = 30}
+            },
+            results =
+            {
+                {type = "item", name = "wlw-spitter-larva", amount = 60},
+                {type = "item", name = "wlw-behemoth-spitter-tamed", amount = 2}
+            }
+        },
+        {
+            type = "recipe",
+            name = "wlw-husbandry-big-biter-breeding",
+            category = "wlw-husbandry",
+            energy_required = 30,
+            enabled = false,
+            main_product = "wlw-biter-larva",
+            ingredients = 
+            {
+                {type = "item", name = "wlw-big-biter-tamed", amount = 2},
+                {type = "item", name = "wlw-biter-meat", amount = 20}
+            },
+            results =
+            {
+                {type = "item", name = "wlw-biter-larva", amount = 30},
+                {type = "item", name = "wlw-big-biter-tamed", amount = 2}
+            }
+        },
+        {
+            type = "recipe",
+            name = "wlw-husbandry-big-spitter-breeding",
+            category = "wlw-husbandry",
+            energy_required = 30,
+            enabled = false,
+            main_product = "wlw-spitter-larva",
+            ingredients = 
+            {
+                {type = "item", name = "wlw-big-spitter-tamed", amount = 2},
+                {type = "item", name = "wlw-biter-meat", amount = 20}
+            },
+            results =
+            {
+                {type = "item", name = "wlw-spitter-larva", amount = 30},
+                {type = "item", name = "wlw-big-spitter-tamed", amount = 2}
+            }
+        },
+        {
+            type = "recipe",
+            name = "wlw-husbandry-big-biter-to-behemoth",
+            category = "wlw-husbandry-with-fluid",
+            energy_required = 60,
+            enabled = false,
+            ingredients = 
+            {
+                {type = "item", name = "wlw-big-biter-untamed", amount = 1},
+                {type = "item", name = "wlw-biter-meat", amount = 540},
+                {type = "fluid", name = "wlw-blood", amount = 500}
+            },
+            results = 
+            {
+                {type = "item", name = "wlw-behemoth-biter-untamed", amount = 1}
+            }
+        },
+        {
+            type = "recipe",
+            name = "wlw-husbandry-big-spitter-to-behemoth",
+            category = "wlw-husbandry-with-fluid",
+            energy_required = 60,
+            enabled = false,
+            ingredients = 
+            {
+                {type = "item", name = "wlw-big-spitter-untamed", amount = 1},
+                {type = "item", name = "wlw-biter-meat", amount = 540},
+                {type = "fluid", name = "wlw-blood", amount = 500}
+            },
+            results = 
+            {
+                {type = "item", name = "wlw-behemoth-spitter-untamed", amount = 1}
+            }
+        },
+        {
+            type = "recipe",
+            name = "wlw-husbandry-machine-1",
+            category = "crafting",
+            energy_required = 10,
+            enabled = false,
+            ingredients = 
+            {
+                {type = "item", name = "iron-plate", amount = 5},
+                {type = "item", name = "wlw-tin-plate", amount = 10},
+                {type = "item", name = "electronic-circuit", amount = 2}
+            },
+            results = 
+            {
+                {type = "item", name = "wlw-husbandry-machine-1", amount = 1}
+            }
+        },
+        {
+            type = "recipe",
+            name = "wlw-husbandry-machine-2",
+            category = "crafting-with-fluid",
+            energy_required = 10,
+            enabled = false,
+            ingredients = 
+            {
+                {type = "item", name = "steel-plate", amount = 5},
+                {type = "fluid", name = "wlw-blood", amount = 100},
+                {type = "item", name = "advanced-circuit", amount = 2}
+            },
+            results = 
+            {
+                {type = "item", name = "wlw-husbandry-machine-2", amount = 1}
+            }
+        },
+        {
+            type = "recipe",
+            name = "wlw-husbandry-machine-3",
+            category = "crafting-with-fluid",
+            energy_required = 10,
+            enabled = false,
+            ingredients = 
+            {
+                {type = "item", name = "wlw-high-density-steel", amount = 5},
+                {type = "fluid", name = "wlw-blood", amount = 200},
+                {type = "item", name = "wlw-biter-meat", amount = 10},
+                {type = "item", name = "processing-unit", amount = 2}
+            },
+            results = 
+            {
+                {type = "item", name = "wlw-husbandry-machine-3", amount = 1}
+            }
+        },
+        {
+            type = "recipe",
+            name = "wlw-husbandry-medium-biter-breeding",
+            category = "wlw-husbandry",
+            energy_required = 30,
+            enabled = false,
+            main_product = "wlw-biter-larva",
+            ingredients = 
+            {
+                {type = "item", name = "wlw-medium-biter-tamed", amount = 2},
+                {type = "item", name = "wlw-biter-meat", amount = 15}
+            },
+            results =
+            {
+                {type = "item", name = "wlw-biter-larva", amount = 20},
+                {type = "item", name = "wlw-medium-biter-tamed", amount = 2}
+            }
+        },
+        {
+            type = "recipe",
+            name = "wlw-husbandry-medium-spitter-breeding",
+            category = "wlw-husbandry",
+            energy_required = 30,
+            enabled = false,
+            main_product = "wlw-spitter-larva",
+            ingredients = 
+            {
+                {type = "item", name = "wlw-medium-spitter-tamed", amount = 2},
+                {type = "item", name = "wlw-biter-meat", amount = 15}
+            },
+            results =
+            {
+                {type = "item", name = "wlw-spitter-larva", amount = 20},
+                {type = "item", name = "wlw-medium-spitter-tamed", amount = 2}
+            }
+        },
+        {
+            type = "recipe",
+            name = "wlw-husbandry-medium-biter-to-big",
+            category = "wlw-husbandry-with-fluid",
+            energy_required = 30,
+            enabled = false,
+            ingredients = 
+            {
+                {type = "item", name = "wlw-medium-biter-untamed", amount = 1},
+                {type = "item", name = "wlw-biter-meat", amount = 240},
+                {type = "fluid", name = "wlw-blood", amount = 400}
+            },
+            results = 
+            {
+                {type = "item", name = "wlw-big-biter-untamed", amount = 1}
+            }
+        },
+        {
+            type = "recipe",
+            name = "wlw-husbandry-medium-spitter-to-big",
+            category = "wlw-husbandry-with-fluid",
+            energy_required = 30,
+            enabled = false,
+            ingredients = 
+            {
+                {type = "item", name = "wlw-medium-spitter-untamed", amount = 1},
+                {type = "item", name = "wlw-biter-meat", amount = 240},
+                {type = "fluid", name = "wlw-blood", amount = 400}
+            },
+            results = 
+            {
+                {type = "item", name = "wlw-big-spitter-untamed", amount = 1}
+            }
+        },
+        {
+            type = "recipe",
+            name = "wlw-husbandry-small-biter-breeding",
+            category = "wlw-husbandry",
+            energy_required = 30,
+            enabled = false,
+            main_product = "wlw-biter-larva",
+            ingredients = 
+            {
+                {type = "item", name = "wlw-small-biter-tamed", amount = 2},
+                {type = "item", name = "wlw-biter-meat", amount = 10}
+            },
+            results =
+            {
+                {type = "item", name = "wlw-biter-larva", amount = 10},
+                {type = "item", name = "wlw-small-biter-tamed", amount = 2}
+            }
+        },
+        {
+            type = "recipe",
+            name = "wlw-husbandry-small-spitter-breeding",
+            category = "wlw-husbandry",
+            energy_required = 30,
+            enabled = false,
+            main_product = "wlw-spitter-larva",
+            ingredients = 
+            {
+                {type = "item", name = "wlw-small-spitter-tamed", amount = 2},
+                {type = "item", name = "wlw-biter-meat", amount = 10}
+            },
+            results =
+            {
+                {type = "item", name = "wlw-spitter-larva", amount = 10},
+                {type = "item", name = "wlw-small-spitter-tamed", amount = 2}
+            }
+        },
+        {
+            type = "recipe",
+            name = "wlw-husbandry-small-biter-to-medium",
+            category = "wlw-husbandry-with-fluid",
+            energy_required = 30,
+            enabled = false,
+            ingredients = 
+            {
+                {type = "item", name = "wlw-small-biter-untamed", amount = 1},
+                {type = "item", name = "wlw-biter-meat", amount = 60},
+                {type = "fluid", name = "wlw-blood", amount = 300}
+            },
+            results = 
+            {
+                {type = "item", name = "wlw-medium-biter-untamed", amount = 1}
+            }
+        },
+        {
+            type = "recipe",
+            name = "wlw-husbandry-small-spitter-to-medium",
+            category = "wlw-husbandry-with-fluid",
+            energy_required = 30,
+            enabled = false,
+            ingredients = 
+            {
+                {type = "item", name = "wlw-small-spitter-untamed", amount = 1},
+                {type = "item", name = "wlw-biter-meat", amount = 60},
+                {type = "fluid", name = "wlw-blood", amount = 300}
+            },
+            results = 
+            {
+                {type = "item", name = "wlw-medium-spitter-untamed", amount = 1}
+            }
+        },
+        {
+            type = "recipe",
+            name = "wlw-husbandry-tame-behemoth-biter",
+            category = "wlw-husbandry",
+            energy_required = 240,
+            enabled = false,
+            ingredients = 
+            {
+                {type = "item", name = "wlw-behemoth-biter-untamed", amount = 1},
+                {type = "item", name = "wlw-biter-meat", amount = 960},
+                {type = "fluid", name = "wlw-blood", amount = 960}
+            },
+            results = 
+            {
+                {type = "item", name = "wlw-behemoth-biter-tamed", amount = 1}
+            }
+        },
+        {
+            type = "recipe",
+            name = "wlw-husbandry-tame-behemoth-spitter",
+            category = "wlw-husbandry",
+            energy_required = 240,
+            enabled = false,
+            ingredients = 
+            {
+                {type = "item", name = "wlw-behemoth-spitter-untamed", amount = 1},
+                {type = "item", name = "wlw-biter-meat", amount = 960},
+                {type = "fluid", name = "wlw-blood", amount = 960}
+            },
+            results = 
+            {
+                {type = "item", name = "wlw-behemoth-spitter-tamed", amount = 1}
+            }
+        },
+        {
+            type = "recipe",
+            name = "wlw-husbandry-tame-big-biter",
+            category = "wlw-husbandry",
+            energy_required = 180,
+            enabled = false,
+            ingredients = 
+            {
+                {type = "item", name = "wlw-big-biter-untamed", amount = 1},
+                {type = "item", name = "wlw-biter-meat", amount = 540},
+                {type = "fluid", name = "wlw-blood", amount = 540}
+            },
+            results = 
+            {
+                {type = "item", name = "wlw-big-biter-tamed", amount = 1}
+            }
+        },
+        {
+            type = "recipe",
+            name = "wlw-husbandry-tame-big-spitter",
+            category = "wlw-husbandry",
+            energy_required = 180,
+            enabled = false,
+            ingredients = 
+            {
+                {type = "item", name = "wlw-big-spitter-untamed", amount = 1},
+                {type = "item", name = "wlw-biter-meat", amount = 540},
+                {type = "fluid", name = "wlw-blood", amount = 540}
+            },
+            results = 
+            {
+                {type = "item", name = "wlw-big-spitter-tamed", amount = 1}
+            }
+        },
+        {
+            type = "recipe",
+            name = "wlw-husbandry-tame-medium-biter",
+            category = "wlw-husbandry",
+            energy_required = 120,
+            enabled = false,
+            ingredients = 
+            {
+                {type = "item", name = "wlw-medium-biter-untamed", amount = 1},
+                {type = "item", name = "wlw-biter-meat", amount = 240},
+                {type = "fluid", name = "wlw-blood", amount = 240}
+            },
+            results = 
+            {
+                {type = "item", name = "wlw-medium-biter-tamed", amount = 1}
+            }
+        },
+        {
+            type = "recipe",
+            name = "wlw-husbandry-tame-medium-spitter",
+            category = "wlw-husbandry",
+            energy_required = 120,
+            enabled = false,
+            ingredients = 
+            {
+                {type = "item", name = "wlw-medium-spitter-untamed", amount = 1},
+                {type = "item", name = "wlw-biter-meat", amount = 240},
+                {type = "fluid", name = "wlw-blood", amount = 240}
+            },
+            results = 
+            {
+                {type = "item", name = "wlw-medium-spitter-tamed", amount = 1}
+            }
+        },
+        {
+            type = "recipe",
+            name = "wlw-husbandry-tame-small-biter",
+            category = "wlw-husbandry",
+            energy_required = 60,
+            enabled = false,
+            ingredients = 
+            {
+                {type = "item", name = "wlw-small-biter-untamed", amount = 1},
+                {type = "item", name = "wlw-biter-meat", amount = 60},
+                {type = "fluid", name = "wlw-blood", amount = 60}
+            },
+            results = 
+            {
+                {type = "item", name = "wlw-small-biter-tamed", amount = 1}
+            }
+        },
+        {
+            type = "recipe",
+            name = "wlw-husbandry-tame-small-spitter",
+            category = "wlw-husbandry",
+            energy_required = 60,
+            enabled = false,
+            ingredients = 
+            {
+                {type = "item", name = "wlw-small-spitter-untamed", amount = 1},
+                {type = "item", name = "wlw-biter-meat", amount = 60},
+                {type = "fluid", name = "wlw-blood", amount = 60}
+            },
+            results = 
+            {
+                {type = "item", name = "wlw-small-spitter-tamed", amount = 1}
             }
         },
         {
@@ -940,7 +1835,7 @@ data:extend(
             },
             results =
             {
-                {type = "fluid", name = "wlw-molten-iron", amount = 200}
+                {type = "fluid", name = "wlw-molten-iron", amount = 100}
             },
             crafting_machine_tint =
             {
@@ -1081,6 +1976,23 @@ data:extend(
             },
             results = {
                 {type = "item", name = "wlw-item-elevator", amount = 1}
+            }
+        },
+        {
+            type = "recipe",
+            name = "wlw-landfill-from-fertilizer-and-biter-meat",
+            category = "crafting",
+            energy_required = 0.5,
+            enabled = false,
+            allow_decomposition = false,
+            ingredients =
+            {
+                {type = "item", name = "wlw-fertilizer", amount = 10},
+                {type = "item", name = "wlw-biter-meat", amount = 10}
+            },
+            results =
+            {
+                {type = "item", name = "landfill", amount = 1}
             }
         },
         {
@@ -1255,7 +2167,7 @@ data:extend(
             },
             results =
             {
-                {type = "fluid", name = "wlw-molten-lead", amount = 200}
+                {type = "fluid", name = "wlw-molten-lead", amount = 100}
             },
             crafting_machine_tint =
             {
@@ -1405,7 +2317,7 @@ data:extend(
                 {type = "item", name = "wlw-tin-ingot", amount = 2},
                 {type = "item", name = "electronic-circuit", amount = 5},
                 {type = "item", name = "wlw-lead-plate", amount = 20},
-                {type = "item", name = "steel-plate", amount = 10}
+                {type = "item", name = "wlw-high-density-steel", amount = 10}
             },
             results =
             {
@@ -1426,6 +2338,13 @@ data:extend(
             results =
             {
                 {type = "fluid", name = "wlw-molten-electrum", amount = 100}
+            },
+            crafting_machine_tint =
+            {
+              primary = {r = 0, g = 1, b = 0, a = 1.000},
+              secondary = {r = 0, g = 1, b = 0, a = 1.000}, -- same color
+              tertiary = {r = 0, g = 1, b = 0, a = 1.000}, -- same color
+              quaternary = {r = 0, g = 1, b = 0, a = 1.000}, -- same color
             }
         },
         {
@@ -1642,7 +2561,7 @@ data:extend(
             },
             results =
             {
-                {type = "fluid", name = "wlw-molten-platinum", amount = 200}
+                {type = "fluid", name = "wlw-molten-platinum", amount = 100}
             },
             crafting_machine_tint =
             {
@@ -1996,7 +2915,7 @@ data:extend(
             },
             results =
             {
-                {type = "fluid", name = "wlw-molten-silver", amount = 200}
+                {type = "fluid", name = "wlw-molten-silver", amount = 100}
             },
             crafting_machine_tint =
             {
@@ -2133,6 +3052,40 @@ data:extend(
             results =
             {
                 {type = "item", name = "wlw-silver-ingot", amount = 5}
+            }
+        },
+        {
+            type = "recipe",
+            name = "wlw-spitter-incubation-1",
+            category = "wlw-husbandry-with-fluid",
+            energy_required = 60,
+            enabled = false,
+            ingredients = 
+            {
+                {type = "item", name = "wlw-spitter-larva", amount = 1},
+                {type = "item", name = "wlw-fertilizer", amount = 5},
+                {type = "fluid", name = "water", amount = 100}
+            },
+            results =
+            {
+                {type = "item", name = "wlw-spitter-pupa", amount = 1}
+            }
+        },
+        {
+            type = "recipe",
+            name = "wlw-spitter-incubation-2",
+            category = "wlw-husbandry-with-fluid",
+            energy_required = 60,
+            enabled = false,
+            ingredients = 
+            {
+                {type = "item", name = "wlw-spitter-pupa", amount = 1},
+                {type = "item", name = "wlw-biter-meat", amount = 10},
+                {type = "fluid", name = "water", amount = 200}
+            },
+            results =
+            {
+                {type = "item", name = "wlw-small-spitter-untamed", amount = 1}
             }
         },
         {
@@ -2512,7 +3465,7 @@ data:extend(
             },
             results =
             {
-                {type = "fluid", name = "wlw-molten-tin", amount = 200}
+                {type = "fluid", name = "wlw-molten-tin", amount = 100}
             },
             crafting_machine_tint =
             {
@@ -2653,7 +3606,7 @@ data:extend(
         },
         {
             type = "recipe",
-            name = "wood",
+            name = "wlw-wood",
             category = "crafting-with-fluid",
             energy_required = 10,
             enabled = false,

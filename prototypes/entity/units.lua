@@ -23,6 +23,17 @@ for name, prototype in pairs(data.raw.unit) do
         explodingUnit.movement_speed = explodingUnit.movement_speed / 2
     end
 
+    -- They should also have 0 resistance to explosions to promote chain reactions.
+    if explodingUnit.resistances then
+        for i, resistance in pairs(explodingUnit.resistances) do
+            if resistance.type == "explosion" then
+                resistance.decrease = 0
+                resistance.percent = 0
+                break
+            end
+        end
+    end
+
     -- tint all the run animation layers
     if explodingUnit.run_animation then
         if explodingUnit.run_animation.layers then

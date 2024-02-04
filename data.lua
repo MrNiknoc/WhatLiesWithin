@@ -34,6 +34,12 @@ require("prototypes.item.sapling")
 require("prototypes.item.item-elevator")
 require("prototypes.item.wood-chips")
 
+-- item-groups
+require("prototypes.item.item-groups")
+
+-- item-subgroups
+require("prototypes.item.item-subgroups")
+
 -- recipes
 require("prototypes.recipes")
 
@@ -45,6 +51,20 @@ require("prototypes.shortcut")
 
 -- technologies
 require("prototypes.technologies")
+
+function allowProductivity(recipe)
+    for _, prototype in pairs(data.raw.module) do
+
+        if prototype.effect.productivity then
+            if prototype.limitation ~= nil then
+                local prod_table = prototype.limitation
+                -- cables
+                table.insert(prod_table, recipe)
+            end
+        end
+    
+    end
+end
 
 -- ***************************
 -- ***************************
@@ -87,7 +107,9 @@ local dummyfurnace =
        crafting_speed = 1,
        crafting_categories = {"dummy"},
        source_inventory_size = 1,
-       result_inventory_size = 1
+       result_inventory_size = 1,
+       -- added this selection_box for compatibility with BottleneckLite
+       selection_box = {{-0.1,-0.1}, {0.1,0.1}}
 }
 data:extend({dummyfurnace})
 
@@ -224,7 +246,7 @@ data.raw["recipe"]["burner-inserter"].ingredients =
     {type = "item", name = "iron-gear-wheel", amount = 1}
 }
 
--- medium electric poles to use silver cable,
+-- medium electric poles to use silver cable, and have a supply_area_distance of 4.5 (9 tiles vs 7)
 data.raw["recipe"]["medium-electric-pole"].ingredients =
 {
     {type = "item", name = "copper-plate", amount = 2},
@@ -232,6 +254,8 @@ data.raw["recipe"]["medium-electric-pole"].ingredients =
     {type = "item", name = "steel-plate", amount = 2},
     {type = "item", name = "wlw-silver-cable", amount = 2}
 }
+
+data.raw["electric-pole"]["medium-electric-pole"].supply_area_distance = 4.5
 
 -- big electric poles to use gold cable,
 data.raw["recipe"]["big-electric-pole"].ingredients =
@@ -249,6 +273,146 @@ data.raw["recipe"]["substation"].ingredients =
     {type = "item", name = "copper-plate", amount = 5},
     {type = "item", name = "steel-plate", amount = 10},
     {type = "item", name = "wlw-platinum-cable", amount = 2}
+}
+
+-- power armor mk1 to use high density steel
+data.raw["recipe"]["power-armor"].ingredients =
+{
+    {type = "item", name = "wlw-high-density-steel", amount = 40},
+    {type = "item", name = "processing-unit", amount = 40},
+    {type = "item", name = "electric-engine-unit", amount = 20}
+}
+
+-- power armor mk2 to use high density structure instead of low density structure and multi-core-processing-units instead of processing-units
+data.raw["recipe"]["power-armor-mk2"].ingredients =
+{
+    {type = "item", name = "wlw-multi-core-processing-unit", amount = 60},
+    {type = "item", name = "electric-engine-unit", amount = 40},
+    {type = "item", name = "wlw-high-density-structure", amount = 30},
+    {type = "item", name = "speed-module-2", amount = 25},
+    {type = "item", name = "effectivity-module-2", amount = 25}
+}
+
+-- uranium fuel cells to use high density steel instead of iron
+data.raw["recipe"]["uranium-fuel-cell"].ingredients =
+{
+    {type = "item", name = "wlw-high-density-steel", amount = 10},
+    {type = "item", name = "uranium-235", amount = 1},
+    {type = "item", name = "uranium-238", amount = 19}
+}
+
+-- rocket fuel to also use steel plates
+data.raw["recipe"]["rocket-fuel"].ingredients =
+{
+    {type = "item", name = "steel-plate", amount = 2},
+    {type = "item", name = "solid-fuel", amount = 10},
+    {type = "fluid", name = "light-oil", amount = 10}
+}
+
+-- nuclear fuel to also use high density steel
+data.raw["recipe"]["nuclear-fuel"].ingredients =
+{
+    {type = "item", name = "wlw-high-density-steel", amount = 2},
+    {type = "item", name = "rocket-fuel", amount = 1},
+    {type = "item", name = "uranium-235", amount = 1}
+}
+
+-- nuclear reactor to use gold plates instead of copper plates and high density steel instead of steel
+data.raw["recipe"]["nuclear-reactor"].ingredients =
+{
+    {type = "item", name = "wlw-gold-plate", amount = 500},
+    {type = "item", name = "wlw-high-density-steel", amount = 500},
+    {type = "item", name = "advanced-circuit", amount = 500},
+    {type = "item", name = "concrete", amount = 500}
+}
+
+-- solar panels to use advanced circuits instead of electronic circuits
+data.raw["recipe"]["solar-panel"].ingredients =
+{
+    {type = "item", name = "copper-plate", amount = 5},
+    {type = "item", name = "steel-plate", amount = 5},
+    {type = "item", name = "advanced-circuit", amount = 15}
+}
+
+-- accumulators to use steel plates instead of iron plates and take 4 silver cable to craft
+data.raw["recipe"]["accumulator"].ingredients =
+{
+    {type = "item", name = "steel-plate", amount = 2},
+    {type = "item", name = "wlw-silver-cable", amount = 4},
+    {type = "item", name = "battery", amount = 5}
+}
+
+-- explosive cannon shells to use high density steel instead of steel
+data.raw["recipe"]["explosive-cannon-shell"].ingredients =
+{
+    {type = "item", name = "wlw-high-density-steel", amount = 2},
+    {type = "item", name = "plastic-bar", amount = 2},
+    {type = "item", name = "explosives", amount = 2}
+}
+
+-- artillery turrets to use high density structure instead of steel
+data.raw["recipe"]["artillery-turret"].ingredients = 
+{
+    {type = "item", name = "wlw-high-density-structure", amount = 60},
+    {type = "item", name = "iron-gear-wheel", amount = 40},
+    {type = "item", name = "advanced-circuit", amount = 20},
+    {type = "item", name = "concrete", amount = 60}
+}
+
+-- artillery wagons to use high density structure instead of steel
+data.raw["recipe"]["artillery-wagon"].ingredients =
+{
+    {type = "item", name = "wlw-high-density-structure", amount = 40},
+    {type = "item", name = "iron-gear-wheel", amount = 10},
+    {type = "item", name = "advanced-circuit", amount = 20},
+    {type = "item", name = "engine-unit", amount = 64},
+    {type = "item", name = "pipe", amount = 16}
+}
+
+-- electric furnaces to use high density steel instead of steel
+data.raw["recipe"]["electric-furnace"].ingredients =
+{
+    {type = "item", name = "wlw-high-density-steel", amount = 10},
+    {type = "item", name = "advanced-circuit", amount = 5},
+    {type = "item", name = "stone-brick", amount = 10}
+}
+
+-- rocket silo to use high density structure instead of steel and multi core processing units instead of processing units
+data.raw["recipe"]["rocket-silo"].ingredients =
+{
+    {type = "item", name = "wlw-high-density-structure", amount = 1000},
+    {type = "item", name = "wlw-multi-core-processing-unit", amount = 200},
+    {type = "item", name = "electric-engine-unit", amount = 200},
+    {type = "item", name = "pipe", amount = 100},
+    {type = "item", name = "concrete", amount = 1000}
+}
+
+-- satellites to use multi core processing units instead of processing units
+data.raw["recipe"]["satellite"].ingredients =
+{
+    {type = "item", name = "wlw-multi-core-processing-unit", amount = 100},
+    {type = "item", name = "low-density-structure", amount = 100},
+    {type = "item", name = "rocket-fuel", amount = 50},
+    {type = "item", name = "solar-panel", amount = 100},
+    {type = "item", name = "accumulator", amount = 100},
+    {type = "item", name = "radar", amount = 5}
+}
+
+-- low density structures to use tin instead of steel
+data.raw["recipe"]["low-density-structure"].ingredients =
+{
+    {type = "item", name = "copper-plate", amount = 20},
+    {type = "item", name = "wlw-tin-plate", amount = 20},
+    {type = "item", name = "plastic-bar", amount = 5}
+}
+
+-- centrifuges to use lead instead of steel
+data.raw["recipe"]["centrifuge"].ingredients =
+{
+    {type = "item", name = "wlw-lead-plate", amount = 50},
+    {type = "item", name = "iron-gear-wheel", amount = 100},
+    {type = "item", name = "advanced-circuit", amount = 100},
+    {type = "item", name = "concrete", amount = 100}
 }
 
 -- land mines to only produce one mine per explosive, and use lead.
@@ -324,6 +488,60 @@ for name, prototype in pairs(data.raw["turret"]) do
     data.raw["turret"][name].attack_parameters.health_penalty = -0.5
 end
 
+-- change biter spawners and spitter spawners to have a low chance of dropping a larva when killed.
+for name, prototype in pairs(data.raw["unit-spawner"]) do
+    if string.find(name, "biter") then
+        data.raw["unit-spawner"][name].loot = 
+        {
+            {
+                count_max = 10,
+                count_min = 1,
+                item = "wlw-biter-larva",
+                probability = 0.1
+            }
+        }
+    elseif string.find(name, "spitter") then
+        data.raw["unit-spawner"][name].loot = 
+        {
+            {
+                count_max = 10,
+                count_min = 1,
+                item = "wlw-spitter-larva",
+                probability = 0.1
+            }
+        }
+    end
+end
+
+-- hide and disable all nightvision recipes, also make their power draws 100YW in case someone does get one somehow..
+for name, prototype in pairs(data.raw["night-vision-equipment"]) do
+    data.raw["night-vision-equipment"][name].enabled = false
+    data.raw["night-vision-equipment"][name].hidden = true
+    data.raw["night-vision-equipment"][name].energy_input = "100YW"
+end
+
+-- hide the night-vision-equipment tech.
+data.raw["technology"]["night-vision-equipment"].hidden = true
+
+-- change the intensity and size of the omnidirectional personal light to compensate for no night vision.
+for name, prototype in pairs(data.raw["character"]) do
+    if prototype.light == nil then prototype.light = {} end
+    if prototype.light ~= nil then
+        for _, light in pairs(prototype.light) do
+            if type(light) == "table" then
+                if light.type == "basic" then
+                    -- this is the circle of light around the player
+                    light.intensity = 1
+                    light.size = 100
+                elseif light.type == "oriented" then
+                    -- this is the flashlight
+                    light.intensity = 1
+                end
+            end
+        end
+    end
+end
+
 -- ***************************
 -- ***************************
 --      END VANILLA TWEAKS
@@ -352,6 +570,35 @@ for name, prototype in pairs(data.raw.recipe) do
             prototype.hide_from_player_crafting = true
         end
     end
+end
+
+-- Allow productivity modules to be used on some WLW recipes.
+
+allowProductivity("wlw-silver-cable")
+allowProductivity("wlw-gold-cable")
+allowProductivity("wlw-platinum-cable")
+allowProductivity("wlw-gold-plate")
+allowProductivity("wlw-lead-plate")
+allowProductivity("wlw-platinum-plate")
+allowProductivity("wlw-silver-plate")
+allowProductivity("wlw-tin-plate")
+allowProductivity("wlw-high-density-steel")
+allowProductivity("wlw-high-density-structure")
+allowProductivity("wlw-multi-core-processing-unit")
+allowProductivity("wlw-wood")
+allowProductivity("wlw-wood-chips")
+allowProductivity("wlw-wood-chips-from-saplings")
+allowProductivity("wlw-fertilizer")
+allowProductivity("wlw-charcoal")
+allowProductivity("wlw-coke")
+
+for _, prototype in pairs(data.raw.recipe) do
+    -- Allow productivity on all butchering recipes
+    if prototype.category == "wlw-butchery" or prototype.category == "wlw-butchery-with-fluid" then
+        allowProductivity(prototype.name)
+    end
+
+    -- Don't allow productivity on any husbandry recipes.
 end
 
 -- ***************************

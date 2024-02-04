@@ -12,6 +12,159 @@ data:extend(
         },
         {
             type = "item",
+            name = "wlw-behemoth-biter-tamed",
+            icon = "__base__/graphics/icons/behemoth-biter.png",
+            icon_size = 64,
+            subgroup = "wlw-biter-husbandry",
+            order = "biter-h",
+            stack_size = 20,
+            place_result = "behemoth-biter",
+            localised_name = "Behemoth biter (tamed)",
+            localised_description = "A well trained behemoth biter. An engineer's best friend."
+        },
+        {
+            type = "item",
+            name = "wlw-behemoth-biter-untamed",
+            icon = "__base__/graphics/icons/behemoth-biter.png",
+            icon_size = 64,
+            subgroup = "wlw-biter-husbandry",
+            order = "biter-g",
+            stack_size = 20,
+            place_result = "behemoth-biter",
+            localised_name = "Behemoth biter (untamed)",
+            localised_description = "An untrained behemoth biter. Very dangerous! Train in a husbandry machine."
+        },
+        {
+            type = "item",
+            name = "wlw-behemoth-spitter-tamed",
+            icon = "__base__/graphics/icons/behemoth-spitter.png",
+            icon_size = 64,
+            subgroup = "wlw-spitter-husbandry",
+            order = "spitter-h",
+            stack_size = 20,
+            place_result = "behemoth-spitter",
+            localised_name = "Behemoth spitter (tamed)",
+            localised_description = "A well trained behemoth spitter. An engineer's spittiest friend."
+        },
+        {
+            type = "item",
+            name = "wlw-behemoth-spitter-untamed",
+            icon = "__base__/graphics/icons/behemoth-spitter.png",
+            icon_size = 64,
+            subgroup = "wlw-spitter-husbandry",
+            order = "spitter-g",
+            stack_size = 20,
+            place_result = "behemoth-spitter",
+            localised_name = "Behemoth spitter (untamed)",
+            localised_description = "An untrained behemoth spitter. Very dangerous! Train in a husbandry machine."
+        },
+        {
+            type = "item",
+            name = "wlw-big-biter-tamed",
+            icon = "__base__/graphics/icons/big-biter.png",
+            icon_size = 64,
+            subgroup = "wlw-biter-husbandry",
+            order = "biter-f",
+            stack_size = 20,
+            place_result = "big-biter",
+            localised_name = "Big biter (tamed)",
+            localised_description = "A well trained big biter. Cute, blue, and surprisingly cuddly!"
+        },
+        {
+            type = "item",
+            name = "wlw-big-biter-untamed",
+            icon = "__base__/graphics/icons/big-biter.png",
+            icon_size = 64,
+            subgroup = "wlw-biter-husbandry",
+            order = "biter-e",
+            stack_size = 20,
+            place_result = "big-biter",
+            localised_name = "Big biter (untamed)",
+            localised_description = "An untrained big biter. Dangerous! Train or grow further in a husbandry machine."
+        },
+        {
+            type = "item",
+            name = "wlw-big-spitter-tamed",
+            icon = "__base__/graphics/icons/big-spitter.png",
+            icon_size = 64,
+            subgroup = "wlw-spitter-husbandry",
+            order = "spitter-f",
+            stack_size = 20,
+            place_result = "big-spitter",
+            localised_name = "Big spitter (tamed)",
+            localised_description = "A well trained big spitter. Cute, blue, and drools like you wouldn't believe."
+        },
+        {
+            type = "item",
+            name = "wlw-big-spitter-untamed",
+            icon = "__base__/graphics/icons/big-spitter.png",
+            icon_size = 64,
+            subgroup = "wlw-spitter-husbandry",
+            order = "spitter-e",
+            stack_size = 20,
+            place_result = "big-spitter",
+            localised_name = "Big spitter (untamed)",
+            localised_description = "An untrained big spitter. Dangerous! Train or grow further in a husbandry machine."
+        },
+        {
+            type = "item",
+            name = "wlw-biter-larva",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/biter-larva.png",
+            icon_size = 64,
+            subgroup = "wlw-biter-breeding",
+            order = "biter-a",
+            stack_size = 20
+        },
+        {
+            type = "item",
+            name = "wlw-biter-meat",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/biter-meat.png",
+            icon_size = 64, icon_mipmaps = 4,
+            subgroup = "wlw-biter-butchering",
+            order = "a",
+            stack_size = 200
+        },
+        {
+            type = "item",
+            name = "wlw-biter-pupa",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/biter-pupa.png",
+            icon_size = 64,
+            subgroup = "wlw-biter-breeding",
+            order = "biter-b",
+            stack_size = 20
+        },
+        {
+            type = "item",
+            name = "wlw-butchering-machine-1",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/butchering-machine-1.png",
+            icon_size = 64, icon_mipmaps = 4,
+            subgroup = "production-machine",
+            order = "wlw-butchering-machine-1",
+            stack_size = 10,
+            place_result = "wlw-butchering-machine-1"
+        },
+        {
+            type = "item",
+            name = "wlw-butchering-machine-2",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/butchering-machine-2.png",
+            icon_size = 64, icon_mipmaps = 4,
+            subgroup = "production-machine",
+            order = "wlw-butchering-machine-2",
+            stack_size = 10,
+            place_result = "wlw-butchering-machine-2"
+        },
+        {
+            type = "item",
+            name = "wlw-butchering-machine-3",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/butchering-machine-3.png",
+            icon_size = 64, icon_mipmaps = 4,
+            subgroup = "production-machine",
+            order = "wlw-butchering-machine-3",
+            stack_size = 10,
+            place_result = "wlw-butchering-machine-3"
+        },
+        {
+            type = "item",
             name = "wlw-casting-machine",
             icon = "__WhatLiesWithinGraphics__/graphics/icons/casting-machine.png",
             icon_size = 64, icon_mipmaps = 4,
@@ -60,6 +213,78 @@ data:extend(
         },
         {
             type = "item",
+            name = "wlw-exploding-small-biter",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/exploding-biter.png",
+            icon_size = 64,
+            subgroup = "wlw-biter-husbandry",
+            order = "biter-i",
+            stack_size = 20
+        },
+        {
+            type = "item",
+            name = "wlw-exploding-medium-biter",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/exploding-biter.png",
+            icon_size = 64,
+            subgroup = "wlw-biter-husbandry",
+            order = "biter-j",
+            stack_size = 20
+        },
+        {
+            type = "item",
+            name = "wlw-exploding-big-biter",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/exploding-biter.png",
+            icon_size = 64,
+            subgroup = "wlw-biter-husbandry",
+            order = "biter-k",
+            stack_size = 20
+        },
+        {
+            type = "item",
+            name = "wlw-exploding-behemoth-biter",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/exploding-biter.png",
+            icon_size = 64,
+            subgroup = "wlw-biter-husbandry",
+            order = "biter-l",
+            stack_size = 20
+        },
+        {
+            type = "item",
+            name = "wlw-exploding-small-spitter",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/exploding-spitter.png",
+            icon_size = 64,
+            subgroup = "wlw-spitter-husbandry",
+            order = "spitter-i",
+            stack_size = 20
+        },
+        {
+            type = "item",
+            name = "wlw-exploding-medium-spitter",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/exploding-spitter.png",
+            icon_size = 64,
+            subgroup = "wlw-spitter-husbandry",
+            order = "spitter-j",
+            stack_size = 20
+        },
+        {
+            type = "item",
+            name = "wlw-exploding-big-spitter",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/exploding-spitter.png",
+            icon_size = 64,
+            subgroup = "wlw-spitter-husbandry",
+            order = "spitter-k",
+            stack_size = 20
+        },
+        {
+            type = "item",
+            name = "wlw-exploding-behemoth-spitter",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/exploding-spitter.png",
+            icon_size = 64,
+            subgroup = "wlw-spitter-husbandry",
+            order = "spitter-l",
+            stack_size = 20
+        },
+        {
+            type = "item",
             name = "wlw-gold-block",
             icon = "__WhatLiesWithinGraphics__/graphics/icons/gold-block.png",
             icon_size = 64, icon_mipmaps = 4,
@@ -105,6 +330,15 @@ data:extend(
         },
         {
             type = "item",
+            name = "wlw-gold-sheet",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/gold-sheet.png",
+            icon_size = 64, icon_mipmaps = 4,
+            subgroup = "raw-material",
+            order = "wlw-gold-sheet",
+            stack_size = 50
+        },
+        {
+            type = "item",
             name = "wlw-high-density-steel",
             icon = "__WhatLiesWithinGraphics__/graphics/icons/high-density-steel.png",
             icon_size = 64, icon_mipmaps = 4,
@@ -123,12 +357,33 @@ data:extend(
         },
         {
             type = "item",
-            name = "wlw-gold-sheet",
-            icon = "__WhatLiesWithinGraphics__/graphics/icons/gold-sheet.png",
+            name = "wlw-husbandry-machine-1",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/husbandry-machine-1.png",
             icon_size = 64, icon_mipmaps = 4,
-            subgroup = "raw-material",
-            order = "wlw-gold-sheet",
-            stack_size = 50
+            subgroup = "wlw-biter-husbandry",
+            order = "machine-a",
+            stack_size = 50,
+            place_result = "wlw-husbandry-machine-1"
+        },
+        {
+            type = "item",
+            name = "wlw-husbandry-machine-2",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/husbandry-machine-2.png",
+            icon_size = 64, icon_mipmaps = 4,
+            subgroup = "wlw-biter-husbandry",
+            order = "machine-b",
+            stack_size = 50,
+            place_result = "wlw-husbandry-machine-2"
+        },
+        {
+            type = "item",
+            name = "wlw-husbandry-machine-3",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/husbandry-machine-3.png",
+            icon_size = 64, icon_mipmaps = 4,
+            subgroup = "wlw-biter-husbandry",
+            order = "machine-c",
+            stack_size = 50,
+            place_result = "wlw-husbandry-machine-3"
         },
         {
             type = "item",
@@ -156,6 +411,54 @@ data:extend(
             subgroup = "raw-material",
             order = "wlw-iron-sheet",
             stack_size = 50
+        },
+        {
+            type = "item",
+            name = "wlw-medium-biter-tamed",
+            icon = "__base__/graphics/icons/medium-biter.png",
+            icon_size = 64,
+            subgroup = "wlw-biter-husbandry",
+            order = "biter-d",
+            stack_size = 20,
+            place_result = "medium-biter",
+            localised_name = "Medium biter (tamed)",
+            localised_description = "A well trained medium biter. Will gleefully pursue your enemies."
+        },
+        {
+            type = "item",
+            name = "wlw-medium-biter-untamed",
+            icon = "__base__/graphics/icons/medium-biter.png",
+            icon_size = 64,
+            subgroup = "wlw-biter-husbandry",
+            order = "biter-c",
+            stack_size = 20,
+            place_result = "medium-biter",
+            localised_name = "Medium biter (untamed)",
+            localised_description = "An untrained medium biter. Train or grow further in a husbandry machine."
+        },
+        {
+            type = "item",
+            name = "wlw-medium-spitter-tamed",
+            icon = "__base__/graphics/icons/medium-spitter.png",
+            icon_size = 64,
+            subgroup = "wlw-spitter-husbandry",
+            order = "spitter-d",
+            stack_size = 20,
+            place_result = "medium-spitter",
+            localised_name = "Medium spitter (tamed)",
+            localised_description = "A well trained medium spitter. Will gleefully spit on your enemies from afar."
+        },
+        {
+            type = "item",
+            name = "wlw-medium-spitter-untamed",
+            icon = "__base__/graphics/icons/medium-spitter.png",
+            icon_size = 64,
+            subgroup = "wlw-spitter-husbandry",
+            order = "spitter-c",
+            stack_size = 20,
+            place_result = "medium-spitter",
+            localised_name = "Medium spitter (untamed)",
+            localised_description = "An untrained medium spitter. Train or grow further in a husbandry machine."
         },
         {
             type = "item",
@@ -302,6 +605,72 @@ data:extend(
             subgroup = "raw-material",
             order = "wlw-silver-sheet",
             stack_size = 50
+        },
+        {
+            type = "item",
+            name = "wlw-small-biter-tamed",
+            icon = "__base__/graphics/icons/small-biter.png",
+            icon_size = 64,
+            subgroup = "wlw-biter-husbandry",
+            order = "biter-b",
+            stack_size = 20,
+            place_result = "small-biter",
+            localised_name = "Small biter (tamed)",
+            localised_description = "A well trained small biter. Eager, adorable, and willing to kill for you."
+        },
+        {
+            type = "item",
+            name = "wlw-small-biter-untamed",
+            icon = "__base__/graphics/icons/small-biter.png",
+            icon_size = 64,
+            subgroup = "wlw-biter-husbandry",
+            order = "biter-a",
+            stack_size = 20,
+            place_result = "small-biter",
+            localised_name = "Small biter (untamed)",
+            localised_description = "An untrained small biter. Train or grow further in a husbandry machine."
+        },
+        {
+            type = "item",
+            name = "wlw-small-spitter-tamed",
+            icon = "__base__/graphics/icons/small-spitter.png",
+            icon_size = 64,
+            subgroup = "wlw-spitter-husbandry",
+            order = "spitter-b",
+            stack_size = 20,
+            place_result = "small-spitter",
+            localised_name = "Small spitter (tamed)",
+            localised_description = "A well trained small spitter. Eager, adorable, and willing to spit on things for you."
+        },
+        {
+            type = "item",
+            name = "wlw-small-spitter-untamed",
+            icon = "__base__/graphics/icons/small-spitter.png",
+            icon_size = 64,
+            subgroup = "wlw-spitter-husbandry",
+            order = "spitter-a",
+            stack_size = 20,
+            place_result = "small-spitter",
+            localised_name = "Small spitter (untamed)",
+            localised_description = "An untrained small spitter. Train or grow further in a husbandry machine."
+        },
+        {
+            type = "item",
+            name = "wlw-spitter-larva",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/spitter-larva.png",
+            icon_size = 64,
+            subgroup = "wlw-spitter-breeding",
+            order = "spitter-a",
+            stack_size = 20
+        },
+        {
+            type = "item",
+            name = "wlw-spitter-pupa",
+            icon = "__WhatLiesWithinGraphics__/graphics/icons/spitter-pupa.png",
+            icon_size = 64,
+            subgroup = "wlw-spitter-breeding",
+            order = "spitter-b",
+            stack_size = 20
         },
         {
             type = "item",

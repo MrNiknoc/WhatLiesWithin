@@ -282,8 +282,8 @@ function Zone.create_underground_layer_given_top_surface_name(top_surface_name, 
         map_gen_settings.starting_area = "none"
         -- water goes 0.7 at layer 1, 0.4 at layer 2, 0.1 at layer 3, then no more water.
         map_gen_settings.water = Zone.clamp(1 - (0.3 * underground_layer))
-        -- no cliffs underground for now.
-        map_gen_settings.cliff_settings.richness = 0
+        -- keeping cliffs at 0.5 for now
+        map_gen_settings.cliff_settings.richness = 0.5
 
         if map_gen_settings.autoplace_controls then
             -- adjust existing autoplace controls accordingly and clamp them at the end.
@@ -305,7 +305,9 @@ function Zone.create_underground_layer_given_top_surface_name(top_surface_name, 
 
                 -- if these stay 0, then we'll clamp between 0 and 0 every time. Not good :)
                 if old_size == 0 then
-                    old_size = 1
+                    if name ~= "enemy-base" then
+                        old_size = 1
+                    end
                 end
 
                 local autoplace_control = {}
@@ -431,10 +433,16 @@ function Zone.create_underground_layer_given_top_surface_name(top_surface_name, 
                     autoplace_control.richness = 0
                     autoplace_control.size = 0
                 elseif name == "enemy-base" then
-                    -- bases increase by 50% in each category, they'll max out quickly and are on every layer.
-                    autoplace_control.frequency = old_frequency + (underground_layer * 0.5)
-                    autoplace_control.richness = old_richness + (underground_layer * 0.5)
-                    autoplace_control.size = old_size + (underground_layer * 0.5)
+                    if old_size == 0 then
+                        autoplace_control.frequency = 0
+                        autoplace_control.richness = 0
+                        autoplace_control.size = 0
+                    else
+                        -- bases increase by 25% in each category, they'll max out quickly and are on every layer.
+                        autoplace_control.frequency = old_frequency + (underground_layer * 0.25)
+                        autoplace_control.richness = old_richness + (underground_layer * 0.25)
+                        autoplace_control.size = old_size + (underground_layer * 0.25)
+                    end
                 else
                     autoplace_control.frequency = old_frequency + (underground_layer * 0.05)
                     autoplace_control.richness = old_richness + (underground_layer * 0.05)
@@ -612,10 +620,16 @@ function Zone.create_underground_layer_given_top_surface_name(top_surface_name, 
                             autoplace_control.richness = 0
                             autoplace_control.size = 0
                         elseif name == "enemy-base" then
-                            -- bases increase by 50% in each category, they'll max out quickly and are on every layer.
-                            autoplace_control.frequency = old_frequency + (underground_layer * 0.5)
-                            autoplace_control.richness = old_richness + (underground_layer * 0.5)
-                            autoplace_control.size = old_size + (underground_layer * 0.5)
+                            if old_size == 0 then
+                                autoplace_control.frequency = 0
+                                autoplace_control.richness = 0
+                                autoplace_control.size = 0
+                            else
+                                -- bases increase by 25% in each category, they'll max out quickly and are on every layer.
+                                autoplace_control.frequency = old_frequency + (underground_layer * 0.25)
+                                autoplace_control.richness = old_richness + (underground_layer * 0.25)
+                                autoplace_control.size = old_size + (underground_layer * 0.25)
+                            end
                         else
                             -- any other ore (modded ores) start at 0.5 and get 0.05 for every layer for every setting.
                             -- they're still capped at 2x or 200% frequency, 5x or 500% richness, and 2x or 200% size

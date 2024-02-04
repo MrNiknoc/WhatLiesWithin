@@ -251,6 +251,7 @@ function GuiClick(event)
     if event.element.name == "wlw_travel_travel_button" then
         local surface = player.surface
         local player_surface_name = surface.name
+
         -- get the parent of the button, this is the frame that holds both dropdowns.
         local parent_frame = event.element.parent
 
@@ -283,22 +284,61 @@ function GuiClick(event)
             -- first check if the player is on the surface that they're trying to travel to.
             if target_surface_name ~= player_surface_name then
                 -- the target surface is a sub surface of the player's current world and should be traveled to.
-
-                -- we need to find a non colliding position for the player to teleport to
                 local target_surface = game.get_surface(target_surface_name)
-                local non_colliding_position = target_surface.find_non_colliding_position("character", player.position, 1000, 1)
 
-                if non_colliding_position == nil then
-                    -- there was not a non-colliding position within 1000 distance of the player's position.
-                    -- prompt the player to move and try again.
-                    player.print("[color=1,0,0]No valid position found. Move somewhere else and try again.[/color]")
+                -- make sure there's an item elevator pair connecting these surfaces within 10 tiles of the player.
+
+                -- first see if there are item elevators within 10 tiles
+                local surface_item_elevators_in_range = surface.find_entities_filtered{
+                    position = player.position,
+                    radius = 10,
+                    name = "wlw-item-elevator",
+                    force = player.force
+                }
+
+                -- then iterate over all of them and if their companion elevator is on the target surface.
+                -- if it is we can travel.
+                if next(surface_item_elevators_in_range) ~= nil then
+
+                    local pair_exists = false
+
+                    for _, elevator in ipairs(surface_item_elevators_in_range) do
+                        local companions = get_companion_elevators(elevator)
+                        if next(companions) ~= nil then
+                            for i=1, #companions do
+                                if companions[i].surface == target_surface then
+                                    pair_exists = true
+                                    goto pair_check
+                                end
+                            end
+                        end
+                    end
+                    ::pair_check::
+                    if pair_exists then
+                        -- we need to find a non colliding position for the player to teleport to
+                        local non_colliding_position = target_surface.find_non_colliding_position("character", player.position, 1000, 1)
+
+                        if non_colliding_position == nil then
+                            -- there was not a non-colliding position within 1000 distance of the player's position.
+                            -- prompt the player to move and try again.
+                            player.print("[color=1,0,0]No valid position found. Move somewhere else and try again.[/color]")
+                        else
+                            -- we found a valid position so tell the player we're moving them there and move them.
+                            player.print("You make your way to " .. target_surface_name .. ".")
+                            player.teleport(non_colliding_position, target_surface)
+                            local super_parent_frame = parent_frame.parent
+                            super_parent_frame.wlw_travel_labels_flow.wlw_travel_current_location_label.caption = "Current Location: [color=0,1,0]" .. player_surface_name .. "[/color]"
+                            toggle_travel_interface(player)
+                        end
+                    else
+                        -- There was no such pair, so we tell the player to find one and return.
+                        player.print("You're not close enough to an item elevator that goes there. Please find or place one and try again!")
+                        return
+                    end
                 else
-                    -- we found a valid position so tell the player we're moving them there and move them.
-                    player.print("You make your way to " .. target_surface_name .. ".")
-                    player.teleport(non_colliding_position, target_surface)
-                    local super_parent_frame = parent_frame.parent
-                    super_parent_frame.wlw_travel_labels_flow.wlw_travel_current_location_label.caption = "Current Location: [color=0,1,0]" .. player_surface_name .. "[/color]"
-                    toggle_travel_interface(player)
+                    -- There was no such pair, so we tell the player to find one and return.
+                    player.print("You're not close enough to an item elevator that goes there. Please find or place one and try again!")
+                    return
                 end
             else
                 -- the player is already on the target surface, so travelling should be disabled.
@@ -324,6 +364,7 @@ function OnBuiltEntity(event)
     local surface = entity.surface
     local player_index = event.player_index
     local player = game.get_player(event.player_index)
+    local used_item = event.item
 
     if not (player and player.valid) then
         return
@@ -579,7 +620,7 @@ function OnBuiltEntity(event)
 
                 if target_surface.find_non_colliding_position("wlw-item-elevator", entity.position, 0.01, 0.01) == nil then
                     -- We failed to build the entity here.
-                    player.create_local_flying_text({text = {"Companion elevator could not be placed! Make sure both ends of the elevator are clear!"}, create_at_cursor = true})
+                    player.create_local_flying_text({text = {"error-message.wlw-cant-place-item-elevator"}, create_at_cursor = true})
                     entity.destroy()
                     player.insert{name = "wlw-item-elevator", count = 1}
                     player.play_sound(
@@ -644,11 +685,68 @@ function OnBuiltEntity(event)
 
         -- this is how you create the arbitrary next underground layer
         -- Zone.create_underground_layer_given_top_surface_name(string.gsub(entity_surface_name, " underground %- layer %d+", ""), 1)
-    else
-        -- print every surface
-        --for _, surface in pairs(global.zones_by_name) do
-            --player.print("Zone name: " .. surface.name .. " Zone index: " .. surface.index)
-        --end
+
+    elseif string.match(name, "silo") then
+        if string.match(entity_surface_name, "underground") then
+            -- We failed to build the entity here.
+            player.create_local_flying_text({text = {"error-message.wlw-cant-place-rocket-silo"}, create_at_cursor = true})
+            entity.destroy()
+            player.insert{name = name, count = 1}
+            player.play_sound(
+                {
+                    path = "utility/cannot_build"
+                }
+            )
+        end
+
+    elseif name == "small-biter" then
+        if used_item then
+            if used_item.name == "wlw-small-biter-untamed" then
+                entity.force = "enemy"
+            end
+        end
+    elseif name == "medium-biter" then
+        if used_item then
+            if used_item.name == "wlw-medium-biter-untamed" then
+                entity.force = "enemy"
+            end
+        end
+    elseif name == "big-biter" then
+        if used_item then
+            if used_item.name == "wlw-big-biter-untamed" then
+                entity.force = "enemy"
+            end
+        end
+    elseif name == "behemoth-biter" then
+        if used_item then
+            if used_item.name == "wlw-behemoth-biter-untamed" then
+                entity.force = "enemy"
+            end
+        end
+    elseif name == "small-spitter" then
+        if used_item then
+            if used_item.name == "wlw-small-spitter-untamed" then
+                entity.force = "enemy"
+            end
+        end
+    elseif name == "medium-spitter" then
+        if used_item then
+            if used_item.name == "wlw-medium-spitter-untamed" then
+                entity.force = "enemy"
+            end
+        end
+    elseif name == "big-spitter" then
+        if used_item then
+            if used_item.name == "wlw-big-spitter-untamed" then
+                entity.force = "enemy"
+            end
+        end
+    elseif name == "behemoth-spitter" then
+        if used_item then
+            if used_item.name == "wlw-behemoth-spitter-untamed" then
+                entity.force = "enemy"
+            end
+        end
     end
 
     --local size = 5
@@ -730,6 +828,7 @@ function OnRobotBuiltEntity(event)
     local name = entity.name
     local surface = entity.surface
     local entity_surface_name = surface.name
+    local used_item = event.stack
 
     if name == "wlw-item-elevator" then
         -- when we place an item elevator, we need to make the next underground layer if it doesn't already exist and place the companion elevator there.
@@ -1043,24 +1142,74 @@ function OnRobotBuiltEntity(event)
 
         -- this is how you create the arbitrary next underground layer
         -- Zone.create_underground_layer_given_top_surface_name(string.gsub(entity_surface_name, " underground %- layer %d+", ""), 1)
-    else
-        -- print every surface
-        --for _, surface in pairs(global.zones_by_name) do
-            --player.print("Zone name: " .. surface.name .. " Zone index: " .. surface.index)
-        --end
+
+    elseif string.match(name, "silo") then
+        if string.match(entity_surface_name, "underground") then
+            entity.destroy()
+            surface.spill_item_stack(robot.position, {name=name, count=1, enable_looted=true})
+            local dropped_item = surface.find_entities_filtered({type = "item-entity", position = robot.position, radius = 10})
+            if dropped_item then
+                dropped_item[1].order_deconstruction(robot.force)
+            end
+        end
+    elseif name == "small-biter" then
+        if used_item then
+            if used_item.name == "wlw-small-biter-untamed" then
+                entity.force = "enemy"
+            end
+        end
+    elseif name == "medium-biter" then
+        if used_item then
+            if used_item.name == "wlw-medium-biter-untamed" then
+                entity.force = "enemy"
+            end
+        end
+    elseif name == "big-biter" then
+        if used_item then
+            if used_item.name == "wlw-big-biter-untamed" then
+                entity.force = "enemy"
+            end
+        end
+    elseif name == "behemoth-biter" then
+        if used_item then
+            if used_item.name == "wlw-behemoth-biter-untamed" then
+                entity.force = "enemy"
+            end
+        end
+    elseif name == "small-spitter" then
+        if used_item then
+            if used_item.name == "wlw-small-spitter-untamed" then
+                entity.force = "enemy"
+            end
+        end
+    elseif name == "medium-spitter" then
+        if used_item then
+            if used_item.name == "wlw-medium-spitter-untamed" then
+                entity.force = "enemy"
+            end
+        end
+    elseif name == "big-spitter" then
+        if used_item then
+            if used_item.name == "wlw-big-spitter-untamed" then
+                entity.force = "enemy"
+            end
+        end
+    elseif name == "behemoth-spitter" then
+        if used_item then
+            if used_item.name == "wlw-behemoth-spitter-untamed" then
+                entity.force = "enemy"
+            end
+        end
     end
-
-    --local size = 5
-
-    --for y=-size, size do
-        --for x=-size, size do
-            --player.surface.create_entity({name="wlw-lead-ore", amount=1000, position={player.position.x+x, player.position.y+y}})
-        --end
-    --end
 end
 
 function PlayerCreated(event)
     local player = game.get_player(event.player_index)
+
+    if not (player and player.valid) then
+        return
+    end
+
     global.players[player.index] = { controls_active = true }
     if player and player.connected then
         if global.space_exploration_enabled then
@@ -1069,6 +1218,18 @@ function PlayerCreated(event)
             player.print("Thank you for playing [color=0,1,1]What Lies Within[/color]. Join us on Discord: [color=0,1,0]https://discord.gg/q3tSrs3uRy[/color]")
         end
     end
+end
+
+function PlayerDied(event)
+    local player = game.get_player(event.player_index)
+
+    if not (player and player.valid) then
+        return
+    end
+
+    local top_surface = Zone.get_top_surface_name(player.surface)
+    player.teleport(player.force.get_spawn_position(top_surface), top_surface)
+
 end
 
 function EntityDamaged(event)
@@ -1087,21 +1248,6 @@ function EntityDamaged(event)
         -- if it's an exploding enemy make smoke on it.
         if string.find(name, "exploding") then
             surface.create_trivial_smoke({name = "fire-smoke", position = {x = position.x, y = position.y - 1.5}, duration = 60})
-        end
-        -- and it's at sub 50% hp
-        if entity.get_health_ratio() < 0.5 then
-            -- and it doesn't die
-            if final_health > 0 then
-                -- and its name doesn't contain wlw-enraged
-                if not string.find(name, "enraged") then
-                    -- replace it with the enraged version of it.
-                    local direction = entity.direction
-                    local enragedName = "wlw-enraged-" .. string.gsub(name, "wlw%-", "")
-                    entity.destroy()
-                    local enragedEntity = surface.create_entity({name = enragedName, position = position, direction = direction})
-                    enragedEntity.health = final_health
-                end
-            end
         end
     end
 end
@@ -1252,8 +1398,21 @@ function LuaShortcut(event)
     local player = game.get_player(event.player_index)
     local prototype_name = event.prototype_name
 
+    if not (player and player.valid) then
+        return
+    end
+
+    if not player.character then
+        player.print("You can't be killed unless you have a body. Return to your body and try again.")
+        return
+    end
+
     if prototype_name == "wlw-travel" then
         toggle_travel_interface(player)
+    elseif prototype_name == "wlw-respawn" then
+        local top_surface = Zone.get_top_surface_name(player.surface)
+        player.character.die()
+        player.teleport(player.force.get_spawn_position(top_surface), top_surface)
     end
 end
 
@@ -1281,7 +1440,7 @@ function GuiSelectionStateChanged(event)
         end
         -- then update the sub surface dropdown
         parent_frame.wlw_travel_sub_level_dropdown.items=sub_surfaces
-        parent_frame.wlw_travel_sub_level_dropdown.selected_index=0
+        parent_frame.wlw_travel_sub_level_dropdown.selected_index=1
     end
 end
 
@@ -1370,6 +1529,7 @@ script.on_event(defines.events.on_entity_died, EntityDied)
 script.on_event(defines.events.script_raised_destroy, EntityDied)
 script.on_event(defines.events.on_entity_spawned, EntitySpawned)
 script.on_event(defines.events.on_player_created, PlayerCreated)
+script.on_event(defines.events.on_player_died, PlayerDied)
 script.on_event(defines.events.on_chunk_generated, ChunkGenerated)
 script.on_event(defines.events.on_surface_created, SurfaceCreated)
 script.on_event(defines.events.on_surface_deleted, SurfaceDeleted)

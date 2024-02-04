@@ -45,8 +45,7 @@ data:extend(
             name = "wlw-tin-ore",
             richness = true,
             order = "wlw-tin-ore",
-            -- as of v0.0.50 tin isn't necessary to beat the game, so it can be disabled.
-            can_be_disabled = true,
+            can_be_disabled = false,
             category = "resource"
         }
     }
