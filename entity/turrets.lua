@@ -1,0 +1,2 @@
+-- This is where we used to make enraged turrets, but that functionality got moved to Angry Biters.
+-- If we ever want to mess with turrets, this is where we'll do it.
