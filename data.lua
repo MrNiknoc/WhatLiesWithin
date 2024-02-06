@@ -257,6 +257,9 @@ data.raw["recipe"]["medium-electric-pole"].ingredients =
 
 data.raw["electric-pole"]["medium-electric-pole"].supply_area_distance = 4.5
 
+-- small electric poles to have a supply_area_distance of 3.5 (7 tiles vs 5)
+data.raw["electric-pole"]["small-electric-pole"].supply_area_distance = 3.5
+
 -- big electric poles to use gold cable,
 data.raw["recipe"]["big-electric-pole"].ingredients =
 {
@@ -535,6 +538,8 @@ for name, prototype in pairs(data.raw["character"]) do
                     light.size = 100
                 elseif light.type == "oriented" then
                     -- this is the flashlight
+                    light.intensity = 1
+                else
                     light.intensity = 1
                 end
             end

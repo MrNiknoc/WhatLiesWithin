@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.0.51021
+Date: 2. 5. 2024
+  Tweaks:
+    - Increased small power pole range from 5 tiles to 7 tiles.
+    - Removed the military science requirement from spitter husbandry 1 tech.
+    - Increased the intensity of the player's lights.
+  Bugfixes:
+    - Added a missing technology key to the locale file.
+---------------------------------------------------------------------------------------------------
 Version: 0.0.51020
 Date: 2. 3. 2024
   Major Features:
