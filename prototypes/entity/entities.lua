@@ -1826,7 +1826,7 @@ husbandry_machine_2.animation =
   layers =
   {
     {
-      filename = "__WhatLiesWithinGraphics__/graphics/entity/husbandry-machine-/husbandry-machine-2.png",
+      filename = "__WhatLiesWithinGraphics__/graphics/entity/husbandry-machine-2/husbandry-machine-2.png",
       priority = "high",
       width = 108,
       height = 110,

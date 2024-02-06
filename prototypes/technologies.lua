@@ -800,8 +800,7 @@ data:extend(
                 ingredients = 
                 {
                     {"automation-science-pack", 1},
-                    {"logistic-science-pack", 1},
-                    {"military-science-pack", 1}
+                    {"logistic-science-pack", 1}
                 },
                 time = 30
             },
