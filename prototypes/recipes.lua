@@ -706,7 +706,7 @@ data:extend(
             },
             results =
             {
-                {type = "fluid", name = "wlw-molten-copper", amount = 100}
+                {type = "fluid", name = "wlw-molten-copper", amount = 200}
             },
             crafting_machine_tint =
             {
@@ -1042,7 +1042,7 @@ data:extend(
             },
             results =
             {
-                {type = "fluid", name = "wlw-molten-gold", amount = 100}
+                {type = "fluid", name = "wlw-molten-gold", amount = 200}
             },
             crafting_machine_tint =
             {
@@ -1835,7 +1835,7 @@ data:extend(
             },
             results =
             {
-                {type = "fluid", name = "wlw-molten-iron", amount = 100}
+                {type = "fluid", name = "wlw-molten-iron", amount = 200}
             },
             crafting_machine_tint =
             {
@@ -2167,7 +2167,7 @@ data:extend(
             },
             results =
             {
-                {type = "fluid", name = "wlw-molten-lead", amount = 100}
+                {type = "fluid", name = "wlw-molten-lead", amount = 200}
             },
             crafting_machine_tint =
             {
@@ -2561,7 +2561,7 @@ data:extend(
             },
             results =
             {
-                {type = "fluid", name = "wlw-molten-platinum", amount = 100}
+                {type = "fluid", name = "wlw-molten-platinum", amount = 200}
             },
             crafting_machine_tint =
             {
@@ -2915,7 +2915,7 @@ data:extend(
             },
             results =
             {
-                {type = "fluid", name = "wlw-molten-silver", amount = 100}
+                {type = "fluid", name = "wlw-molten-silver", amount = 200}
             },
             crafting_machine_tint =
             {
@@ -3465,7 +3465,7 @@ data:extend(
             },
             results =
             {
-                {type = "fluid", name = "wlw-molten-tin", amount = 100}
+                {type = "fluid", name = "wlw-molten-tin", amount = 200}
             },
             crafting_machine_tint =
             {

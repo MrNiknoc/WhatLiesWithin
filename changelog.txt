@@ -1,8 +1,10 @@
 ---------------------------------------------------------------------------------------------------
 Version: 0.0.51023
 Date: 2. 7. 2024
+  Bugfixes:
+    - Casting technology now unlocks steel casting recipes, they were missed before.
   Tweaks:
-    - TODO: Change the casting recipes to match compression recipes.
+    - Changed the casting recipes to match the compression recipes.
 ---------------------------------------------------------------------------------------------------
 Version: 0.0.51022
 Date: 2. 6. 2024
