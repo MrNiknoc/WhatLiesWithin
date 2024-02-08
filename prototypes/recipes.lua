@@ -547,7 +547,7 @@ data:extend(
             enabled = false,
             ingredients = 
             {
-                {type = "fluid", name = "wlw-molten-copper", amount = 6400}
+                {type = "fluid", name = "wlw-molten-copper", amount = 12500}
             },
             results =
             {
@@ -573,7 +573,7 @@ data:extend(
             },
             results =
             {
-                {type = "fluid", name = "wlw-molten-copper", amount = 6400}
+                {type = "fluid", name = "wlw-molten-copper", amount = 12500}
             },
             crafting_machine_tint =
             {
@@ -643,7 +643,7 @@ data:extend(
             enabled = false,
             ingredients = 
             {
-                {type = "fluid", name = "wlw-molten-copper", amount = 400}
+                {type = "fluid", name = "wlw-molten-copper", amount = 500}
             },
             results =
             {
@@ -669,7 +669,7 @@ data:extend(
             },
             results =
             {
-                {type = "fluid", name = "wlw-molten-copper", amount = 400}
+                {type = "fluid", name = "wlw-molten-copper", amount = 500}
             },
             crafting_machine_tint =
             {
@@ -783,7 +783,7 @@ data:extend(
             enabled = false,
             ingredients = 
             {
-                {type = "fluid", name = "wlw-molten-copper", amount = 1600}
+                {type = "fluid", name = "wlw-molten-copper", amount = 2500}
             },
             results =
             {
@@ -809,7 +809,7 @@ data:extend(
             },
             results =
             {
-                {type = "fluid", name = "wlw-molten-copper", amount = 1600}
+                {type = "fluid", name = "wlw-molten-copper", amount = 2500}
             },
             crafting_machine_tint =
             {
@@ -870,7 +870,7 @@ data:extend(
             enabled = false,
             ingredients = 
             {
-                {type = "fluid", name = "wlw-molten-gold", amount = 6400}
+                {type = "fluid", name = "wlw-molten-gold", amount = 12500}
             },
             results =
             {
@@ -896,7 +896,7 @@ data:extend(
             },
             results =
             {
-                {type = "fluid", name = "wlw-molten-gold", amount = 6400}
+                {type = "fluid", name = "wlw-molten-gold", amount = 12500}
             },
             crafting_machine_tint =
             {
@@ -979,7 +979,7 @@ data:extend(
             enabled = false,
             ingredients = 
             {
-                {type = "fluid", name = "wlw-molten-gold", amount = 400}
+                {type = "fluid", name = "wlw-molten-gold", amount = 500}
             },
             results =
             {
@@ -1005,7 +1005,7 @@ data:extend(
             },
             results =
             {
-                {type = "fluid", name = "wlw-molten-gold", amount = 400}
+                {type = "fluid", name = "wlw-molten-gold", amount = 500}
             },
             crafting_machine_tint =
             {
@@ -1130,7 +1130,7 @@ data:extend(
             enabled = false,
             ingredients = 
             {
-                {type = "fluid", name = "wlw-molten-gold", amount = 1600}
+                {type = "fluid", name = "wlw-molten-gold", amount = 2500}
             },
             results =
             {
@@ -1156,7 +1156,7 @@ data:extend(
             },
             results =
             {
-                {type = "fluid", name = "wlw-molten-gold", amount = 1600}
+                {type = "fluid", name = "wlw-molten-gold", amount = 2500}
             },
             crafting_machine_tint =
             {
@@ -1698,7 +1698,7 @@ data:extend(
             enabled = false,
             ingredients = 
             {
-                {type = "fluid", name = "wlw-molten-iron", amount = 6400}
+                {type = "fluid", name = "wlw-molten-iron", amount = 12500}
             },
             results =
             {
@@ -1724,7 +1724,7 @@ data:extend(
             },
             results =
             {
-                {type = "fluid", name = "wlw-molten-iron", amount = 6400}
+                {type = "fluid", name = "wlw-molten-iron", amount = 12500}
             },
             crafting_machine_tint =
             {
@@ -1772,7 +1772,7 @@ data:extend(
             enabled = false,
             ingredients = 
             {
-                {type = "fluid", name = "wlw-molten-iron", amount = 400}
+                {type = "fluid", name = "wlw-molten-iron", amount = 500}
             },
             results =
             {
@@ -1798,7 +1798,7 @@ data:extend(
             },
             results =
             {
-                {type = "fluid", name = "wlw-molten-iron", amount = 400}
+                {type = "fluid", name = "wlw-molten-iron", amount = 500}
             },
             crafting_machine_tint =
             {
@@ -1912,7 +1912,7 @@ data:extend(
             enabled = false,
             ingredients = 
             {
-                {type = "fluid", name = "wlw-molten-iron", amount = 1600}
+                {type = "fluid", name = "wlw-molten-iron", amount = 2500}
             },
             results =
             {
@@ -1938,7 +1938,7 @@ data:extend(
             },
             results =
             {
-                {type = "fluid", name = "wlw-molten-iron", amount = 1600}
+                {type = "fluid", name = "wlw-molten-iron", amount = 2500}
             },
             crafting_machine_tint =
             {
@@ -2032,7 +2032,7 @@ data:extend(
             enabled = false,
             ingredients = 
             {
-                {type = "fluid", name = "wlw-molten-lead", amount = 6400}
+                {type = "fluid", name = "wlw-molten-lead", amount = 12500}
             },
             results =
             {
@@ -2058,7 +2058,7 @@ data:extend(
             },
             results =
             {
-                {type = "fluid", name = "wlw-molten-lead", amount = 6400}
+                {type = "fluid", name = "wlw-molten-lead", amount = 12500}
             },
             crafting_machine_tint =
             {
@@ -2104,7 +2104,7 @@ data:extend(
             enabled = false,
             ingredients = 
             {
-                {type = "fluid", name = "wlw-molten-lead", amount = 400}
+                {type = "fluid", name = "wlw-molten-lead", amount = 500}
             },
             results =
             {
@@ -2130,7 +2130,7 @@ data:extend(
             },
             results =
             {
-                {type = "fluid", name = "wlw-molten-lead", amount = 400}
+                {type = "fluid", name = "wlw-molten-lead", amount = 500}
             },
             crafting_machine_tint =
             {
@@ -2255,7 +2255,7 @@ data:extend(
             enabled = false,
             ingredients = 
             {
-                {type = "fluid", name = "wlw-molten-lead", amount = 1600}
+                {type = "fluid", name = "wlw-molten-lead", amount = 2500}
             },
             results =
             {
@@ -2281,7 +2281,7 @@ data:extend(
             },
             results =
             {
-                {type = "fluid", name = "wlw-molten-lead", amount = 1600}
+                {type = "fluid", name = "wlw-molten-lead", amount = 2500}
             },
             crafting_machine_tint =
             {
@@ -2387,7 +2387,7 @@ data:extend(
             enabled = false,
             ingredients = 
             {
-                {type = "fluid", name = "wlw-molten-platinum", amount = 6400}
+                {type = "fluid", name = "wlw-molten-platinum", amount = 12500}
             },
             results =
             {
@@ -2413,7 +2413,7 @@ data:extend(
             },
             results =
             {
-                {type = "fluid", name = "wlw-molten-platinum", amount = 6400}
+                {type = "fluid", name = "wlw-molten-platinum", amount = 12500}
             },
             crafting_machine_tint =
             {
@@ -2498,7 +2498,7 @@ data:extend(
             enabled = false,
             ingredients = 
             {
-                {type = "fluid", name = "wlw-molten-platinum", amount = 400}
+                {type = "fluid", name = "wlw-molten-platinum", amount = 500}
             },
             results =
             {
@@ -2524,7 +2524,7 @@ data:extend(
             },
             results =
             {
-                {type = "fluid", name = "wlw-molten-platinum", amount = 400}
+                {type = "fluid", name = "wlw-molten-platinum", amount = 500}
             },
             crafting_machine_tint =
             {
@@ -2653,7 +2653,7 @@ data:extend(
             enabled = false,
             ingredients = 
             {
-                {type = "fluid", name = "wlw-molten-platinum", amount = 1600}
+                {type = "fluid", name = "wlw-molten-platinum", amount = 2500}
             },
             results =
             {
@@ -2679,7 +2679,7 @@ data:extend(
             },
             results =
             {
-                {type = "fluid", name = "wlw-molten-platinum", amount = 1600}
+                {type = "fluid", name = "wlw-molten-platinum", amount = 2500}
             },
             crafting_machine_tint =
             {
@@ -2743,7 +2743,7 @@ data:extend(
             enabled = false,
             ingredients = 
             {
-                {type = "fluid", name = "wlw-molten-silver", amount = 6400}
+                {type = "fluid", name = "wlw-molten-silver", amount = 12500}
             },
             results =
             {
@@ -2769,7 +2769,7 @@ data:extend(
             },
             results =
             {
-                {type = "fluid", name = "wlw-molten-silver", amount = 6400}
+                {type = "fluid", name = "wlw-molten-silver", amount = 12500}
             },
             crafting_machine_tint =
             {
@@ -2852,7 +2852,7 @@ data:extend(
             enabled = false,
             ingredients = 
             {
-                {type = "fluid", name = "wlw-molten-silver", amount = 400}
+                {type = "fluid", name = "wlw-molten-silver", amount = 500}
             },
             results =
             {
@@ -2878,7 +2878,7 @@ data:extend(
             },
             results =
             {
-                {type = "fluid", name = "wlw-molten-silver", amount = 400}
+                {type = "fluid", name = "wlw-molten-silver", amount = 500}
             },
             crafting_machine_tint =
             {
@@ -3003,7 +3003,7 @@ data:extend(
             enabled = false,
             ingredients = 
             {
-                {type = "fluid", name = "wlw-molten-silver", amount = 1600}
+                {type = "fluid", name = "wlw-molten-silver", amount = 2500}
             },
             results =
             {
@@ -3029,7 +3029,7 @@ data:extend(
             },
             results =
             {
-                {type = "fluid", name = "wlw-molten-silver", amount = 1600}
+                {type = "fluid", name = "wlw-molten-silver", amount = 2500}
             },
             crafting_machine_tint =
             {
@@ -3111,7 +3111,7 @@ data:extend(
             enabled = false,
             ingredients =
             {
-                {type = "fluid", name = "wlw-molten-steel", amount = 6400}
+                {type = "fluid", name = "wlw-molten-steel", amount = 12500}
             },
             results =
             {
@@ -3137,7 +3137,7 @@ data:extend(
             },
             results =
             {
-                {type = "fluid", name = "wlw-molten-steel", amount = 6400}
+                {type = "fluid", name = "wlw-molten-steel", amount = 12500}
             },
             crafting_machine_tint =
             {
@@ -3170,7 +3170,7 @@ data:extend(
             enabled = false,
             ingredients =
             {
-                {type = "fluid", name = "wlw-molten-steel", amount = 400}
+                {type = "fluid", name = "wlw-molten-steel", amount = 500}
             },
             results =
             {
@@ -3196,7 +3196,7 @@ data:extend(
             },
             results =
             {
-                {type = "fluid", name = "wlw-molten-steel", amount = 400}
+                {type = "fluid", name = "wlw-molten-steel", amount = 500}
             },
             crafting_machine_tint =
             {
@@ -3273,7 +3273,7 @@ data:extend(
             enabled = false,
             ingredients =
             {
-                {type = "fluid", name = "wlw-molten-steel", amount = 1600}
+                {type = "fluid", name = "wlw-molten-steel", amount = 2500}
             },
             results =
             {
@@ -3299,7 +3299,7 @@ data:extend(
             },
             results =
             {
-                {type = "fluid", name = "wlw-molten-steel", amount = 1600}
+                {type = "fluid", name = "wlw-molten-steel", amount = 2500}
             },
             crafting_machine_tint =
             {
@@ -3330,7 +3330,7 @@ data:extend(
             enabled = false,
             ingredients = 
             {
-                {type = "fluid", name = "wlw-molten-tin", amount = 6400}
+                {type = "fluid", name = "wlw-molten-tin", amount = 12500}
             },
             results =
             {
@@ -3356,7 +3356,7 @@ data:extend(
             },
             results =
             {
-                {type = "fluid", name = "wlw-molten-tin", amount = 6400}
+                {type = "fluid", name = "wlw-molten-tin", amount = 12500}
             },
             crafting_machine_tint =
             {
@@ -3402,7 +3402,7 @@ data:extend(
             enabled = false,
             ingredients = 
             {
-                {type = "fluid", name = "wlw-molten-tin", amount = 400}
+                {type = "fluid", name = "wlw-molten-tin", amount = 500}
             },
             results =
             {
@@ -3428,7 +3428,7 @@ data:extend(
             },
             results =
             {
-                {type = "fluid", name = "wlw-molten-tin", amount = 400}
+                {type = "fluid", name = "wlw-molten-tin", amount = 500}
             },
             crafting_machine_tint =
             {
@@ -3553,7 +3553,7 @@ data:extend(
             enabled = false,
             ingredients = 
             {
-                {type = "fluid", name = "wlw-molten-tin", amount = 1600}
+                {type = "fluid", name = "wlw-molten-tin", amount = 2500}
             },
             results =
             {
@@ -3579,7 +3579,7 @@ data:extend(
             },
             results =
             {
-                {type = "fluid", name = "wlw-molten-tin", amount = 1600}
+                {type = "fluid", name = "wlw-molten-tin", amount = 2500}
             },
             crafting_machine_tint =
             {
