@@ -57,17 +57,20 @@ local function build_travel_interface(player)
 end
 
 local function command_friendly_biters_to_follow_players()
-    -- iterate every surface and command friendly biters on each of them
-    for _, surface in pairs(game.surfaces) do
 
-        -- there are no characters on this surface, so skip this surface.
-        local surface_characters = surface.find_entities_filtered{type = "character"}
-        if next(surface_characters) == nil then goto surface_continue end
+    -- iterate all players, check if there are any friendly biters/spitters nearby and command them to follow the player
+    for _, player in pairs(game.connected_players) do
+        if not (player and player.valid) then
+            goto player_continue
+        elseif player.character == nil then
+            goto player_continue
+        end
 
-        local friendly_units = surface.find_entities_filtered{type = "unit", force = "player"}
-        if next(friendly_units) ~= nil then
+        local nearby_friendly_units = player.surface.find_entities_filtered{type = "unit", force = player.force, position = player.position, radius = 50}
+
+        if next(nearby_friendly_units) ~= nil then
             -- command each friendly unit
-            for _, unit in pairs(friendly_units) do
+            for _, unit in pairs(nearby_friendly_units) do
                 -- if the unit already has a command that isn't wander, skip it.
                 if unit.has_command() then
                     if unit.command.type ~= defines.command.wander then
@@ -89,9 +92,9 @@ local function command_friendly_biters_to_follow_players()
                     goto continue
                 end
 
-                local close_enemy_units = surface.find_entities_filtered{position = unit.position, radius = 50, force = "enemy", type = "unit"}
-                local close_enemy_turrets = surface.find_entities_filtered{position = unit.position, radius = 50, force = "enemy", type = "turret"}
-                local close_enemy_spawners = surface.find_entities_filtered{position = unit.position, radius = 50, force = "enemy", type = "unit-spawner"}
+                local close_enemy_units = player.surface.find_entities_filtered{position = unit.position, radius = 50, force = "enemy", type = "unit"}
+                local close_enemy_turrets = player.surface.find_entities_filtered{position = unit.position, radius = 50, force = "enemy", type = "turret"}
+                local close_enemy_spawners = player.surface.find_entities_filtered{position = unit.position, radius = 50, force = "enemy", type = "unit-spawner"}
 
                 -- biters should prioritize other biters, spitters should prioritize turrets.
                 if isBiter then
@@ -125,14 +128,14 @@ local function command_friendly_biters_to_follow_players()
                 end
 
                 -- if we get here there are no nearby enemies so check if the unit is near a character.
-                local close_characters = surface.find_entities_filtered{type = "character", force = unit.force, position = unit.position, radius = 12}
+                local close_characters = player.surface.find_entities_filtered{type = "character", force = unit.force, position = unit.position, radius = 12}
                 if next(close_characters) ~= nil then
                     -- there is a character kinda close, so skip this unit.
                     goto continue
                 end
 
 
-                local characters = surface.find_entities_filtered{type = "character", force = unit.force}
+                local characters = player.surface.find_entities_filtered{type = "character", force = unit.force}
                 if next(characters) ~= nil then
                     unit.set_command({type = defines.command.go_to_location, destination_entity = characters[math.random(#characters)], radius = 5})
                 else
@@ -143,7 +146,7 @@ local function command_friendly_biters_to_follow_players()
             end
         end
 
-        ::surface_continue::
+        ::player_continue::
     end
 end
 
