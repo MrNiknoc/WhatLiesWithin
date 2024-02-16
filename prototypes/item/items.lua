@@ -16,7 +16,7 @@ data:extend(
             icon = "__base__/graphics/icons/behemoth-biter.png",
             icon_size = 64,
             subgroup = "wlw-biter-husbandry",
-            order = "biter-h",
+            order = "biter-k",
             stack_size = 20,
             place_result = "behemoth-biter",
             localised_name = "Behemoth biter (tamed)",
@@ -28,7 +28,7 @@ data:extend(
             icon = "__base__/graphics/icons/behemoth-biter.png",
             icon_size = 64,
             subgroup = "wlw-biter-husbandry",
-            order = "biter-g",
+            order = "biter-j",
             stack_size = 20,
             place_result = "behemoth-biter",
             localised_name = "Behemoth biter (untamed)",
@@ -40,7 +40,7 @@ data:extend(
             icon = "__base__/graphics/icons/behemoth-spitter.png",
             icon_size = 64,
             subgroup = "wlw-spitter-husbandry",
-            order = "spitter-h",
+            order = "spitter-k",
             stack_size = 20,
             place_result = "behemoth-spitter",
             localised_name = "Behemoth spitter (tamed)",
@@ -52,7 +52,7 @@ data:extend(
             icon = "__base__/graphics/icons/behemoth-spitter.png",
             icon_size = 64,
             subgroup = "wlw-spitter-husbandry",
-            order = "spitter-g",
+            order = "spitter-j",
             stack_size = 20,
             place_result = "behemoth-spitter",
             localised_name = "Behemoth spitter (untamed)",
@@ -64,7 +64,7 @@ data:extend(
             icon = "__base__/graphics/icons/big-biter.png",
             icon_size = 64,
             subgroup = "wlw-biter-husbandry",
-            order = "biter-f",
+            order = "biter-h",
             stack_size = 20,
             place_result = "big-biter",
             localised_name = "Big biter (tamed)",
@@ -76,7 +76,7 @@ data:extend(
             icon = "__base__/graphics/icons/big-biter.png",
             icon_size = 64,
             subgroup = "wlw-biter-husbandry",
-            order = "biter-e",
+            order = "biter-g",
             stack_size = 20,
             place_result = "big-biter",
             localised_name = "Big biter (untamed)",
@@ -88,7 +88,7 @@ data:extend(
             icon = "__base__/graphics/icons/big-spitter.png",
             icon_size = 64,
             subgroup = "wlw-spitter-husbandry",
-            order = "spitter-f",
+            order = "spitter-h",
             stack_size = 20,
             place_result = "big-spitter",
             localised_name = "Big spitter (tamed)",
@@ -100,7 +100,7 @@ data:extend(
             icon = "__base__/graphics/icons/big-spitter.png",
             icon_size = 64,
             subgroup = "wlw-spitter-husbandry",
-            order = "spitter-e",
+            order = "spitter-g",
             stack_size = 20,
             place_result = "big-spitter",
             localised_name = "Big spitter (untamed)",
@@ -217,8 +217,11 @@ data:extend(
             icon = "__WhatLiesWithinGraphics__/graphics/icons/exploding-biter.png",
             icon_size = 64,
             subgroup = "wlw-biter-husbandry",
-            order = "biter-i",
-            stack_size = 20
+            order = "biter-c",
+            stack_size = 20,
+            place_result = "wlw-exploding-small-biter",
+            localised_name = "Exploding small biter",
+            localised_description = "You strapped an explosion to a living creature... how cruel."
         },
         {
             type = "item",
@@ -226,8 +229,11 @@ data:extend(
             icon = "__WhatLiesWithinGraphics__/graphics/icons/exploding-biter.png",
             icon_size = 64,
             subgroup = "wlw-biter-husbandry",
-            order = "biter-j",
-            stack_size = 20
+            order = "biter-f",
+            stack_size = 20,
+            place_result = "wlw-exploding-medium-biter",
+            localised_name = "Exploding medium biter",
+            localised_description = "You strapped a bigger explosion to a living creature... how cruel."
         },
         {
             type = "item",
@@ -235,8 +241,11 @@ data:extend(
             icon = "__WhatLiesWithinGraphics__/graphics/icons/exploding-biter.png",
             icon_size = 64,
             subgroup = "wlw-biter-husbandry",
-            order = "biter-k",
-            stack_size = 20
+            order = "biter-i",
+            stack_size = 20,
+            place_result = "wlw-exploding-big-biter",
+            localised_name = "Exploding big biter",
+            localised_description = "You strapped an even BIGGER explosion to a living creature... how cruel."
         },
         {
             type = "item",
@@ -245,7 +254,10 @@ data:extend(
             icon_size = 64,
             subgroup = "wlw-biter-husbandry",
             order = "biter-l",
-            stack_size = 20
+            stack_size = 20,
+            place_result = "wlw-exploding-behemoth-biter",
+            localised_name = "Exploding behemoth biter",
+            localised_description = "You strapped the biggest explosion you have to a living creature... now you have become death."
         },
         {
             type = "item",
@@ -253,8 +265,11 @@ data:extend(
             icon = "__WhatLiesWithinGraphics__/graphics/icons/exploding-spitter.png",
             icon_size = 64,
             subgroup = "wlw-spitter-husbandry",
-            order = "spitter-i",
-            stack_size = 20
+            order = "spitter-c",
+            stack_size = 20,
+            place_result = "wlw-exploding-small-spitter",
+            localised_name = "Exploding small spitter",
+            localised_description = "You strapped an explosion to a living creature... how cruel."
         },
         {
             type = "item",
@@ -262,8 +277,11 @@ data:extend(
             icon = "__WhatLiesWithinGraphics__/graphics/icons/exploding-spitter.png",
             icon_size = 64,
             subgroup = "wlw-spitter-husbandry",
-            order = "spitter-j",
-            stack_size = 20
+            order = "spitter-f",
+            stack_size = 20,
+            place_result = "wlw-exploding-medium-spitter",
+            localised_name = "Exploding medium spitter",
+            localised_description = "You strapped a bigger explosion to a living creature... how cruel."
         },
         {
             type = "item",
@@ -271,8 +289,11 @@ data:extend(
             icon = "__WhatLiesWithinGraphics__/graphics/icons/exploding-spitter.png",
             icon_size = 64,
             subgroup = "wlw-spitter-husbandry",
-            order = "spitter-k",
-            stack_size = 20
+            order = "spitter-i",
+            stack_size = 20,
+            place_result = "wlw-exploding-big-spitter",
+            localised_name = "Exploding big spitter",
+            localised_description = "You strapped an even BIGGER explosion to a living creature... how cruel."
         },
         {
             type = "item",
@@ -281,7 +302,10 @@ data:extend(
             icon_size = 64,
             subgroup = "wlw-spitter-husbandry",
             order = "spitter-l",
-            stack_size = 20
+            stack_size = 20,
+            place_result = "wlw-exploding-behemoth-spitter",
+            localised_name = "Exploding behemoth spitter",
+            localised_description = "You strapped the biggest explosion you have to a living creature... now you have become death."
         },
         {
             type = "item",
@@ -418,7 +442,7 @@ data:extend(
             icon = "__base__/graphics/icons/medium-biter.png",
             icon_size = 64,
             subgroup = "wlw-biter-husbandry",
-            order = "biter-d",
+            order = "biter-e",
             stack_size = 20,
             place_result = "medium-biter",
             localised_name = "Medium biter (tamed)",
@@ -430,7 +454,7 @@ data:extend(
             icon = "__base__/graphics/icons/medium-biter.png",
             icon_size = 64,
             subgroup = "wlw-biter-husbandry",
-            order = "biter-c",
+            order = "biter-d",
             stack_size = 20,
             place_result = "medium-biter",
             localised_name = "Medium biter (untamed)",
@@ -442,7 +466,7 @@ data:extend(
             icon = "__base__/graphics/icons/medium-spitter.png",
             icon_size = 64,
             subgroup = "wlw-spitter-husbandry",
-            order = "spitter-d",
+            order = "spitter-e",
             stack_size = 20,
             place_result = "medium-spitter",
             localised_name = "Medium spitter (tamed)",
@@ -454,7 +478,7 @@ data:extend(
             icon = "__base__/graphics/icons/medium-spitter.png",
             icon_size = 64,
             subgroup = "wlw-spitter-husbandry",
-            order = "spitter-c",
+            order = "spitter-d",
             stack_size = 20,
             place_result = "medium-spitter",
             localised_name = "Medium spitter (untamed)",

@@ -1,4 +1,14 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.0.51025
+Date: 2. 15. 2024
+  Tweaks:
+    - Friends no longer make alerts when they're taking damage or destroyed.
+    - Friendly biters will now prioritize attacking biters -> worms -> spawners.
+    - Friendly spitters will now prioritize attacking worms -> biters -> spawners.
+    - Added exploding versions of friendly biters and spitters hehe
+  Bugfixes:
+    - Fixed a bug that was preventing the behemoth spitter recipes from being unlocked.
+---------------------------------------------------------------------------------------------------
 Version: 0.0.51024
 Date: 2. 15. 2024
   Minor Features:

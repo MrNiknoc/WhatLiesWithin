@@ -179,7 +179,8 @@ data:extend(
                 {type = "unlock-recipe", recipe = "wlw-biter-incubation-1"},
                 {type = "unlock-recipe", recipe = "wlw-biter-incubation-2"},
                 {type = "unlock-recipe", recipe = "wlw-husbandry-tame-small-biter"},
-                {type = "unlock-recipe", recipe = "wlw-husbandry-small-biter-breeding"}
+                {type = "unlock-recipe", recipe = "wlw-husbandry-small-biter-breeding"},
+                {type = "unlock-recipe", recipe = "wlw-exploding-small-biter"}
             }
         },
         {
@@ -207,7 +208,8 @@ data:extend(
                 {type = "unlock-recipe", recipe = "wlw-husbandry-machine-2"},
                 {type = "unlock-recipe", recipe = "wlw-husbandry-small-biter-to-medium"},
                 {type = "unlock-recipe", recipe = "wlw-husbandry-tame-medium-biter"},
-                {type = "unlock-recipe", recipe = "wlw-husbandry-medium-biter-breeding"}
+                {type = "unlock-recipe", recipe = "wlw-husbandry-medium-biter-breeding"},
+                {type = "unlock-recipe", recipe = "wlw-exploding-medium-biter"}
             }
         },
         {
@@ -236,7 +238,8 @@ data:extend(
                 {type = "unlock-recipe", recipe = "wlw-husbandry-machine-3"},
                 {type = "unlock-recipe", recipe = "wlw-husbandry-medium-biter-to-big"},
                 {type = "unlock-recipe", recipe = "wlw-husbandry-tame-big-biter"},
-                {type = "unlock-recipe", recipe = "wlw-husbandry-big-biter-breeding"}
+                {type = "unlock-recipe", recipe = "wlw-husbandry-big-biter-breeding"},
+                {type = "unlock-recipe", recipe = "wlw-exploding-big-biter"}
             }
         },
         {
@@ -265,7 +268,8 @@ data:extend(
             {
                 {type = "unlock-recipe", recipe = "wlw-husbandry-big-biter-to-behemoth"},
                 {type = "unlock-recipe", recipe = "wlw-husbandry-tame-behemoth-biter"},
-                {type = "unlock-recipe", recipe = "wlw-husbandry-behemoth-biter-breeding"}
+                {type = "unlock-recipe", recipe = "wlw-husbandry-behemoth-biter-breeding"},
+                {type = "unlock-recipe", recipe = "wlw-exploding-behemoth-biter"}
             }
         },
         {
@@ -813,7 +817,8 @@ data:extend(
                 {type = "unlock-recipe", recipe = "wlw-spitter-incubation-1"},
                 {type = "unlock-recipe", recipe = "wlw-spitter-incubation-2"},
                 {type = "unlock-recipe", recipe = "wlw-husbandry-tame-small-spitter"},
-                {type = "unlock-recipe", recipe = "wlw-husbandry-small-spitter-breeding"}
+                {type = "unlock-recipe", recipe = "wlw-husbandry-small-spitter-breeding"},
+                {type = "unlock-recipe", recipe = "wlw-exploding-small-spitter"}
             }
         },
         {
@@ -840,7 +845,8 @@ data:extend(
             {
                 {type = "unlock-recipe", recipe = "wlw-husbandry-small-spitter-to-medium"},
                 {type = "unlock-recipe", recipe = "wlw-husbandry-tame-medium-spitter"},
-                {type = "unlock-recipe", recipe = "wlw-husbandry-medium-spitter-breeding"}
+                {type = "unlock-recipe", recipe = "wlw-husbandry-medium-spitter-breeding"},
+                {type = "unlock-recipe", recipe = "wlw-exploding-medium-spitter"}
             }
         },
         {
@@ -868,7 +874,8 @@ data:extend(
             {
                 {type = "unlock-recipe", recipe = "wlw-husbandry-medium-spitter-to-big"},
                 {type = "unlock-recipe", recipe = "wlw-husbandry-tame-big-spitter"},
-                {type = "unlock-recipe", recipe = "wlw-husbandry-big-spitter-breeding"}
+                {type = "unlock-recipe", recipe = "wlw-husbandry-big-spitter-breeding"},
+                {type = "unlock-recipe", recipe = "wlw-exploding-big-spitter"}
             }
         },
         {
@@ -895,9 +902,10 @@ data:extend(
             },
             effects = 
             {
-                {type = "unlock-recipe", recipe = "wlw-husbandry-big-biter-to-behemoth"},
-                {type = "unlock-recipe", recipe = "wlw-husbandry-tame-behemoth-biter"},
-                {type = "unlock-recipe", recipe = "wlw-husbandry-behemoth-spitter-breeding"}
+                {type = "unlock-recipe", recipe = "wlw-husbandry-big-spitter-to-behemoth"},
+                {type = "unlock-recipe", recipe = "wlw-husbandry-tame-behemoth-spitter"},
+                {type = "unlock-recipe", recipe = "wlw-husbandry-behemoth-spitter-breeding"},
+                {type = "unlock-recipe", recipe = "wlw-exploding-behemoth-spitter"}
             }
         },
         {

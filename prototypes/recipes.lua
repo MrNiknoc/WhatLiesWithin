@@ -836,6 +836,134 @@ data:extend(
         },
         {
             type = "recipe",
+            name = "wlw-exploding-small-biter",
+            category = "crafting",
+            energy_required = 5,
+            enabled = false,
+            ingredients =
+            {
+                {type = "item", name = "wlw-small-biter-tamed", amount = 1},
+                {type = "item", name = "grenade", amount = 1}
+            },
+            results =
+            {
+                {type = "item", name = "wlw-exploding-small-biter", amount = 1}
+            }
+        },
+        {
+            type = "recipe",
+            name = "wlw-exploding-small-spitter",
+            category = "crafting",
+            energy_required = 5,
+            enabled = false,
+            ingredients =
+            {
+                {type = "item", name = "wlw-small-spitter-tamed", amount = 1},
+                {type = "item", name = "grenade", amount = 1}
+            },
+            results =
+            {
+                {type = "item", name = "wlw-exploding-small-spitter", amount = 1}
+            }
+        },
+        {
+            type = "recipe",
+            name = "wlw-exploding-medium-biter",
+            category = "crafting",
+            energy_required = 5,
+            enabled = false,
+            ingredients =
+            {
+                {type = "item", name = "wlw-medium-biter-tamed", amount = 1},
+                {type = "item", name = "rocket", amount = 1}
+            },
+            results =
+            {
+                {type = "item", name = "wlw-exploding-medium-biter", amount = 1}
+            }
+        },
+        {
+            type = "recipe",
+            name = "wlw-exploding-medium-spitter",
+            category = "crafting",
+            energy_required = 5,
+            enabled = false,
+            ingredients =
+            {
+                {type = "item", name = "wlw-medium-spitter-tamed", amount = 1},
+                {type = "item", name = "rocket", amount = 1}
+            },
+            results =
+            {
+                {type = "item", name = "wlw-exploding-medium-spitter", amount = 1}
+            }
+        },
+        {
+            type = "recipe",
+            name = "wlw-exploding-big-biter",
+            category = "crafting",
+            energy_required = 5,
+            enabled = false,
+            ingredients =
+            {
+                {type = "item", name = "wlw-big-biter-tamed", amount = 1},
+                {type = "item", name = "cluster-grenade", amount = 1}
+            },
+            results =
+            {
+                {type = "item", name = "wlw-exploding-big-biter", amount = 1}
+            }
+        },
+        {
+            type = "recipe",
+            name = "wlw-exploding-big-spitter",
+            category = "crafting",
+            energy_required = 5,
+            enabled = false,
+            ingredients =
+            {
+                {type = "item", name = "wlw-big-spitter-tamed", amount = 1},
+                {type = "item", name = "cluster-grenade", amount = 1}
+            },
+            results =
+            {
+                {type = "item", name = "wlw-exploding-big-spitter", amount = 1}
+            }
+        },
+        {
+            type = "recipe",
+            name = "wlw-exploding-behemoth-biter",
+            category = "crafting",
+            energy_required = 5,
+            enabled = false,
+            ingredients =
+            {
+                {type = "item", name = "wlw-behemoth-biter-tamed", amount = 1},
+                {type = "item", name = "atomic-bomb", amount = 1}
+            },
+            results =
+            {
+                {type = "item", name = "wlw-exploding-behemoth-biter", amount = 1}
+            }
+        },
+        {
+            type = "recipe",
+            name = "wlw-exploding-behemoth-spitter",
+            category = "crafting",
+            energy_required = 5,
+            enabled = false,
+            ingredients =
+            {
+                {type = "item", name = "wlw-behemoth-spitter-tamed", amount = 1},
+                {type = "item", name = "atomic-bomb", amount = 1}
+            },
+            results =
+            {
+                {type = "item", name = "wlw-exploding-behemoth-spitter", amount = 1}
+            }
+        },
+        {
+            type = "recipe",
             name = "wlw-fertilizer",
             category = "crafting-with-fluid",
             energy_required = 2,

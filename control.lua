@@ -60,35 +60,83 @@ local function command_friendly_biters_to_follow_players()
     -- iterate every surface and command friendly biters on each of them
     for _, surface in pairs(game.surfaces) do
 
-        -- if there are no characters on this surface, skip it.
+        -- there are no characters on this surface, so skip this surface.
         local surface_characters = surface.find_entities_filtered{type = "character"}
         if next(surface_characters) == nil then goto surface_continue end
-        local friendly_biters = surface.find_entities_filtered{type = "unit", force = "player"}
-        if next(friendly_biters) ~= nil then
-            -- command each friendly biter
-            for _, biter in pairs(friendly_biters) do
-                -- if the biter already has a command that isn't wander, skip it.
-                if biter.has_command() then
-                    if biter.command.type ~= defines.command.wander then
-                        -- this biter is commanded and not wandering, skip it.
+
+        local friendly_units = surface.find_entities_filtered{type = "unit", force = "player"}
+        if next(friendly_units) ~= nil then
+            -- command each friendly unit
+            for _, unit in pairs(friendly_units) do
+                -- if the unit already has a command that isn't wander, skip it.
+                if unit.has_command() then
+                    if unit.command.type ~= defines.command.wander then
+                        -- this unit is commanded and not wandering, skip it.
                         goto continue
                     end
                 end
-                local close_enemies = surface.find_entities_filtered{position = biter.position, radius = 50, force = "enemy", type = {"unit", "unit-spawner", "turret"}}
-                if next(close_enemies) ~= nil then
-                    biter.set_command({type = defines.command.attack, target = close_enemies[math.random(#close_enemies)]})
-                    goto continue
-                end
-                local close_characters = surface.find_entities_filtered{type = "character", force = biter.force, position = biter.position, radius = 12}
-                if next(close_characters) ~= nil then
-                    -- there is a character kinda close, so skip this biter.
-                    goto continue
-                end
-                local characters = surface.find_entities_filtered{type = "character", force = biter.force}
-                if next(characters) ~= nil then
-                    biter.set_command({type = defines.command.go_to_location, destination_entity = characters[math.random(#characters)], radius = 5})
+
+                local isBiter = false
+
+                if string.find(unit.name, "biter") then
+                    -- this is a biter
+                    isBiter = true
+                elseif string.find(unit.name, "spitter") then
+                    -- this is a spitter
+                    isBiter = false
                 else
-                    -- there are no characters on this surface so skip this biter
+                    -- this is neither a biter nor a spitter, so skip it.
+                    goto continue
+                end
+
+                local close_enemy_units = surface.find_entities_filtered{position = unit.position, radius = 50, force = "enemy", type = "unit"}
+                local close_enemy_turrets = surface.find_entities_filtered{position = unit.position, radius = 50, force = "enemy", type = "turret"}
+                local close_enemy_spawners = surface.find_entities_filtered{position = unit.position, radius = 50, force = "enemy", type = "unit-spawner"}
+
+                -- biters should prioritize other biters, spitters should prioritize turrets.
+                if isBiter then
+                    -- attack close units
+                    if next(close_enemy_units) ~= nil then
+                        unit.set_command({type = defines.command.attack, target = close_enemy_units[math.random(#close_enemy_units)]})
+                        goto continue
+                    -- otherwise attack close turrets
+                    elseif next(close_enemy_turrets) ~= nil then
+                        unit.set_command({type = defines.command.attack, target = close_enemy_turrets[math.random(#close_enemy_turrets)]})
+                        goto continue
+                    -- otherwise attack close spawners
+                    elseif next(close_enemy_spawners) ~= nil then
+                        unit.set_command({type = defines.command.attack, target = close_enemy_spawners[math.random(#close_enemy_spawners)]})
+                        goto continue
+                    end                 
+                else
+                    -- attack close turrets
+                    if next(close_enemy_turrets) ~= nil then
+                        unit.set_command({type = defines.command.attack, target = close_enemy_turrets[math.random(#close_enemy_turrets)]})
+                        goto continue
+                    -- otherwise attack close units
+                    elseif next(close_enemy_units) ~= nil then
+                        unit.set_command({type = defines.command.attack, target = close_enemy_units[math.random(#close_enemy_units)]})
+                        goto continue
+                    -- otherwise attack close spawners
+                    elseif next(close_enemy_spawners) ~= nil then
+                        unit.set_command({type = defines.command.attack, target = close_enemy_spawners[math.random(#close_enemy_spawners)]})
+                        goto continue
+                    end 
+                end
+
+                -- if we get here there are no nearby enemies so check if the unit is near a character.
+                local close_characters = surface.find_entities_filtered{type = "character", force = unit.force, position = unit.position, radius = 12}
+                if next(close_characters) ~= nil then
+                    -- there is a character kinda close, so skip this unit.
+                    goto continue
+                end
+
+
+                local characters = surface.find_entities_filtered{type = "character", force = unit.force}
+                if next(characters) ~= nil then
+                    unit.set_command({type = defines.command.go_to_location, destination_entity = characters[math.random(#characters)], radius = 5})
+                else
+                    -- there are no characters on this surface so skip this unit
                     goto continue
                 end
                 ::continue::
