@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.0.51024
+Date: 2. 15. 2024
+  Minor Features:
+    - Item elevators now display the layer they're connected to.
+    - Friends will now follow and try to protect players.
+  Bugfixes:
+    - Fixed a bug that was making it very hard to place item elevators.
+---------------------------------------------------------------------------------------------------
 Version: 0.0.51023
 Date: 2. 7. 2024
   Bugfixes:

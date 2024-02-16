@@ -56,6 +56,49 @@ local function build_travel_interface(player)
     controls_flow.add{type="button", name="wlw_travel_travel_button", caption={"wlw-gui.travel"}}
 end
 
+local function command_friendly_biters_to_follow_players()
+    -- iterate every surface and command friendly biters on each of them
+    for _, surface in pairs(game.surfaces) do
+
+        -- if there are no characters on this surface, skip it.
+        local surface_characters = surface.find_entities_filtered{type = "character"}
+        if next(surface_characters) == nil then goto surface_continue end
+        local friendly_biters = surface.find_entities_filtered{type = "unit", force = "player"}
+        if next(friendly_biters) ~= nil then
+            -- command each friendly biter
+            for _, biter in pairs(friendly_biters) do
+                -- if the biter already has a command that isn't wander, skip it.
+                if biter.has_command() then
+                    if biter.command.type ~= defines.command.wander then
+                        -- this biter is commanded and not wandering, skip it.
+                        goto continue
+                    end
+                end
+                local close_enemies = surface.find_entities_filtered{position = biter.position, radius = 50, force = "enemy", type = {"unit", "unit-spawner", "turret"}}
+                if next(close_enemies) ~= nil then
+                    biter.set_command({type = defines.command.attack, target = close_enemies[math.random(#close_enemies)]})
+                    goto continue
+                end
+                local close_characters = surface.find_entities_filtered{type = "character", force = biter.force, position = biter.position, radius = 12}
+                if next(close_characters) ~= nil then
+                    -- there is a character kinda close, so skip this biter.
+                    goto continue
+                end
+                local characters = surface.find_entities_filtered{type = "character", force = biter.force}
+                if next(characters) ~= nil then
+                    biter.set_command({type = defines.command.go_to_location, destination_entity = characters[math.random(#characters)], radius = 5})
+                else
+                    -- there are no characters on this surface so skip this biter
+                    goto continue
+                end
+                ::continue::
+            end
+        end
+
+        ::surface_continue::
+    end
+end
+
 local function get_blacklisted_surfaces()
     return global.underground_blacklisted_surfaces
 end
@@ -143,6 +186,48 @@ local function remove_blacklisted_surface(surface_name)
     for index, value in ipairs(global.underground_blacklisted_surfaces) do
         if value == surface_name then
             table.remove(global.underground_blacklisted_surfaces, index)
+        end
+    end
+end
+
+local function render_destination_text_on_elevators()
+
+    -- TODO: Change this function to pull from a cached table of item elevators, rather than searching every surface for them.
+    -- TODO: Big performance gains to be had there. This does work though.
+
+    -- First clear everything that we're already rendering. NOTE if we end up rendering more than just these texts, we'll want to only clear them and not everything rendered.
+    rendering.clear("WhatLiesWithin")
+
+    for _, surface in pairs(game.surfaces) do
+        local elevators = surface.find_entities_filtered{
+            name = "wlw-item-elevator"
+        }
+
+        if next(elevators) ~= nil then
+            for _, elevator in pairs(elevators) do
+                local companions = get_companion_elevators(elevator)
+
+                if next(companions) ~= nil then
+                    local companion_surface_name = companions[1].surface.name
+                    local destination_text = 'Idk man'
+                    if string.find(companion_surface_name, "underground %- layer") then
+                        destination_text = string.sub(companion_surface_name, string.find(companion_surface_name, "underground %- layer") + 14, string.len(companion_surface_name))
+                    else
+                        destination_text = companion_surface_name
+                    end
+
+                    rendering.draw_text{
+                        text = destination_text,
+                        surface = elevator.surface,
+                        target = elevator,
+                        target_offset = {-1.5, 1},
+                        color = {1,1,1,1}, -- pure white
+                        scale = 3,
+                        forces = {},
+                        players = {}
+                    }
+                end
+            end
         end
     end
 end
@@ -238,6 +323,9 @@ function OnConfigurationChanged(event)
     -- make sure every Zone is created that should be.
     -- if there are zones already then check if each surface is in the zone list.
     Zone.rebuild_global_surface_lists()
+
+    -- render destination texts for elevators
+    render_destination_text_on_elevators()
 end
 
 function GuiClick(event)
@@ -369,6 +457,9 @@ function OnBuiltEntity(event)
     if not (player and player.valid) then
         return
     end
+
+    local player_character = player.character
+
     local entity_surface_name = surface.name
 
     if name == "wlw-item-elevator" then
@@ -409,6 +500,10 @@ function OnBuiltEntity(event)
 
                 local target_surface = game.surfaces[top_surface_name .. " underground - layer " .. tostring(target_underground_layer_number)]
 
+                -- Make sure that the chunk we're trying to place the elevator in has been generated, otherwise a position will be unfindable.
+                target_surface.request_to_generate_chunks(entity.position)
+                target_surface.force_generate_chunk_requests()
+
                 -- then try to place the companion elevator there. If it fails then we can't place the elevator here.
                 if target_surface.find_non_colliding_position("wlw-item-elevator", entity.position, 0.01, 0.01) == nil then
                     -- We failed to build the entity here.
@@ -464,13 +559,51 @@ function OnBuiltEntity(event)
                     bottom_pole.destructible = false
                     bottom_pole.minable = false
 
-                    -- We succeeded in building the entity here so give it them both the correct link id and return.
+                    -- We succeeded in building the entity here so give them both the correct link id and return.
                     entity.link_id = next_link_id
                     companion_elevator.link_id = next_link_id
 
                     -- also generate a radius of 3 chunks around the elevator (enables biter spawning, among other things)
                     target_surface.request_to_generate_chunks(companion_elevator.position, 3)
                     target_surface.force_generate_chunk_requests()
+
+                    -- also render text on each elevator
+                    local top_destination_text = 'Idk man'
+                    local bottom_destination_text = 'Idk man'
+
+                    if string.find(target_surface.name, "underground %- layer") then
+                        top_destination_text = string.sub(target_surface.name, string.find(target_surface.name, "underground %- layer") + 14, string.len(target_surface.name))
+                    else
+                        top_destination_text = target_surface.name
+                    end
+
+                    if string.find(entity_surface_name, "underground %- layer") then
+                        bottom_destination_text = string.sub(entity_surface_name, string.find(entity_surface_name, "underground %- layer") + 14, string.len(entity_surface_name))
+                    else
+                        bottom_destination_text = entity_surface_name
+                    end
+
+                    rendering.draw_text{
+                        text = top_destination_text,
+                        surface = entity.surface,
+                        target = entity,
+                        target_offset = {-1.5, 1},
+                        color = {1,1,1,1}, -- pure white
+                        scale = 3,
+                        forces = {},
+                        players = {}
+                    }
+
+                    rendering.draw_text{
+                        text = bottom_destination_text,
+                        surface = target_surface,
+                        target = companion_elevator,
+                        target_offset = {-1.5, 1},
+                        color = {1,1,1,1}, -- pure white
+                        scale = 3,
+                        forces = {},
+                        players = {}
+                    }
                     return
                 end
             else
@@ -478,6 +611,10 @@ function OnBuiltEntity(event)
 
                 local target_surface = game.surfaces[top_surface_name .. " underground - layer " .. tostring(target_underground_layer_number)]
 
+                -- Make sure that the chunk we're trying to place the elevator in has been generated, otherwise a position will be unfindable.
+                target_surface.request_to_generate_chunks(entity.position)
+                target_surface.force_generate_chunk_requests()
+
                 -- then try to place the companion elevator there. If it fails then we can't place the elevator here.
                 if target_surface.find_non_colliding_position("wlw-item-elevator", entity.position, 0.01, 0.01) == nil then
                     -- We failed to build the entity here.
@@ -539,6 +676,44 @@ function OnBuiltEntity(event)
                     -- also generate a radius of 3 chunks around the elevator (enables biter spawning, among other things)
                     target_surface.request_to_generate_chunks(companion_elevator.position, 3)
                     target_surface.force_generate_chunk_requests()
+
+                    -- also render text on each elevator
+                    local top_destination_text = 'Idk man'
+                    local bottom_destination_text = 'Idk man'
+
+                    if string.find(target_surface.name, "underground %- layer") then
+                        top_destination_text = string.sub(target_surface.name, string.find(target_surface.name, "underground %- layer") + 14, string.len(target_surface.name))
+                    else
+                        top_destination_text = target_surface.name
+                    end
+
+                    if string.find(entity_surface_name, "underground %- layer") then
+                        bottom_destination_text = string.sub(entity_surface_name, string.find(entity_surface_name, "underground %- layer") + 14, string.len(entity_surface_name))
+                    else
+                        bottom_destination_text = entity_surface_name
+                    end
+
+                    rendering.draw_text{
+                        text = top_destination_text,
+                        surface = entity.surface,
+                        target = entity,
+                        target_offset = {-1.5, 1},
+                        color = {1,1,1,1}, -- pure white
+                        scale = 3,
+                        forces = {},
+                        players = {}
+                    }
+
+                    rendering.draw_text{
+                        text = bottom_destination_text,
+                        surface = target_surface,
+                        target = companion_elevator,
+                        target_offset = {-1.5, 1},
+                        color = {1,1,1,1}, -- pure white
+                        scale = 3,
+                        forces = {},
+                        players = {}
+                    }
                     return
                 end
             end
@@ -549,6 +724,10 @@ function OnBuiltEntity(event)
 
                 local target_surface = game.surfaces[entity_surface_name .. " underground - layer 1"]
 
+                -- Make sure that the chunk we're trying to place the elevator in has been generated, otherwise a position will be unfindable.
+                target_surface.request_to_generate_chunks(entity.position)
+                target_surface.force_generate_chunk_requests()
+
                 if target_surface.find_non_colliding_position("wlw-item-elevator", entity.position, 0.01, 0.01) == nil then
                     -- We failed to build the entity here.
                     player.create_local_flying_text({text = {"error-message.wlw-cant-place-item-elevator"}, create_at_cursor = true})
@@ -610,6 +789,44 @@ function OnBuiltEntity(event)
                     -- also generate a radius of 3 chunks around the elevator (enables biter spawning, among other things)
                     target_surface.request_to_generate_chunks(companion_elevator.position, 3)
                     target_surface.force_generate_chunk_requests()
+
+                    -- also render text on each elevator
+                    local top_destination_text = 'Idk man'
+                    local bottom_destination_text = 'Idk man'
+
+                    if string.find(target_surface.name, "underground %- layer") then
+                        top_destination_text = string.sub(target_surface.name, string.find(target_surface.name, "underground %- layer") + 14, string.len(target_surface.name))
+                    else
+                        top_destination_text = target_surface.name
+                    end
+
+                    if string.find(entity_surface_name, "underground %- layer") then
+                        bottom_destination_text = string.sub(entity_surface_name, string.find(entity_surface_name, "underground %- layer") + 14, string.len(entity_surface_name))
+                    else
+                        bottom_destination_text = entity_surface_name
+                    end
+
+                    rendering.draw_text{
+                        text = top_destination_text,
+                        surface = entity.surface,
+                        target = entity,
+                        target_offset = {-1.5, 1},
+                        color = {1,1,1,1}, -- pure white
+                        scale = 3,
+                        forces = {},
+                        players = {}
+                    }
+
+                    rendering.draw_text{
+                        text = bottom_destination_text,
+                        surface = target_surface,
+                        target = companion_elevator,
+                        target_offset = {-1.5, 1},
+                        color = {1,1,1,1}, -- pure white
+                        scale = 3,
+                        forces = {},
+                        players = {}
+                    }
                     return
                 end
             else
@@ -618,6 +835,10 @@ function OnBuiltEntity(event)
 
                 local target_surface = game.surfaces[entity_surface_name .. " underground - layer 1"]
 
+                -- Make sure that the chunk we're trying to place the elevator in has been generated, otherwise a position will be unfindable.
+                target_surface.request_to_generate_chunks(entity.position)
+                target_surface.force_generate_chunk_requests()
+
                 if target_surface.find_non_colliding_position("wlw-item-elevator", entity.position, 0.01, 0.01) == nil then
                     -- We failed to build the entity here.
                     player.create_local_flying_text({text = {"error-message.wlw-cant-place-item-elevator"}, create_at_cursor = true})
@@ -678,6 +899,44 @@ function OnBuiltEntity(event)
                     -- also generate a radius of 3 chunks around the elevator (enables biter spawning, among other things)
                     target_surface.request_to_generate_chunks(companion_elevator.position, 3)
                     target_surface.force_generate_chunk_requests()
+
+                    -- also render text on each elevator
+                    local top_destination_text = 'Idk man'
+                    local bottom_destination_text = 'Idk man'
+
+                    if string.find(target_surface.name, "underground %- layer") then
+                        top_destination_text = string.sub(target_surface.name, string.find(target_surface.name, "underground %- layer") + 14, string.len(target_surface.name))
+                    else
+                        top_destination_text = target_surface.name
+                    end
+
+                    if string.find(entity_surface_name, "underground %- layer") then
+                        bottom_destination_text = string.sub(entity_surface_name, string.find(entity_surface_name, "underground %- layer") + 14, string.len(entity_surface_name))
+                    else
+                        bottom_destination_text = entity_surface_name
+                    end
+
+                    rendering.draw_text{
+                        text = top_destination_text,
+                        surface = entity.surface,
+                        target = entity,
+                        target_offset = {-1.5, 1},
+                        color = {1,1,1,1}, -- pure white
+                        scale = 3,
+                        forces = {},
+                        players = {}
+                    }
+
+                    rendering.draw_text{
+                        text = bottom_destination_text,
+                        surface = target_surface,
+                        target = companion_elevator,
+                        target_offset = {-1.5, 1},
+                        color = {1,1,1,1}, -- pure white
+                        scale = 3,
+                        forces = {},
+                        players = {}
+                    }
                     return
                 end
             end
@@ -687,6 +946,7 @@ function OnBuiltEntity(event)
         -- Zone.create_underground_layer_given_top_surface_name(string.gsub(entity_surface_name, " underground %- layer %d+", ""), 1)
 
     elseif string.match(name, "silo") then
+        -- Disallow silos to be built underground
         if string.match(entity_surface_name, "underground") then
             -- We failed to build the entity here.
             player.create_local_flying_text({text = {"error-message.wlw-cant-place-rocket-silo"}, create_at_cursor = true})
@@ -1227,9 +1487,18 @@ function PlayerDied(event)
         return
     end
 
+    player.print("You died. You will respawn on the surface.")
+end
+
+function PlayerRespawned(event)
+    local player = game.get_player(event.player_index)
+
+    if not (player and player.valid) then
+        return
+    end
+
     local top_surface = Zone.get_top_surface_name(player.surface)
     player.teleport(player.force.get_spawn_position(top_surface), top_surface)
-
 end
 
 function EntityDamaged(event)
@@ -1453,6 +1722,9 @@ function OnTick(event)
     local nauvis = game.surfaces[1]
 
     if next(game.connected_players) ~= nil then
+        -- first command friendly biters
+        command_friendly_biters_to_follow_players()
+
         -- this range is inclusive, first number and last number are possible.
         -- right now the range goes up to 2.16m, which is the number of ticks in 10 hours. on average an atmosphere message should happen once every ten hours.
         -- these are meant to just be flavor.
@@ -1530,6 +1802,7 @@ script.on_event(defines.events.script_raised_destroy, EntityDied)
 script.on_event(defines.events.on_entity_spawned, EntitySpawned)
 script.on_event(defines.events.on_player_created, PlayerCreated)
 script.on_event(defines.events.on_player_died, PlayerDied)
+script.on_event(defines.events.on_player_respawned, PlayerRespawned)
 script.on_event(defines.events.on_chunk_generated, ChunkGenerated)
 script.on_event(defines.events.on_surface_created, SurfaceCreated)
 script.on_event(defines.events.on_surface_deleted, SurfaceDeleted)

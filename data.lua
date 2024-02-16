@@ -113,6 +113,11 @@ local dummyfurnace =
 }
 data:extend({dummyfurnace})
 
+-- change units to not alert when taking damage
+for name, prototype in pairs(data.raw["unit"]) do
+    prototype.alert_when_damaged = false
+end
+
 -- change plate icons to fit the plate > ingot > sheet > block convention. (plate = iron plate, ingot = steel-plate, sheet = stone-brick, block = solid-fuel)
 data.raw["item"]["copper-plate"].icon = "__WhatLiesWithinGraphics__/graphics/icons/copper-plate.png"
 data.raw["item"]["iron-plate"].icon = "__WhatLiesWithinGraphics__/graphics/icons/iron-plate.png"
